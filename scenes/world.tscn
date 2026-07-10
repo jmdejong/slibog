@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://b8vt5oobg364r"]
+
+[ext_resource type="PackedScene" uid="uid://br3hfmthooqpg" path="res://scenes/player.tscn" id="1_4wyf3"]
+[ext_resource type="Shader" uid="uid://c48pvo4nqjn3" path="res://code/shaders/outblur.gdshader" id="1_71j4m"]
+[ext_resource type="PackedScene" uid="uid://cxtq3sfexdf4o" path="res://scenes/environment.tscn" id="2_rwgxs"]
+[ext_resource type="PackedScene" uid="uid://c5yts0b33od7m" path="res://scenes/monsters/arm_ball.tscn" id="3_4wyf3"]
+[ext_resource type="Script" uid="uid://dwrn2q786m36j" path="res://code/effects.gd" id="4_k0juu"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_it4ap"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cdsqw"]
+render_priority = 0
+shader = ExtResource("1_71j4m")
+shader_parameter/inner = 0.1
+shader_parameter/outer = 0.3
+
+[node name="World" type="Node3D" unique_id=951009489]
+
+[node name="Test" type="Node3D" parent="." unique_id=1718309922]
+
+[node name="OutblurTest" type="MeshInstance3D" parent="Test" unique_id=997396732]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.0971107, 2.9053812, -6.024007)
+visible = false
+mesh = SubResource("SphereMesh_it4ap")
+surface_material_override/0 = SubResource("ShaderMaterial_cdsqw")
+
+[node name="Player" parent="." unique_id=265189897 instance=ExtResource("1_4wyf3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, -1.9936124e-09, -1.9936124e-09)
+
+[node name="Environment" parent="." unique_id=1292691616 instance=ExtResource("2_rwgxs")]
+
+[node name="Creatures" type="Node3D" parent="." unique_id=521132684]
+
+[node name="ArmBall" parent="Creatures" unique_id=1995655771 instance=ExtResource("3_4wyf3")]
+transform = Transform3D(-0.19973692, 0, -0.9798496, 0, 1, 0, 0.9798496, 0, -0.19973692, 0, 0, -18.020195)
+
+[node name="ArmBall2" parent="Creatures" unique_id=828132823 instance=ExtResource("3_4wyf3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -54.977226, 0, -78.22279)
+
+[node name="Effects" type="Node3D" parent="." unique_id=1272592360]
+script = ExtResource("4_k0juu")

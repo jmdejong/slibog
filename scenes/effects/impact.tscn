@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://baspx1h0d80jm"]
+
+[ext_resource type="Shader" uid="uid://c48pvo4nqjn3" path="res://code/shaders/outblur.gdshader" id="1_w032t"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_it4ap"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8pfwn"]
+render_priority = 0
+shader = ExtResource("1_w032t")
+
+[sub_resource type="Animation" id="Animation_8pfwn"]
+length = 0.001
+tracks/0/type = "scale_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 1, 1, 1)
+
+[sub_resource type="Animation" id="Animation_w032t"]
+resource_name = "play"
+length = 0.3
+tracks/0/type = "scale_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0.2, 0.2, 0.2, 0.1, 1, 0.4, 0.4, 0.4, 0.2, 1, 0.7, 0.7, 0.7, 0.3, 1, 1, 1, 1)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jyt4a"]
+_data = {
+&"RESET": SubResource("Animation_8pfwn"),
+&"play": SubResource("Animation_w032t")
+}
+
+[node name="Impact" type="Node3D" unique_id=1941469683]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1575977729]
+mesh = SubResource("SphereMesh_it4ap")
+surface_material_override/0 = SubResource("ShaderMaterial_8pfwn")
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=497801874]
+billboard = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1916131464]
+libraries/ = SubResource("AnimationLibrary_jyt4a")
+autoplay = &"play"
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="queue_free" unbinds=1]

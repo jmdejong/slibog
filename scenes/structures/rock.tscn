@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://dwijwqo44vuk6"]
+
+[ext_resource type="Material" uid="uid://dbagpcxyb1od0" path="res://rock.tres" id="1_urypp"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_fvao4"]
+radius = 2.5
+height = 4.0
+radial_segments = 5
+rings = 3
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_urypp"]
+radius = 2.0
+
+[node name="Rock" type="StaticBody3D" unique_id=1684314174]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2036392291]
+mesh = SubResource("SphereMesh_fvao4")
+surface_material_override/0 = ExtResource("1_urypp")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1216564907]
+shape = SubResource("SphereShape3D_urypp")

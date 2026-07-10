@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cdk81nghx3v48"]
+
+[ext_resource type="Material" uid="uid://btoib0ln78fjg" path="res://materials/ground_grass.tres" id="1_pybca"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_it4ap"]
+size = Vector3(256, 10, 256)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_it4ap"]
+size = Vector2(256, 256)
+
+[node name="Ground" type="StaticBody3D" unique_id=808522484]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=273213999]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, -5, -1.9936124e-09)
+shape = SubResource("BoxShape3D_it4ap")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1813849471]
+cast_shadow = 0
+mesh = SubResource("PlaneMesh_it4ap")
+surface_material_override/0 = ExtResource("1_pybca")
