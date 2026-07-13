@@ -1,16 +1,15 @@
 [gd_scene format=3 uid="uid://b26pm3dnngvy7"]
 
 [ext_resource type="Script" uid="uid://bngv8w1xfltwe" path="res://code/weapon.gd" id="1_8fn8c"]
+[ext_resource type="Material" uid="uid://brqu4p7dasgj3" path="res://materials/pole_wood.tres" id="2_f4mc5"]
+[ext_resource type="Material" uid="uid://c8wsmxh2ly2k1" path="res://materials/weapon_metal.tres" id="3_osdwm"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_it4ap"]
 top_radius = 0.05
 bottom_radius = 0.05
-height = 2.4
+height = 3.2
 radial_segments = 32
 rings = 2
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cdsqw"]
-albedo_color = Color(0.46666667, 0.26666668, 0, 1)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_cdsqw"]
 top_radius = 0.0
@@ -54,21 +53,21 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_f4mc5"]
 resource_name = "attack"
-length = 0.4
+length = 0.5
 tracks/0/type = "position_3d"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath("Handle")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0.5, -1.9936124e-09, 0.5, 0.1, 1, 0.5, 0, -2, 0.4, 1, 0.5, 0, 0)
+tracks/0/keys = PackedFloat32Array(0, 1, 0.5, 0, 0.5, 0.1, 1, 0.5, 0, 1, 0.2, 1, 0.5, 0, -3, 0.5, 1, 0.5, 0, 0)
 tracks/1/type = "scale_3d"
 tracks/1/imported = false
-tracks/1/enabled = true
+tracks/1/enabled = false
 tracks/1/path = NodePath("Handle/Pole/Point/HitArea/HitShape")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array(0, 1, 1, 1, 1, 0.1, 1, 5, 5, 5, 0.4, 1, 1, 1, 1)
+tracks/1/keys = PackedFloat32Array(0.1, 1, 1, 1, 1, 0.2, 1, 5, 5, 5, 0.5, 1, 1, 1, 1)
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
@@ -76,7 +75,7 @@ tracks/2/path = NodePath(".:is_stabbing")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.13333334),
+"times": PackedFloat32Array(0.1, 0.23333333),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [true, false]
@@ -95,13 +94,14 @@ script = ExtResource("1_8fn8c")
 transform = Transform3D(0.99094516, -0.13233678, -0.022684108, 0.04494346, 0.16773129, 0.9848077, -0.12652142, -0.97691005, 0.17216024, 0.5, 0, 0)
 
 [node name="Pole" type="MeshInstance3D" parent="Handle" unique_id=1130786516]
-transform = Transform3D(1, -1.4901161e-08, 3.7252903e-09, 0, 0.99999994, 1.4901161e-08, 0, 0, 0.99999994, -1.9936124e-09, 0.6, -1.9936124e-09)
+transform = Transform3D(1, 2.30968e-07, 4.8801303e-07, 0, 0.999998, -1.937151e-07, 0, 5.9604645e-08, 0.99999905, -1.9936124e-09, 1, -1.9936124e-09)
 mesh = SubResource("CylinderMesh_it4ap")
-surface_material_override/0 = SubResource("StandardMaterial3D_cdsqw")
+surface_material_override/0 = ExtResource("2_f4mc5")
 
 [node name="Point" type="MeshInstance3D" parent="Handle/Pole" unique_id=88785153]
-transform = Transform3D(1, 0, -3.7252903e-09, -7.450581e-09, 1, -1.4901161e-08, 0, 1.4901161e-08, 1, -1.9936124e-09, 1.3, -1.9936124e-09)
+transform = Transform3D(1, 0, -3.7252903e-09, -7.450581e-09, 1, -1.4901161e-08, 0, 1.4901161e-08, 1, -1.9936124e-09, 1.7, -1.9936124e-09)
 mesh = SubResource("CylinderMesh_cdsqw")
+surface_material_override/0 = ExtResource("3_osdwm")
 
 [node name="HitArea" type="Area3D" parent="Handle/Pole/Point" unique_id=2114089901]
 unique_name_in_owner = true
@@ -117,6 +117,3 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, 1, -1.9936124
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=642825512]
 libraries/ = SubResource("AnimationLibrary_osdwm")
-
-[connection signal="area_entered" from="Handle/Pole/Point/HitArea" to="." method="_on_hit_area_area_entered"]
-[connection signal="area_shape_entered" from="Handle/Pole/Point/HitArea" to="." method="_on_hit_area_area_shape_entered"]

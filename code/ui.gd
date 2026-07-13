@@ -10,4 +10,13 @@ func set_health(health: float, max_health: float) -> void:
 	%HealthMarker.anchor_right = health / max_health
 
 func fade(value: float) -> void:
+	$Fade.visible = value > 0
 	$Fade.material.set_shader_parameter("faded", value)
+
+func end_run() -> void:
+	$EndRun.visible = true
+	await get_tree().create_timer(1).timeout
+	%Return.visible = true
+
+func return_to_main() -> void:
+	get_tree().change_scene_to_file("res://scenes/main.tscn")

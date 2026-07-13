@@ -1,3 +1,4 @@
+class_name Player
 extends CharacterBody3D
 
 
@@ -11,6 +12,9 @@ var gravity_enabled: bool = true
 var max_health: float = 20
 var health: float = max_health
 var dead: bool = false
+var dead_and_gone: bool = false
+
+@onready var weapon: Weapon = %Hand.get_child(0)
 
 signal viewpoint_changed(pos: Vector3)
 
@@ -41,7 +45,7 @@ func _input(event: InputEvent) -> void:
 	# Capturing/Freeing the cursor
 	if Input.is_action_just_pressed("escape"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	if Input.is_action_just_pressed("click"):
+	if Input.is_action_just_pressed("click") and not dead_and_gone:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	if Input.is_action_just_pressed("toggle_gravity"):
 		gravity_enabled = not gravity_enabled
@@ -54,7 +58,7 @@ func _input(event: InputEvent) -> void:
 			rotate_y(-event.relative.x * MOUSE_SENSITIVITY)
 			%Hand.rotation.x = %Head.rotation.x * 0.8
 	if Input.is_action_just_pressed("attack") and not dead:
-		%Hand/Spear.attack()
+		weapon.attack()
 
 func update_health_bar():
 	$UI.set_health(health, max_health)
@@ -72,4 +76,13 @@ func hit(damage: float) -> void:
 func die() -> void:
 	dead = true
 	$AnimationPlayer.play("die")
+	await get_tree().create_timer(2).timeout
+	dead_and_gone = true
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	$UI.end_run()
+
+func set_weapon(weapon: Weapon) -> void:
+	for child in %Hand.get_children():
+		child.queue_free()
+	weapon.player = self
+	%Hand.add_child(weapon)

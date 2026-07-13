@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="slibog"
-run/main_scene="uid://b8vt5oobg364r"
+run/main_scene="uid://dhp37g8dw61oy"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -121,6 +121,7 @@ attack={
 
 [layer_names]
 
+3d_render/layer_5="PlayerSelf"
 3d_physics/layer_3="player_hitbox"
 3d_physics/layer_4="monster_hitbox"
 

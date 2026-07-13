@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://cxy741q5tm3id"]
+
+[ext_resource type="Script" uid="uid://kqjyouax6h61" path="res://code/player_class.gd" id="1_pxyhg"]
+[ext_resource type="PackedScene" uid="uid://b26pm3dnngvy7" path="res://scenes/weapons/spear.tscn" id="2_u32aw"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_it4ap"]
+radius = 0.4
+height = 1.8
+
+[node name="Spearman" type="Node3D" unique_id=1667816485]
+script = ExtResource("1_pxyhg")
+display_name = "Spearman"
+weapon = ExtResource("2_u32aw")
+
+[node name="Preview" type="Node3D" parent="." unique_id=2018921034]
+
+[node name="Weapon" parent="Preview" unique_id=710711126 instance=ExtResource("2_u32aw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, 1, -1.9936124e-09)
+
+[node name="Body" type="MeshInstance3D" parent="Preview" unique_id=1809163520]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, 0.9, -1.9936124e-09)
+mesh = SubResource("CapsuleMesh_it4ap")

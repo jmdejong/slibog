@@ -2,10 +2,10 @@ class_name Monster;
 extends CharacterBody3D
 var health: float = 30
 
-var target: Node3D = null
+var target: Player = null
 var home: Node3D = null
 var forget_range: float = 64
-var attack_range: float = 2
+var attack_range: float = 2.5
 var cooldown: float = 0
 var speed: float = 3
 var knockback_duration: float = 0
@@ -15,7 +15,7 @@ var reconsider_timeout: float = 0
 var dead: bool = false
 @onready var collision_sphere: CollisionShape3D = $Hitbox/CollisionShape3D
 
-func hit(damage: float, knockback: Vector3, by: Node3D) -> void:
+func hit(damage: float, knockback: Vector3, by: Player) -> void:
 	target = by
 	health -= damage
 	knockback_duration = knockback_max_duration
@@ -78,7 +78,6 @@ func _physics_process(delta: float) -> void:
 	reconsider_timeout -= delta
 
 func do_attack() -> void:
-	prints($AttackArea.get_overlapping_areas())
 	for area: Area3D in $AttackArea.get_overlapping_areas():
 		var victim: Node3D = area.get_parent()
 		victim.hit(10)

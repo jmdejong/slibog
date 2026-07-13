@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://b0wq18drwat32"]
+
+[ext_resource type="Script" uid="uid://kqjyouax6h61" path="res://code/player_class.gd" id="1_r54uk"]
+[ext_resource type="PackedScene" uid="uid://bk1gpfqrw82g6" path="res://scenes/weapons/axe.tscn" id="2_jif13"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_rj8lh"]
+radius = 0.4
+height = 1.8
+
+[node name="Axeman" type="Node3D" unique_id=125638878]
+script = ExtResource("1_r54uk")
+display_name = "Axeman"
+weapon = ExtResource("2_jif13")
+
+[node name="Preview" type="Node3D" parent="." unique_id=733100933]
+
+[node name="Axe" parent="Preview" unique_id=2076198396 instance=ExtResource("2_jif13")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, 1, -1.9936124e-09)
+
+[node name="Body" type="MeshInstance3D" parent="Preview" unique_id=1289213286]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, 0.9, -1.9936124e-09)
+mesh = SubResource("CapsuleMesh_rj8lh")
