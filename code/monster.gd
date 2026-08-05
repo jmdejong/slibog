@@ -8,6 +8,7 @@ var forget_range: float = 64
 var attack_range: float = 2.5
 var cooldown: float = 0
 var speed: float = 3
+@export var knockback: float = 10
 var knockback_duration: float = 0
 var knockback_max_duration: float = 0.6
 var knockback_dir: Vector3 = Vector3.ZERO
@@ -80,4 +81,6 @@ func _physics_process(delta: float) -> void:
 func do_attack() -> void:
 	for area: Area3D in $AttackArea.get_overlapping_areas():
 		var victim: Node3D = area.get_parent()
-		victim.hit(10)
+		var direction: Vector3 = victim.global_position - global_position
+		direction.y = 0;
+		victim.hit(10, direction.normalized() * knockback, self)

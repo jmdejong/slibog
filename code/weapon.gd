@@ -1,6 +1,7 @@
 class_name Weapon
 extends Node3D
 
+@export var attack_single: bool = false
 @export var is_stabbing: bool = false:
 	set(val):
 		is_stabbing = val
@@ -22,6 +23,8 @@ func _on_hit_area_area_entered(area: Area3D) -> void:
 		return
 	var monster: Monster = area.get_parent()
 	do_attack(monster)
+	if attack_single:
+		is_stabbing = false
 
 func do_attack(monster: Monster) -> void:
 	var other_shape: CollisionShape3D = monster.collision_sphere

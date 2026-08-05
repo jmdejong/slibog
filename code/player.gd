@@ -13,6 +13,9 @@ var max_health: float = 20
 var health: float = max_health
 var dead: bool = false
 var dead_and_gone: bool = false
+var knockback_duration: float = 0
+var knockback_max_duration: float = 0.3
+var knockback_dir: Vector3 = Vector3.ZERO
 
 @onready var weapon: Weapon = %Hand.get_child(0)
 
@@ -24,11 +27,18 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	
 	var input_movement: Vector2 = Input.get_vector("left", "right", "forwards", "backwards")
-	var movement: Vector3 = (Vector3(input_movement.x, 0, input_movement.y) * speed) \
-		.rotated(Vector3.UP, self.rotation.y)
+	var movement: Vector3 = Vector3.ZERO
+	
+	if knockback_duration > 0:
+		var kd: float = knockback_duration / knockback_max_duration
+		movement = knockback_dir * kd*kd
+	elif not dead:
+		movement = (Vector3(input_movement.x, 0, input_movement.y) * speed) \
+			.rotated(Vector3.UP, self.rotation.y)
+	
 	if gravity_enabled:
 		movement.y = velocity.y + get_gravity().y*delta
-		if Input.is_action_pressed("up") and is_on_floor():
+		if Input.is_action_pressed("up") and is_on_floor() and not dead:
 			movement.y = jump_speed
 	else:
 		movement.y = speed * Input.get_axis("down", "up")# Input.is_action_pressed("up")) - float(Input.is_action_pressed("down")))
@@ -36,8 +46,8 @@ func _physics_process(delta: float) -> void:
 			movement *= sprint_mult
 	
 	velocity = movement
-	if not dead:
-		move_and_slide()
+	move_and_slide()
+	knockback_duration -= delta
 	
 	viewpoint_changed.emit(position)
 
@@ -67,9 +77,11 @@ func _on_alerter_area_entered(area: Area3D) -> void:
 	var monster: Monster = area.get_parent()
 	monster.alert_to_target(self)
 
-func hit(damage: float) -> void:
+func hit(damage: float, knockback: Vector3, _by: Monster) -> void:
 	health -= damage
 	update_health_bar()
+	knockback_duration = knockback_max_duration
+	knockback_dir = knockback
 	if health <= 0:
 		die()
 
@@ -81,8 +93,9 @@ func die() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	$UI.end_run()
 
-func set_weapon(weapon: Weapon) -> void:
+func set_weapon(new_weapon: Weapon) -> void:
 	for child in %Hand.get_children():
 		child.queue_free()
-	weapon.player = self
-	%Hand.add_child(weapon)
+	new_weapon.player = self
+	%Hand.add_child(new_weapon)
+	weapon = new_weapon

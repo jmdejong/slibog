@@ -89,6 +89,7 @@ _data = {
 
 [node name="Spear" type="Node3D" unique_id=710711126]
 script = ExtResource("1_8fn8c")
+attack_single = true
 
 [node name="Handle" type="Node3D" parent="." unique_id=1376726347]
 transform = Transform3D(0.99094516, -0.13233678, -0.022684108, 0.04494346, 0.16773129, 0.9848077, -0.12652142, -0.97691005, 0.17216024, 0.5, 0, 0)
