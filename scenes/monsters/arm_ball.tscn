@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c5yts0b33od7m"]
 
 [ext_resource type="Script" uid="uid://blyb5xd78b1fr" path="res://code/monster.gd" id="1_fkm5i"]
+[ext_resource type="Material" uid="uid://cj03y5vpdfynw" path="res://materials/eyebrow.tres" id="2_wso1e"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_it4ap"]
 radius = 0.8
@@ -24,11 +25,8 @@ rings = 2
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cdsqw"]
 albedo_color = Color(0.13333334, 0.13333334, 0.13333334, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5dnai"]
-albedo_color = Color(0.23, 0.09200001, 0, 1)
-
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_cdsqw"]
-material = SubResource("StandardMaterial3D_5dnai")
+material = ExtResource("2_wso1e")
 radius = 0.08
 height = 0.5
 
@@ -105,6 +103,8 @@ _data = {
 radius = 1.0
 
 [node name="ArmBall" type="CharacterBody3D" unique_id=828132823]
+collision_layer = 2
+collision_mask = 3
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true

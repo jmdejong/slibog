@@ -1,0 +1,151 @@
+[gd_scene format=3 uid="uid://b8ifqcg5xcqwp"]
+
+[ext_resource type="Script" uid="uid://bn3bcooxr15wl" path="res://code/monsters/bouncer.gd" id="1_eiuac"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_4c0ec"]
+radius = 1.2
+
+[sub_resource type="SphereMesh" id="SphereMesh_it4ap"]
+radius = 1.2
+height = 2.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rslks"]
+albedo_color = Color(0.43, 0.3698, 0.3698, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_it4ap"]
+radius = 0.28
+height = 1.2
+radial_segments = 16
+rings = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cdsqw"]
+albedo_color = Color(0.48, 0.48, 0.48, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_it4ap"]
+top_radius = 0.1
+bottom_radius = 0.0
+height = 1.4
+cap_bottom = false
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4xpdj"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_it4ap"]
+radius = 1.2
+
+[sub_resource type="Animation" id="Animation_eiuac"]
+length = 0.001
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0)
+
+[sub_resource type="Animation" id="Animation_7av2o"]
+resource_name = "attack"
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.3, 1, 0.258819, 0, 0, 0.965926, 0.6, 1, -0.258819, 0, 0, 0.965926, 1, 1, 0, 0, 0, 1)
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.36666667),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"do_attack"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_jekcj"]
+resource_name = "die"
+length = 5.0
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Model")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 5, 1, 0, -3, 0)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Model")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.5, 1, 0.696364, 0.122788, -0.122788, 0.696364)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n7chy"]
+_data = {
+&"RESET": SubResource("Animation_eiuac"),
+&"attack": SubResource("Animation_7av2o"),
+&"die": SubResource("Animation_jekcj")
+}
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_eiuac"]
+radius = 0.9
+
+[node name="Balrus" type="CharacterBody3D" unique_id=1017014087]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_eiuac")
+jump_speed = 4.9999999999999
+attack_range = 7.99999999999984
+speed = 4.9999999999999
+attack_damage = 14.9999999999997
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=6969173]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, 1.2, -1.9936124e-09)
+shape = SubResource("SphereShape3D_4c0ec")
+
+[node name="Model" type="Node3D" parent="." unique_id=1741868087]
+
+[node name="Body" type="MeshInstance3D" parent="Model" unique_id=2020571676]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, 1.2, -1.9936124e-09)
+mesh = SubResource("SphereMesh_it4ap")
+surface_material_override/0 = SubResource("StandardMaterial3D_rslks")
+
+[node name="Face" type="MeshInstance3D" parent="Model" unique_id=465728672]
+transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, -1.9936124e-09, 1.6, -1)
+mesh = SubResource("CapsuleMesh_it4ap")
+surface_material_override/0 = SubResource("StandardMaterial3D_cdsqw")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Model/Face" unique_id=76215674]
+transform = Transform3D(-3.7855173e-08, 0.8660254, -0.5, -1, -4.371139e-08, 0, -2.1855694e-08, 0.5, 0.8660254, -0.6, -0.4, -0.5)
+mesh = SubResource("CylinderMesh_it4ap")
+surface_material_override/0 = SubResource("StandardMaterial3D_4xpdj")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Model/Face" unique_id=406024037]
+transform = Transform3D(-3.7855173e-08, 0.8660254, -0.5, -1, -4.371139e-08, 0, -2.1855694e-08, 0.5, 0.8660254, -0.6, 0.4, -0.5)
+mesh = SubResource("CylinderMesh_it4ap")
+surface_material_override/0 = SubResource("StandardMaterial3D_4xpdj")
+
+[node name="Hitbox" type="Area3D" parent="." unique_id=1852764661]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox" unique_id=2029279144]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, 1.2, -1.9936124e-09)
+shape = SubResource("SphereShape3D_it4ap")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=796016465]
+process_mode = 1
+libraries/ = SubResource("AnimationLibrary_n7chy")
+
+[node name="AttackArea" type="Area3D" parent="." unique_id=457816579]
+collision_layer = 0
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AttackArea" unique_id=240668156]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, 0.8104949, -1.3697932)
+shape = SubResource("SphereShape3D_eiuac")

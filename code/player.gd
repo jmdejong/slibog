@@ -9,7 +9,7 @@ const gravity: float = 9.81
 const jump_speed: float = 5
 
 var gravity_enabled: bool = true
-var max_health: float = 20
+var max_health: float = 30
 var health: float = max_health
 var dead: bool = false
 var dead_and_gone: bool = false

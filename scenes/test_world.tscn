@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://7aus8kw62omx" path="res://scenes/structures/small_tree.tscn" id="4_jtak5"]
 [ext_resource type="PackedScene" uid="uid://inndsla2y1r1" path="res://scenes/spawner.tscn" id="6_yw8f4"]
 [ext_resource type="PackedScene" uid="uid://c5yts0b33od7m" path="res://scenes/monsters/arm_ball.tscn" id="7_jtak5"]
+[ext_resource type="PackedScene" uid="uid://b8ifqcg5xcqwp" path="res://scenes/monsters/balrus.tscn" id="9_7448y"]
 
 [node name="TestWorld" type="Node3D" unique_id=1292691616]
 
@@ -39,7 +40,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.460354, 0, -15.661432)
 [node name="SmallTree" parent="." unique_id=818594305 instance=ExtResource("4_jtak5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.52051, 0, 30.548649)
 
-[node name="Spawner" parent="." unique_id=1606651978 instance=ExtResource("6_yw8f4")]
+[node name="ArmballSpawner" parent="." unique_id=1606651978 instance=ExtResource("6_yw8f4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.28395, 0, 17.724745)
 creature = ExtResource("7_jtak5")
+respawn_time = 9.9999999999998
+
+[node name="BalrusSpawner" parent="." unique_id=2027334472 instance=ExtResource("6_yw8f4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.086693, 0, -22.889482)
+creature = ExtResource("9_7448y")
+count = 1
 respawn_time = 9.9999999999998

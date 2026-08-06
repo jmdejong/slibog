@@ -122,6 +122,8 @@ attack={
 [layer_names]
 
 3d_render/layer_5="PlayerSelf"
+3d_physics/layer_1="solid"
+3d_physics/layer_2="creatures"
 3d_physics/layer_3="player_hitbox"
 3d_physics/layer_4="monster_hitbox"
 
