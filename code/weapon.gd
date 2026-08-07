@@ -27,6 +27,8 @@ func _on_hit_area_area_entered(area: Area3D) -> void:
 		is_stabbing = false
 
 func do_attack(monster: Monster) -> void:
+	if monster.dead:
+		return
 	var other_shape: CollisionShape3D = monster.collision_sphere
 	var hit_pos: Vector3 = $%HitArea.global_position
 	if other_shape.shape is SphereShape3D:
