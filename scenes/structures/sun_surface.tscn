@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://yf830ij3s22a"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_it4ap"]
+size = Vector3(1024, 1024, 1024)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ll7ae"]
+size = Vector2(1024, 1024)
+
+[sub_resource type="Gradient" id="Gradient_1byqv"]
+offsets = PackedFloat32Array(0, 0.15306123, 0.3877551, 0.73129255, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.58, 0, 0, 1, 0.9, 0, 0, 1, 0.96, 0.89568, 0.31679997, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_dg6bu"]
+frequency = 0.02
+fractal_octaves = 6
+fractal_lacunarity = 3.0
+fractal_gain = 0.9
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_k20h4"]
+width = 128
+height = 128
+noise = SubResource("FastNoiseLite_dg6bu")
+color_ramp = SubResource("Gradient_1byqv")
+seamless = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wolcm"]
+albedo_texture = SubResource("NoiseTexture2D_k20h4")
+uv1_scale = Vector3(64, 64, 64)
+texture_filter = 2
+
+[node name="SunSurface" type="StaticBody3D" unique_id=620245187]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=811792212]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, -512, -1.9936124e-09)
+shape = SubResource("BoxShape3D_it4ap")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=379886605]
+mesh = SubResource("PlaneMesh_ll7ae")
+surface_material_override/0 = SubResource("StandardMaterial3D_wolcm")

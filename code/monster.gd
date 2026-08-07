@@ -111,7 +111,8 @@ func angle_to_target() -> float:
 	return Vector2(look_dir.x, look_dir.z).angle_to(Vector2(target_dir.x, target_dir.z))
 
 func start_walk() -> void:
-	horizontal_velocity = (target_pos - global_position).normalized() * speed
+	var dif: Vector3 = target_pos - global_position
+	horizontal_velocity = Vector3(dif.x, 0, dif.z).normalized() * speed
 	reconsider_timeout = min(reconsider_timeout, global_position.distance_to(target_pos) * speed)
 
 func walk() -> void:

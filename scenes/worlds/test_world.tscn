@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://cxtq3sfexdf4o"]
+
+[ext_resource type="Environment" uid="uid://dkaipsmtbmw7a" path="res://materials/environment/day_environment.tres" id="1_oemaf"]
+[ext_resource type="PackedScene" uid="uid://cdk81nghx3v48" path="res://scenes/structures/ground.tscn" id="2_8xtsc"]
+[ext_resource type="PackedScene" uid="uid://bxgiwy7folhqu" path="res://scenes/structures/tree.tscn" id="3_dwl5u"]
+[ext_resource type="PackedScene" uid="uid://ckvhddih8pih4" path="res://scenes/structures/house.tscn" id="4_d5wlu"]
+[ext_resource type="PackedScene" uid="uid://dwijwqo44vuk6" path="res://scenes/structures/rock.tscn" id="5_dneas"]
+[ext_resource type="PackedScene" uid="uid://7aus8kw62omx" path="res://scenes/structures/small_tree.tscn" id="6_anyd7"]
+[ext_resource type="PackedScene" uid="uid://inndsla2y1r1" path="res://scenes/spawner.tscn" id="7_0xgc2"]
+[ext_resource type="PackedScene" uid="uid://c5yts0b33od7m" path="res://scenes/monsters/arm_ball.tscn" id="8_fs4ai"]
+[ext_resource type="PackedScene" uid="uid://b8ifqcg5xcqwp" path="res://scenes/monsters/balrus.tscn" id="9_oesy6"]
+[ext_resource type="PackedScene" uid="uid://bxqhjxk7305s7" path="res://scenes/monsters/beaksheep.tscn" id="10_si77m"]
+
+[node name="TestWorld" type="Node3D" unique_id=1292691616]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1207640652]
+environment = ExtResource("1_oemaf")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment" unique_id=559209819]
+transform = Transform3D(0.9659259, -0.25488704, 0.04494347, 0, 0.17364824, 0.9848077, -0.25881907, -0.95125127, 0.1677313, -1.9936124e-09, 10, -1.9936124e-09)
+light_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
+shadow_enabled = true
+
+[node name="Spawn" type="Node3D" parent="." unique_id=318140625]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.208963, 0)
+
+[node name="Ground" parent="." unique_id=808522484 instance=ExtResource("2_8xtsc")]
+
+[node name="Tree" parent="." unique_id=645795352 instance=ExtResource("3_dwl5u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.135178, 0, 40.167984)
+
+[node name="Tree2" parent="." unique_id=1500531051 instance=ExtResource("3_dwl5u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -44.135178, 0, 28.999233)
+
+[node name="Tree3" parent="." unique_id=325165628 instance=ExtResource("3_dwl5u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.01338, 0, 48.604282)
+
+[node name="House" parent="." unique_id=909676520 instance=ExtResource("4_d5wlu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 41.15596, 0, -46.604897)
+
+[node name="Rock" parent="." unique_id=1967228066 instance=ExtResource("5_dneas")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.08074, 0, -36.36163)
+
+[node name="Rock2" parent="." unique_id=1996588419 instance=ExtResource("5_dneas")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.257545, 0, -23.288853)
+
+[node name="Rock3" parent="." unique_id=970665113 instance=ExtResource("5_dneas")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.460354, 0, -15.661432)
+
+[node name="SmallTree" parent="." unique_id=818594305 instance=ExtResource("6_anyd7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.52051, 0, 30.548649)
+
+[node name="ArmballSpawner" parent="." unique_id=1606651978 instance=ExtResource("7_0xgc2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.28395, 0, 17.724745)
+creature = ExtResource("8_fs4ai")
+respawn_time = 9.9999999999998
+
+[node name="BalrusSpawner" parent="." unique_id=2027334472 instance=ExtResource("7_0xgc2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.086693, 0, -22.889482)
+creature = ExtResource("9_oesy6")
+count = 1
+respawn_time = 9.9999999999998
+
+[node name="BeaksheepSpawner" parent="." unique_id=1706592773 instance=ExtResource("7_0xgc2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 42.754032, 0, 34.900917)
+creature = ExtResource("10_si77m")
+count = 1
+respawn_time = 9.9999999999998

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c5yts0b33od7m"]
 
 [ext_resource type="Script" uid="uid://blyb5xd78b1fr" path="res://code/monster.gd" id="1_fkm5i"]
-[ext_resource type="Material" uid="uid://cj03y5vpdfynw" path="res://materials/eyebrow.tres" id="2_wso1e"]
+[ext_resource type="Material" uid="uid://cj03y5vpdfynw" path="res://materials/creature/eyebrow.tres" id="2_wso1e"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_it4ap"]
 radius = 0.8

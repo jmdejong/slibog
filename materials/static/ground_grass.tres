@@ -18,5 +18,5 @@ seamless = true
 
 [resource]
 albedo_texture = SubResource("NoiseTexture2D_e3hyu")
-uv1_scale = Vector3(16, 16, 16)
+uv1_scale = Vector3(64, 64, 64)
 texture_filter = 2

@@ -6,14 +6,25 @@ var classes: Array[PlayerClass] = [
 	preload("res://scenes/player_classes/axeman.tscn").instantiate()
 ]
 
+var levels: Array[LevelBlueprint] = [
+	preload("res://scenes/levels/test_level.tscn").instantiate(),
+	preload("res://scenes/levels/sol.tscn").instantiate()
+]
+
 var class_selector: int = 0
+var level_selector: int = 0
 
 func _ready() -> void:
 	change_selected_class(0)
+	change_selected_level(0)
 
 func spawn_in_world() -> void:
 	var world: World = preload("res://scenes/world.tscn").instantiate()
-	world.set_player(selected_class().player())
+	var level: Node3D = selected_level().generate()
+	world.add_child(level)
+	var player: Player = selected_class().player()
+	player.position = level.get_node("Spawn").position
+	world.set_player(player)
 	get_tree().change_scene_to_node(world)
 
 func change_selected_class(d: int) -> void:
@@ -24,3 +35,15 @@ func change_selected_class(d: int) -> void:
 
 func selected_class() -> PlayerClass:
 	return classes[class_selector]
+
+func change_selected_level(d: int) -> void:
+	level_selector = posmod(level_selector + d, levels.size())
+	for child: Node in %LevelPreview.get_children():
+		child.queue_free()
+	%LevelPreview.add_child(selected_level().preview())
+
+func selected_level() -> LevelBlueprint:
+	return levels[level_selector]
+
+func _process(delta: float) -> void:
+	%ClassPreview.rotate_y(delta/5)

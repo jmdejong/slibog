@@ -66,16 +66,21 @@ func _physics_process(delta: float) -> void:
 	
 	viewpoint_changed.emit(position)
 	
-	health = min(max_health, health + heal_rate * delta)
-	if floor(prev_health) != floor(health):
+	if dead:
+		health = 0
+	else:
+		health = min(max_health, health + heal_rate * delta)
+	if prev_health != health:
 		update_health_bar()
 	if floor(stamina) <= 0:
 		is_sprinting = false
-	if is_sprinting:
+	if dead:
+		stamina = max(stamina - 10 * delta, 0)
+	elif is_sprinting:
 		stamina = max(stamina - sprint_stamina_drain * delta, 0)
 	else:
 		stamina = min(stamina + stamina_regen_rate * delta, max_stamina)
-	if floor(prev_stamina) != floor(stamina):
+	if prev_stamina != stamina:
 		update_stamina_bar()
 
 func _input(event: InputEvent) -> void:

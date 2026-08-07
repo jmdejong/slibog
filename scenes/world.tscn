@@ -2,7 +2,6 @@
 
 [ext_resource type="Shader" uid="uid://c48pvo4nqjn3" path="res://code/shaders/outblur.gdshader" id="1_71j4m"]
 [ext_resource type="Script" uid="uid://bj8plbngv8ts" path="res://code/world.gd" id="1_qfnet"]
-[ext_resource type="PackedScene" uid="uid://cxtq3sfexdf4o" path="res://scenes/test_world.tscn" id="2_rwgxs"]
 [ext_resource type="Script" uid="uid://dwrn2q786m36j" path="res://code/effects.gd" id="4_k0juu"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_it4ap"]
@@ -23,8 +22,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.0971107, 2.9053812, -6.024
 visible = false
 mesh = SubResource("SphereMesh_it4ap")
 surface_material_override/0 = SubResource("ShaderMaterial_cdsqw")
-
-[node name="Environment" parent="." unique_id=1292691616 instance=ExtResource("2_rwgxs")]
 
 [node name="Creatures" type="Node3D" parent="." unique_id=521132684]
 

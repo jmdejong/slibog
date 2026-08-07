@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://buy0r8yjrtfu0"]
+
+[ext_resource type="Environment" uid="uid://bq12rrq07uicx" path="res://materials/environment/sun_environment.tres" id="1_dg6bu"]
+[ext_resource type="Script" uid="uid://36mluet3puat" path="res://code/monsters/burn.gd" id="1_k20h4"]
+[ext_resource type="PackedScene" uid="uid://yf830ij3s22a" path="res://scenes/structures/sun_surface.tscn" id="2_1byqv"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_it4ap"]
+radius = 1024.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4xpdj"]
+vertex_color_use_as_albedo = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_it4ap"]
+material = SubResource("StandardMaterial3D_4xpdj")
+size = Vector3(0.3, 0.3, 0.3)
+
+[sub_resource type="Gradient" id="Gradient_cdsqw"]
+colors = PackedColorArray(1, 1, 0, 1, 1, 0, 0, 1)
+
+[node name="Sol" type="Node3D" unique_id=1292691616]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1207640652]
+environment = ExtResource("1_dg6bu")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment" unique_id=559209819]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, -1.9936124e-09, -1.2052262, -1.9936124e-09)
+light_color = Color(0.8666667, 0.6666667, 0, 1)
+
+[node name="Spawn" type="Node3D" parent="." unique_id=318140625]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.208963, 0)
+
+[node name="SunSurface" parent="." unique_id=620245187 instance=ExtResource("2_1byqv")]
+
+[node name="Burn" type="Area3D" parent="." unique_id=660715508]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("1_k20h4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Burn" unique_id=1080740960]
+shape = SubResource("SphereShape3D_it4ap")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="." unique_id=1491560690]
+amount = 80
+mesh = SubResource("BoxMesh_it4ap")
+emission_shape = 3
+emission_box_extents = Vector3(10, 1, 10)
+spread = 123.56
+gravity = Vector3(0, 10, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 2.0
+angle_min = -310.3
+angle_max = 358.0
+scale_amount_min = 0.5
+color_ramp = SubResource("Gradient_cdsqw")

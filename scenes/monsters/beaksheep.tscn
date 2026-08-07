@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bxqhjxk7305s7"]
 
 [ext_resource type="Script" uid="uid://cfp607levj2bg" path="res://code/monsters/charger.gd" id="1_32d6j"]
-[ext_resource type="Material" uid="uid://h5cusipbiubh" path="res://materials/dirty_fur.tres" id="2_32d6j"]
+[ext_resource type="Material" uid="uid://h5cusipbiubh" path="res://materials/creature/dirty_fur.tres" id="2_32d6j"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_u11a5"]
 radius = 0.9
