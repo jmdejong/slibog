@@ -153,7 +153,7 @@ func _physics_process(delta: float) -> void:
 func is_attacking() -> bool:
 	return $AnimationPlayer.current_animation == "attack" and $AnimationPlayer.is_playing()
 
-func post_process(delta: float) -> void:
+func post_process(_delta: float) -> void:
 	pass
 
 func start_attack() -> void:

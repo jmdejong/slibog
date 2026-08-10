@@ -1,8 +1,7 @@
 [gd_scene format=3 uid="uid://bpcm81j0r8362"]
 
-[ext_resource type="Script" uid="uid://clhdkhr0gt64k" path="res://code/ui.gd" id="1_x4jx1"]
-[ext_resource type="Shader" uid="uid://bh5gkfcw2md36" path="res://code/shaders/fadout.gdshader" id="2_yev5y"]
-[ext_resource type="FontFile" uid="uid://brlxme5qgpox1" path="res://fonts/Avara.ttf" id="3_yev5y"]
+[ext_resource type="Script" uid="uid://clhdkhr0gt64k" path="res://code/overlay_ui.gd" id="1_j5fei"]
+[ext_resource type="Shader" uid="uid://bh5gkfcw2md36" path="res://code/shaders/fadout.gdshader" id="2_d0yxp"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_x4jx1"]
 frequency = 0.03
@@ -12,35 +11,18 @@ fractal_octaves = 3
 noise = SubResource("FastNoiseLite_x4jx1")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qhqgy"]
-shader = ExtResource("2_yev5y")
+shader = ExtResource("2_d0yxp")
 shader_parameter/faded = 0.0
 shader_parameter/noise3 = SubResource("NoiseTexture3D_dqkch")
 
-[sub_resource type="LabelSettings" id="LabelSettings_x4jx1"]
-font = ExtResource("3_yev5y")
-font_size = 40
-
-[sub_resource type="Theme" id="Theme_cq10t"]
-default_font = ExtResource("3_yev5y")
-
-[node name="UI" type="Control" unique_id=1519459537]
+[node name="OverlayUi" type="Control" unique_id=1519459537]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_x4jx1")
-
-[node name="Fade" type="ColorRect" parent="." unique_id=1201082914]
-visible = false
-material = SubResource("ShaderMaterial_qhqgy")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+script = ExtResource("1_j5fei")
 
 [node name="HealthBar" type="ColorRect" parent="." unique_id=434064218]
 unique_name_in_owner = true
@@ -114,8 +96,9 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0.5025, 0.67, 1)
 
-[node name="EndRun" type="Control" parent="." unique_id=392948691]
+[node name="Fade" type="ColorRect" parent="." unique_id=1201082914]
 visible = false
+material = SubResource("ShaderMaterial_qhqgy")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -123,39 +106,8 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="EndRun" unique_id=704242206]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -41.5
-offset_top = -150.0
-offset_right = 41.5
-offset_bottom = -100.0
-grow_horizontal = 2
-grow_vertical = 2
-text = "Run Ended"
-label_settings = SubResource("LabelSettings_x4jx1")
-uppercase = true
-
-[node name="Return" type="Button" parent="EndRun" unique_id=781627434]
+[node name="Info" type="Label" parent="." unique_id=1184266720]
 unique_name_in_owner = true
-visible = false
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -4.0
-offset_top = 100.0
-offset_right = 4.0
-offset_bottom = 4.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = SubResource("Theme_cq10t")
-text = "Return"
-
-[connection signal="pressed" from="EndRun/Return" to="." method="return_to_main"]
+offset_right = 40.0
+offset_bottom = 23.0

@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://bo4hctqk8250p"]
+
+[ext_resource type="Script" uid="uid://crmmvcswbt7lo" path="res://code/menu_ui.gd" id="1_b5e6c"]
+[ext_resource type="FontFile" uid="uid://brlxme5qgpox1" path="res://fonts/Avara.ttf" id="2_tner2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_qlg0r"]
+font = ExtResource("2_tner2")
+font_size = 40
+
+[sub_resource type="Theme" id="Theme_tuyoq"]
+default_font = ExtResource("2_tner2")
+
+[node name="MenuUi" type="Control" unique_id=223404704]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_b5e6c")
+
+[node name="EndRun" type="Control" parent="." unique_id=65751365]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="EndRun" unique_id=1619927086]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -41.5
+offset_top = -150.0
+offset_right = 41.5
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Run Ended"
+label_settings = SubResource("LabelSettings_qlg0r")
+uppercase = true
+
+[node name="Return" type="Button" parent="EndRun" unique_id=1920560487]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = 100.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_tuyoq")
+text = "Return"
+
+[connection signal="pressed" from="EndRun/Return" to="." method="return_to_main"]
