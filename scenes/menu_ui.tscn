@@ -59,6 +59,6 @@ offset_bottom = 4.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_tuyoq")
-text = "Return"
+text = "Ascend"
 
 [connection signal="pressed" from="EndRun/Return" to="." method="return_to_main"]

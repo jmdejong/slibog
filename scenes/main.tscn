@@ -122,6 +122,7 @@ flat = true
 
 [node name="Control" type="Control" parent="." unique_id=1834852640]
 layout_mode = 1
+anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -192,7 +193,7 @@ offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 0
 theme = SubResource("Theme_it4ap")
-text = "Spawn"
+text = "Reincarnate"
 
 [connection signal="pressed" from="CharacterPreview2/NextClass" to="." method="change_selected_class" binds= [1]]
 [connection signal="pressed" from="CharacterPreview2/PrevClass" to="." method="change_selected_class" binds= [-1]]

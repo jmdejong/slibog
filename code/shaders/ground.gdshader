@@ -11,24 +11,33 @@ void vertex() {
 	world_position = VERTEX;
 }
 
+float hash1(ivec2 t) {
+	return float(abs(t.x * 123459 + t.y * 234567 + 543) % 100) / 100.0;
+}
+float hash2(ivec2 t) {
+	return float(abs(t.x * 987653 + t.y * 754215 + 129) % 100) / 100.0;
+}
+
 vec2 texelpos(ivec2 texel) {
 	return vec2(
-		float(texel.x) + float((texel.x * 123459 + texel.y * 234567 + 543) % 100) / 200.0 - 0.25,
-		float(texel.y) + float((texel.x * 987653 + texel.y * 754215 + 129) % 100) / 200.0 - 0.25
+		float(texel.x) + (hash1(texel) - 0.5)/2.0,
+		float(texel.y) + (hash2(texel) - 0.5)/2.0
 	);
 }
 
 void fragment() {
 	vec2 p = world_position.xz / pixel_size;
 	ivec2 pf = ivec2(floor(p));
-	ivec2 pc = ivec2(ceil(p));
-	ivec2 corners[4] = { pf, ivec2(pc.x, pf.y), ivec2(pf.x, pc.y), pc };
+	ivec2 pc = pf + ivec2(1, 1);//ivec2(ceil(p));
+	ivec2 pcf = pf + ivec2(1, 0);//ivec2(int(ceil(p.x)), int(floor(p.y)));
+	ivec2 pfc = pf + ivec2(0, 1);//ivec2(int(floor(p.x)), int(ceil(p.y)));
+	ivec2 corners[4] = { pf, pcf, pfc, pc };
 	
 	float distances[4];
-	float min_distance = 999999.0;
+	//float min_distance = 999999.0;
 	for (int i=0; i<4; ++i) {
 		float d = distance(texelpos(corners[i]), p);
-		float min_distance = min(d, min_distance);
+		//float min_distance = min(d, min_distance);
 		distances[i] = d;
 	}
 	ivec2 t = distances[0] < distances[1] ? (
@@ -45,4 +54,19 @@ void fragment() {
 	);
 	//ALBEDO = texelFetch(tex, t % tex_size, 0).xyz;
 	ALBEDO = texture(tex, vec2(t)/float(tex_size)).xyz;
+	//if ((t.x + t.y)%2 == 0) {
+		//ALBEDO = vec3(0, 0, 0);
+	//} else {
+		//ALBEDO = vec3(1, 1, 1);
+	//}
+	//ALBEDO = vec3(p, 0);
+	//ALBEDO = vec3(distance(p, vec2(pcf)), 0, 0);
+	//ALBEDO = vec3(vec2(pc) - p, 0);
+	//float c = distance(vec2(t), p);
+	//ALBEDO = vec3(c, c, c);
+	//ALBEDO = vec3(
+		//float(abs(pf.x * 1234547 + pf.y * 32432401 + 2409587)%200)/200.0,
+		//float(abs(pf.x * 34823181 + pf.y * 6187137 + 317878)%200)/200.0,
+		//float(abs(pf.x * 84317105 + pf.y * 1804877 + 12134870)%200)/200.0
+	//);
 }

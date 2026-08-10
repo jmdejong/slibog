@@ -1,6 +1,7 @@
 extends Control
 
 func end_run() -> void:
+	visible = true
 	$EndRun.visible = true
 	await get_tree().create_timer(1).timeout
 	%Return.visible = true
