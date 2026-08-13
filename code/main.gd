@@ -7,9 +7,9 @@ var classes: Array[PlayerClass] = [
 ]
 
 var levels: Array[LevelBlueprint] = [
-	preload("res://scenes/levels/test_level.tscn").instantiate(),
+	preload("res://scenes/levels/valley.tscn").instantiate(),
 	preload("res://scenes/levels/sol.tscn").instantiate(),
-	preload("res://scenes/levels/valley.tscn").instantiate()
+	preload("res://scenes/levels/test_level.tscn").instantiate(),
 ]
 
 var class_selector: int = 0

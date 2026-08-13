@@ -5,6 +5,8 @@ const area_axis_count: int = 4
 const area_size: float = level_size / area_axis_count
 const area_segments: int = 8
 
+enum AreaType {Spawn, Forest, Bushy, Rocky, Grass}
+
 func generate() -> Node3D:
 	var world: Node3D = Node3D.new()
 	world.add_child(%WorldEnvironment.duplicate())
@@ -14,9 +16,17 @@ func generate() -> Node3D:
 	world.add_child(spawn)
 	for x: int in range(0, area_axis_count):
 		for y: int in range(0, area_axis_count):
-			prints(x, y, Time.get_ticks_msec())
 			generate_area(world, Vector2i(x, y))
-	prints("done", Time.get_ticks_msec())
+	var boundary_body: StaticBody3D = StaticBody3D.new()
+	for n: Vector3 in [Vector3(1, 0, 0), Vector3(-1, 0, 0), Vector3(0, 0, 1), Vector3(0, 0,-1)]:
+		var boundary_shape: CollisionShape3D = CollisionShape3D.new()
+		var world_boundary: WorldBoundaryShape3D = WorldBoundaryShape3D.new()
+		world_boundary.plane = Plane(n)
+		boundary_shape.shape = world_boundary
+		boundary_shape.position = n.posmod(level_size)
+		boundary_body.add_child(boundary_shape)
+	world.add_child(boundary_body)
+		
 	return world
 
 func generate_area(world: Node3D, area_id: Vector2i) -> void:
@@ -51,23 +61,63 @@ func generate_area(world: Node3D, area_id: Vector2i) -> void:
 	else:
 		var subtiles: int = 8
 		var tile_size: float = area_size / subtiles
+		var danger: int = clamp(area_id.x + area_id.y + randi_range(-1, 1), 0, 5)
+		var monster_chance: float = danger / 20.0
+		var primary_enemy: PackedScene = preload("res://scenes/monsters/arm_ball.tscn")
+		if danger > 3:
+			var r: float = randf()
+			if r < 0.3:
+				primary_enemy = preload("res://scenes/monsters/balrus.tscn")
+			else:
+				primary_enemy = preload("res://scenes/monsters/beaksheep.tscn")
+		var secondary_enemy: PackedScene = preload("res://scenes/monsters/arm_ball.tscn")
+		var area_type: AreaType = [
+			AreaType.Forest,
+			AreaType.Bushy,
+			AreaType.Rocky,
+			AreaType.Grass
+		][randi_range(0, 3)]
+		var spawner: Node3D = preload("res://scenes/spawner.tscn").instantiate()
+		world.add_child(spawner)
 		for x: int in range(1, subtiles):
 			for y: int in range(1, subtiles):
 				var tile: Vector2i = Vector2i(x, y)
 				var pos2: Vector2 = area.position + tile_size * (Vector2(tile) + Vector2(randf_range(0.2, 0.8), randf_range(0.2, 0.8)))
 				var pos: Vector3 = Vector3(pos2.x, 1, pos2.y)
 				var r: float = randf()
-				var struct: Node3D = null
-				if r < 0.25:
-					struct = preload("res://scenes/structures/rock.tscn").instantiate()
-				elif r < 0.5:
-					struct = preload("res://scenes/structures/small_tree.tscn").instantiate()
+				if r < monster_chance:
+					var monster: Monster
+					if randf() < 0.6:
+						monster = primary_enemy.instantiate()
+					else:
+						monster = secondary_enemy.instantiate()
+					monster.position = pos
+					monster.rotation.y = randf_range(-PI, PI)
+					spawner.add_child(monster)
 				else:
-					struct = preload("res://scenes/structures/tree.tscn").instantiate()
-				if struct != null:
-					struct.position = pos
-					struct.rotation.y = randf_range(-PI, PI)
-					world.add_child(struct)
+					var struct: Node3D = null
+					if area_type == AreaType.Forest:
+						if r > 0.8:
+							struct = preload("res://scenes/structures/small_tree.tscn").instantiate()
+						elif r > 0.5:
+							struct = preload("res://scenes/structures/tree.tscn").instantiate()
+					elif area_type == AreaType.Bushy:
+						if r > 0.85:
+							struct = preload("res://scenes/structures/small_tree.tscn").instantiate()
+						elif r > 0.75:
+							struct = preload("res://scenes/structures/tree.tscn").instantiate()
+					elif area_type == AreaType.Rocky:
+						if r > 0.7:
+							struct = preload("res://scenes/structures/rock.tscn").instantiate()
+					elif area_type == AreaType.Grass:
+						if r > 0.95:
+							struct = preload("res://scenes/structures/small_tree.tscn").instantiate()
+						elif r > 0.9:
+							struct = preload("res://scenes/structures/tree.tscn").instantiate()
+					if struct != null:
+						struct.position = pos
+						struct.rotation.y = randf_range(-PI, PI)
+						world.add_child(struct)
 	world.add_child(ground)
 
 func generate_ground(area: Rect2) -> Node3D:

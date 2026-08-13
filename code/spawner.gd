@@ -3,7 +3,7 @@ extends Node3D
 #@export var creature: PackedScene
 #@export var count: int = 3
 @export var roam_range: float = 10
-@export var respawn_time: float = 60
+@export var respawn_time: float = 120
 @export var initial_spawn: bool = true
 #var planned: int = 0;
 
@@ -40,5 +40,5 @@ func spawn(index: int) -> void:
 	var n = blueprints[index].duplicate()
 	spawned[index] = n
 	n.home = self
-	n.position = global_position + Vector3.FORWARD.rotated(Vector3.UP, randf() * 2 * PI) * sqrt(randf() * roam_range)
+	#n.position = global_position + Vector3.FORWARD.rotated(Vector3.UP, randf() * 2 * PI) * sqrt(randf() * roam_range)
 	get_node("/root/World/Creatures").add_child(n)
