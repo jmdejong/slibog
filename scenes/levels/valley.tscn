@@ -8,10 +8,7 @@
 [sub_resource type="PlaneMesh" id="PlaneMesh_udwnv"]
 size = Vector2(256, 256)
 
-[sub_resource type="HeightMapShape3D" id="HeightMapShape3D_it4ap"]
-map_width = 9
-map_depth = 9
-map_data = PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_amgr8"]
 
 [node name="Valley" type="Node3D" unique_id=511982229]
 script = ExtResource("1_nje75")
@@ -22,7 +19,6 @@ script = ExtResource("1_nje75")
 transform = Transform3D(-0.7071068, -0.5, 0.5, 0, 0.7071068, 0.70710677, -0.7071068, 0.5, -0.5, 2.1965134, 3.5554314, -2.4901724)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Preview" unique_id=1914979460]
-visible = false
 mesh = SubResource("PlaneMesh_udwnv")
 surface_material_override/0 = ExtResource("2_th8hq")
 
@@ -40,4 +36,4 @@ shadow_enabled = true
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1813257951]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1132218801]
-shape = SubResource("HeightMapShape3D_it4ap")
+shape = SubResource("WorldBoundaryShape3D_amgr8")

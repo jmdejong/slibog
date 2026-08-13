@@ -40,5 +40,5 @@ func spawn(index: int) -> void:
 	var n = blueprints[index].duplicate()
 	spawned[index] = n
 	n.home = self
-	n.position = global_position + Vector3.FORWARD.rotated(Vector3.UP, randf() * 2 * PI) * sqrt(randf() * roam_range)
+	#n.position = global_position + Vector3.FORWARD.rotated(Vector3.UP, randf() * 2 * PI) * sqrt(randf() * roam_range)
 	get_node("/root/World/Creatures").add_child(n)
