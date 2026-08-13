@@ -26,7 +26,6 @@ seamless = true
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wolcm"]
 albedo_texture = SubResource("NoiseTexture2D_k20h4")
 uv1_scale = Vector3(64, 64, 64)
-texture_filter = 2
 
 [node name="SunSurface" type="StaticBody3D" unique_id=620245187]
 

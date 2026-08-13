@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://ddewpbstt2aag"]
+
+[ext_resource type="Environment" uid="uid://dkaipsmtbmw7a" path="res://materials/environment/day_environment.tres" id="1_nnjfp"]
+[ext_resource type="Material" uid="uid://btoib0ln78fjg" path="res://materials/static/ground_grass.tres" id="2_7khok"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_it4ap"]
+left_to_right = 0.0
+size = Vector3(20, 21, 20)
+
+[sub_resource type="Curve" id="Curve_cdsqw"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.05113636, 0.6159421), 0.0, 0.0, 0, 0, Vector2(0.23863637, 0.7608696), 0.0, 0.0, 0, 0, Vector2(0.6761364, 0.55797106), 0.0, 0.0, 0, 0, Vector2(0.92329544, 0.13768125), 0.0, 0.0, 0, 0, Vector2(0.9943182, 1), 0.0, 0.0, 0, 0]
+point_count = 6
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_it4ap"]
+radius = 2.0
+sections = 8
+section_length = 2.0
+curve = SubResource("Curve_cdsqw")
+
+[node name="Valley" type="Node3D" unique_id=1635716418]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1118867364]
+environment = ExtResource("1_nnjfp")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment" unique_id=1117527584]
+transform = Transform3D(0.9659259, -0.25488704, 0.04494347, 0, 0.17364824, 0.9848077, -0.25881907, -0.95125127, 0.1677313, -1.9936124e-09, 10, -1.9936124e-09)
+light_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
+shadow_enabled = true
+
+[node name="Spawn" type="Node3D" parent="." unique_id=779971234]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, 2, -1.9936124e-09)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=840517251]
+size = Vector3(256, 64, 256)
+material = ExtResource("2_7khok")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGBox3D" unique_id=776561942]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, 64, -1.9936124e-09)
+operation = 2
+size = Vector3(192, 128, 192)
+material = ExtResource("2_7khok")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="CSGBox3D" unique_id=781897764]
+transform = Transform3D(0.015843282, 0, 0.9998745, 0, 1, 0, -0.9998745, 0, 0.015843282, -1.9936124e-09, -1.9936124e-09, 11.916)
+mesh = SubResource("PrismMesh_it4ap")
+material = ExtResource("2_7khok")
+
+[node name="CSGMesh3D2" type="CSGMesh3D" parent="CSGBox3D" unique_id=1894756022]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.394, 0, -1.9936124e-09)
+mesh = SubResource("TubeTrailMesh_it4ap")
+material = ExtResource("2_7khok")

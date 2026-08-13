@@ -17,7 +17,7 @@ func stop_charge() -> void:
 
 func post_process(delta: float) -> void:
 	cooldown -= delta
-	if is_charging and cooldown <= 0:
+	if is_charging and cooldown <= 0 and behavior == Behavior.Attacking:
 		var attacked: int = do_attack()
 		if attacked > 0:
 			cooldown = charge_attack_speed

@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cxtq3sfexdf4o" path="res://scenes/worlds/test_world.tscn" id="2_w7c3h"]
 [ext_resource type="Material" uid="uid://btoib0ln78fjg" path="res://materials/static/ground_grass.tres" id="3_mx8sn"]
 [ext_resource type="Environment" uid="uid://dkaipsmtbmw7a" path="res://materials/environment/day_environment.tres" id="4_v45ci"]
+[ext_resource type="PackedScene" uid="uid://ckvhddih8pih4" path="res://scenes/structures/house.tscn" id="5_48ne7"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_2r41h"]
 size = Vector2(256, 256)
@@ -15,7 +16,7 @@ scene = ExtResource("2_w7c3h")
 [node name="Preview" type="Node3D" parent="." unique_id=1716652406]
 
 [node name="Camera3D2" type="Camera3D" parent="Preview" unique_id=364008759]
-transform = Transform3D(-0.70710677, -0.49999997, 0.49999997, 0, 0.70710677, 0.70710677, -0.70710677, 0.49999997, -0.49999997, 0.82907486, 1.5057249, -1.9780053)
+transform = Transform3D(-0.7071068, -0.5, 0.5, 0, 0.7071068, 0.70710677, -0.7071068, 0.5, -0.5, 4.054273, 8.583325, -2.3212652)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Preview" unique_id=865394917]
 mesh = SubResource("PlaneMesh_2r41h")
@@ -28,3 +29,5 @@ environment = ExtResource("4_v45ci")
 transform = Transform3D(0.9659259, -0.25488704, 0.04494347, 0, 0.17364824, 0.9848077, -0.25881907, -0.95125127, 0.1677313, -1.9936124e-09, 10, -1.9936124e-09)
 light_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
 shadow_enabled = true
+
+[node name="House" parent="Preview" unique_id=909676520 instance=ExtResource("5_48ne7")]

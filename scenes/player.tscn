@@ -17,7 +17,7 @@ radius = 0.45
 height = 1.7
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_it4ap"]
-radius = 20.0
+radius = 32.0
 
 [sub_resource type="Animation" id="Animation_g2els"]
 length = 0.001

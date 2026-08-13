@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://gndlkiscp2ib"]
+
+[ext_resource type="Script" uid="uid://cakoid5jxbfw3" path="res://code/levels/valley.gd" id="1_nje75"]
+[ext_resource type="Material" uid="uid://btoib0ln78fjg" path="res://materials/static/ground_grass.tres" id="2_th8hq"]
+[ext_resource type="Environment" uid="uid://dkaipsmtbmw7a" path="res://materials/environment/day_environment.tres" id="3_amgr8"]
+[ext_resource type="PackedScene" uid="uid://dwijwqo44vuk6" path="res://scenes/structures/rock.tscn" id="4_amgr8"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_udwnv"]
+size = Vector2(256, 256)
+
+[sub_resource type="HeightMapShape3D" id="HeightMapShape3D_it4ap"]
+map_width = 9
+map_depth = 9
+map_data = PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+
+[node name="Valley" type="Node3D" unique_id=511982229]
+script = ExtResource("1_nje75")
+
+[node name="Preview" type="Node3D" parent="." unique_id=1672200582]
+
+[node name="Camera3D2" type="Camera3D" parent="Preview" unique_id=719512494]
+transform = Transform3D(-0.7071068, -0.5, 0.5, 0, 0.7071068, 0.70710677, -0.7071068, 0.5, -0.5, 2.1965134, 3.5554314, -2.4901724)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Preview" unique_id=1914979460]
+visible = false
+mesh = SubResource("PlaneMesh_udwnv")
+surface_material_override/0 = ExtResource("2_th8hq")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Preview" unique_id=1861849166]
+unique_name_in_owner = true
+environment = ExtResource("3_amgr8")
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="Preview/WorldEnvironment" unique_id=939638907]
+transform = Transform3D(0.9659259, -0.25488704, 0.04494347, 0, 0.17364824, 0.9848077, -0.25881907, -0.95125127, 0.1677313, -1.9936124e-09, 10, -1.9936124e-09)
+light_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
+shadow_enabled = true
+
+[node name="Rock" parent="Preview" unique_id=1684314174 instance=ExtResource("4_amgr8")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1813257951]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1132218801]
+shape = SubResource("HeightMapShape3D_it4ap")

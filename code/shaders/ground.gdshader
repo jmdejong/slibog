@@ -3,12 +3,16 @@ shader_type spatial;
 render_mode world_vertex_coords, specular_disabled, diffuse_lambert;
 
 uniform sampler2D tex : source_color, filter_nearest_mipmap;
+uniform sampler2D wall_tex : source_color, filter_nearest_mipmap;
 uniform int tex_size = 128;
 uniform float pixel_size = 0.5;
+uniform float max_y_floor = 0.707;
 varying vec3 world_position;
+varying vec3 world_normal;
 
 void vertex() {
 	world_position = VERTEX;
+	world_normal = NORMAL;
 }
 
 float hash1(ivec2 t) {
@@ -52,8 +56,14 @@ void fragment() {
 			distances[1] < distances[3] ? corners[1] : corners[3]
 		)
 	);
+	t += int(floor(world_position.y / pixel_size));
 	//ALBEDO = texelFetch(tex, t % tex_size, 0).xyz;
-	ALBEDO = texture(tex, vec2(t)/float(tex_size)).xyz;
+	vec2 tex_coord = vec2(t)/float(tex_size);
+	if (world_normal.y > max_y_floor) {
+		ALBEDO = texture(tex, tex_coord).xyz;
+	} else {
+		ALBEDO = texture(wall_tex, tex_coord).xyz;
+	}
 	//if ((t.x + t.y)%2 == 0) {
 		//ALBEDO = vec3(0, 0, 0);
 	//} else {

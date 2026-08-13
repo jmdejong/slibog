@@ -5,7 +5,8 @@
 [node name="Spawner" type="Node3D" unique_id=1606651978]
 script = ExtResource("1_2vbf6")
 
-[node name="Timer" type="Timer" parent="." unique_id=1986461495]
+[node name="Timer" type="Timer" parent="." unique_id=1385707646]
+wait_time = 5.0
 autostart = true
 
 [connection signal="timeout" from="Timer" to="." method="tick"]
