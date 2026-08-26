@@ -94,6 +94,8 @@ _data = {
 [sub_resource type="SphereShape3D" id="SphereShape3D_eiuac"]
 radius = 0.9
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_7av2o"]
+
 [node name="Balrus" type="CharacterBody3D" unique_id=1017014087]
 collision_layer = 2
 collision_mask = 3
@@ -149,3 +151,15 @@ monitorable = false
 [node name="CollisionShape3D" type="CollisionShape3D" parent="AttackArea" unique_id=240668156]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, 0.8104949, -1.3697932)
 shape = SubResource("SphereShape3D_eiuac")
+
+[node name="Observe" type="Area3D" parent="." unique_id=71378938]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 16
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Observe" unique_id=743298739]
+shape = SubResource("SphereShape3D_7av2o")
+
+[connection signal="area_entered" from="Observe" to="." method="_on_observe_area_entered"]
+[connection signal="area_exited" from="Observe" to="." method="_on_observe_area_exited"]

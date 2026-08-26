@@ -2,7 +2,7 @@ class_name Player
 extends CharacterBody3D
 
 const walk_speed: float = 4.3
-const sprint_speed: float = 8	
+const sprint_speed: float = 8
 const debug_sprint_mult: float = 10
 const gravity: float = 9.81
 const jump_speed: float = 5
@@ -95,10 +95,6 @@ func update_health_bar():
 
 func update_stamina_bar():
 	%OverlayUi.set_stamina(stamina, max_stamina)
-
-func _on_alerter_area_entered(area: Area3D) -> void:
-	var monster: Monster = area.get_parent()
-	monster.alert_to_target(self)
 
 func hit(damage: float, knockback: Vector3, _by: Monster) -> void:
 	health -= damage

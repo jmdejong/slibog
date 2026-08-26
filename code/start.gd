@@ -8,10 +8,10 @@ func _ready() -> void:
 	generate_world.call_deferred()
 
 func generate_world() -> void:
-	var level: Node3D = load("res://scenes/levels/valley.tscn").instantiate().generate()
+	var level: Node3D = load("res://scenes/levels/valley.tscn").instantiate().generate(randi())
 	world.add_child(level)
 	var player: Player = load("res://scenes/player_classes/spearman.tscn").instantiate().player()
-	player.position = level.get_node("Spawn").position
+	player.transform = level.get_node("Spawn").transform
 	world.set_player(player)
 	start_world.call_deferred()
 

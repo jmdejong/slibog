@@ -3,6 +3,7 @@ extends CharacterBody3D
 var health: float = 30
 
 @export var forget_range: float = 64
+@export var alert_range: float = 32
 @export var attack_range: float = 2.5
 @export var attack_knockback: float = 10
 @export var attack_cooldown: float = 1
@@ -11,28 +12,40 @@ var health: float = 30
 @export var turn_speed: float = PI # rad/s
 var knockback_duration: float = 0
 var knockback_max_duration: float = 0.6
-var knockback_dir: Vector3 = Vector3.ZERO
+var knockback_dir: Vector3
+var knockback_strength: float
 var reconsider_timeout: float = 0
 var dead: bool = false
+var last_random_pos_stamp: int = 0
+const change_random_pos_ms: int = 2000
 
 var target: Player = null
 var home: Node3D = null
 @onready var collision_sphere: CollisionShape3D = $Hitbox/CollisionShape3D
 @onready var target_pos: Vector3 = position
+var has_target_pos: bool = false
 
-var horizontal_velocity: Vector3:
-	set(v):
-		velocity = Vector3(v.x, velocity.y, v.z)
-	get():
-		return Vector3(horizontal_velocity.x, 0, horizontal_velocity.z)
-enum Behavior {Waiting, Walking, Turning, Attacking, Knockedback, Dying}
+enum Behavior {Sleeping, Waiting, Walking, Turning, Attacking, Knockedback, Dying}
 var behavior: Behavior = Behavior.Waiting
+
+func set_horizontal_velocity(vel: Vector3) -> void:
+	velocity = Vector3(vel.x, velocity.y, vel.z)
+
+func reset_horizontal_velocity() -> void:
+	velocity = Vector3(0, velocity.y, 0)
+
+func walk_to(to: Vector3, move_speed: float) -> void:
+	var dir: Vector3 = to - global_position
+	var hdir: Vector2 = Vector2(dir.x, dir.z)
+	var hvel: Vector2 = hdir.normalized() * move_speed
+	velocity = Vector3(hvel.x, velocity.y, hvel.y)
 
 func hit(damage: float, knockback: Vector3, by: Player) -> void:
 	target = by
 	health -= damage
 	knockback_duration = knockback_max_duration
-	knockback_dir = knockback
+	knockback_dir = knockback.normalized()
+	knockback_strength = knockback.length()
 	behavior = Behavior.Knockedback
 	$AnimationPlayer.stop()
 	if health <= 0:
@@ -41,7 +54,7 @@ func hit(damage: float, knockback: Vector3, by: Player) -> void:
 func die() -> void:
 		dead = true
 		behavior = Behavior.Dying
-		horizontal_velocity = Vector3.ZERO
+		reset_horizontal_velocity()
 		#process_mode = Node.PROCESS_MODE_DISABLED
 		collision_layer = 0
 		collision_mask = 1
@@ -59,39 +72,47 @@ func plan() -> void:
 		target = null
 	if behavior == Behavior.Dying or knockback_duration > 0 or is_attacking():
 		return
+	if !%Observe.has_overlapping_areas():
+		behavior = Behavior.Sleeping
+		return
 	if not is_on_floor() and behavior != Behavior.Turning:
 		behavior = Behavior.Waiting
 		return
-	var has_target_pos: bool = false
+	if target == null:
+		for o: Area3D in %Observe.get_overlapping_areas():
+			var player: Player = o.get_parent()
+			if global_position.distance_to(player.global_position) < alert_range:
+				target = player
 	if target == null:
 		reconsider_timeout = randf_range(0.8, 2)
 		if randf() < 0.3 or home != null and global_position.distance_to(home.global_position) > home.roam_range:
 			behavior = Behavior.Walking
 			var rc := Vector3.FORWARD.rotated(Vector3.UP, 2 * PI * randf())
-			if home != null:
-				has_target_pos = true
-				target_pos = home.global_position + rc * home.roam_range
-			else:
-				has_target_pos = true
-				target_pos = global_position + rc * 10
+			if !has_target_pos or last_random_pos_stamp < Time.get_ticks_msec() - change_random_pos_ms:
+				if home != null:
+					has_target_pos = true
+					target_pos = home.global_position + rc * home.roam_range
+				else:
+					has_target_pos = true
+					target_pos = global_position + rc * 10
+				last_random_pos_stamp = Time.get_ticks_msec()
 			target_pos.y = global_position.y
 			behavior = Behavior.Walking
 			start_walk()
 		else:
-			horizontal_velocity = Vector3.ZERO
+			reset_horizontal_velocity()
 			behavior = Behavior.Waiting
-	else:
-		if global_position.distance_to(target.global_position) > forget_range:
-			target = null
-			behavior = Behavior.Waiting
-			plan.call_deferred()
-		else:
-			target_pos = target.global_position
-			has_target_pos = true
+	if target != null and global_position.distance_to(target.global_position) > forget_range:
+		target = null
+		behavior = Behavior.Waiting
+		plan.call_deferred()
+	if target != null:
+		target_pos = target.global_position
+		has_target_pos = true
 	if has_target_pos:
 		if abs(angle_to_target()) > 0.05:
 			behavior = Behavior.Turning
-			horizontal_velocity = Vector3.ZERO
+			reset_horizontal_velocity()
 		else:
 			look_at(Vector3(target_pos.x, global_position.y, target_pos.z))
 			if global_position.distance_to(target_pos) <= attack_range:
@@ -106,13 +127,12 @@ func plan() -> void:
 				start_walk()
 
 func angle_to_target() -> float:
-	var look_dir: Vector3 = transform.basis * Vector3.FORWARD
+	var look_dir: Vector3 = global_basis * Vector3.FORWARD
 	var target_dir: Vector3 = target_pos - global_position
 	return Vector2(look_dir.x, look_dir.z).angle_to(Vector2(target_dir.x, target_dir.z))
 
 func start_walk() -> void:
-	var dif: Vector3 = target_pos - global_position
-	horizontal_velocity = Vector3(dif.x, 0, dif.z).normalized() * speed
+	walk_to(target_pos, speed)
 	reconsider_timeout = min(reconsider_timeout, global_position.distance_to(target_pos) * speed)
 
 func walk() -> void:
@@ -120,6 +140,8 @@ func walk() -> void:
 		plan()
 
 func _physics_process(delta: float) -> void:
+	if behavior == Behavior.Sleeping:
+		return
 	if behavior == Behavior.Waiting:
 		if reconsider_timeout <= 0:
 			plan()
@@ -136,7 +158,7 @@ func _physics_process(delta: float) -> void:
 	elif behavior == Behavior.Knockedback:
 		if knockback_duration > 0:
 			var kd: float = knockback_duration / knockback_max_duration
-			horizontal_velocity = knockback_dir * kd*kd
+			set_horizontal_velocity(knockback_dir * knockback_strength * kd * kd)
 		else:
 			plan()
 	elif behavior == Behavior.Attacking:
@@ -157,8 +179,7 @@ func post_process(_delta: float) -> void:
 	pass
 
 func start_attack() -> void:
-	horizontal_velocity = Vector3.ZERO
-	
+	reset_horizontal_velocity()
 
 func do_attack() -> int:
 	var victims: int = 0
@@ -171,3 +192,15 @@ func do_attack() -> int:
 		direction.y = 0;
 		victim.hit(attack_damage, direction.normalized() * attack_knockback, self)
 	return victims
+
+func _on_observe_area_entered(area: Area3D) -> void:
+	var player: Player = area.get_parent()
+	if global_position.distance_to(player.global_position) < alert_range:
+		alert_to_target(player)
+	elif behavior == Behavior.Sleeping:
+		plan()
+
+
+func _on_observe_area_exited(_area: Area3D) -> void:
+	if behavior != Behavior.Dying and %Observe != null and !%Observe.has_overlapping_areas():
+		behavior = Behavior.Sleeping

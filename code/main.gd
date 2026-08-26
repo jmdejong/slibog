@@ -21,10 +21,10 @@ func _ready() -> void:
 
 func spawn_in_world() -> void:
 	var world: World = preload("res://scenes/world.tscn").instantiate()
-	var level: Node3D = selected_level().generate()
+	var level: Node3D = selected_level().generate(randi())
 	world.add_child(level)
 	var player: Player = selected_class().player()
-	player.position = level.get_node("Spawn").position
+	player.transform = level.get_node("Spawn").transform
 	world.set_player(player)
 	get_tree().change_scene_to_node(world)
 

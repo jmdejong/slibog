@@ -6,5 +6,5 @@ extends Node3D
 func preview() -> Node3D:
 	return $Preview.duplicate()
 
-func generate() -> Node3D:
+func generate(_seed: int) -> Node3D:
 	return scene.instantiate()

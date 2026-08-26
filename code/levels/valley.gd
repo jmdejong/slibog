@@ -7,7 +7,9 @@ const area_segments: int = 8
 
 enum AreaType {Spawn, Forest, Bushy, Rocky, Grass}
 
-func generate() -> Node3D:
+func generate(world_seed: int) -> Node3D:
+	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
+	rng.seed = world_seed
 	var world: Node3D = Node3D.new()
 	world.add_child(%WorldEnvironment.duplicate())
 	var spawn: Node3D = Node3D.new()
@@ -16,7 +18,7 @@ func generate() -> Node3D:
 	world.add_child(spawn)
 	for x: int in range(0, area_axis_count):
 		for y: int in range(0, area_axis_count):
-			generate_area(world, Vector2i(x, y))
+			generate_area(world, Vector2i(x, y), rng)
 	var boundary_body: StaticBody3D = StaticBody3D.new()
 	for n: Vector3 in [Vector3(1, 0, 0), Vector3(-1, 0, 0), Vector3(0, 0, 1), Vector3(0, 0,-1)]:
 		var boundary_shape: CollisionShape3D = CollisionShape3D.new()
@@ -29,8 +31,10 @@ func generate() -> Node3D:
 		
 	return world
 
-func generate_area(world: Node3D, area_id: Vector2i) -> void:
+func generate_area(world: Node3D, area_id: Vector2i, rng: RandomNumberGenerator) -> void:
 	var area: Rect2 = Rect2(Vector2(area_id) * area_size, Vector2.ONE * area_size)
+	var center2: Vector2 = area.get_center()
+	var center: Vector3 = Vector3(center2.x, 1, center2.y)
 	var ground: Node3D = generate_ground(area)
 	if area_id == Vector2i.ZERO:
 		# spawn area
@@ -44,9 +48,9 @@ func generate_area(world: Node3D, area_id: Vector2i) -> void:
 				var tile: Vector2i = Vector2i(x, y)
 				if abs(x - spawn_tile.x) <= 1 and abs(y - spawn_tile.y) <=1 :
 					continue
-				var pos2: Vector2 = area.position + tile_size * Vector2(tile) + Vector2(randf_range(0.2, 0.8), randf_range(0.2, 0.8))
+				var pos2: Vector2 = area.position + tile_size * Vector2(tile) + Vector2(rng.randf_range(0.2, 0.8), rng.randf_range(0.2, 0.8))
 				var pos: Vector3 = Vector3(pos2.x, 1, pos2.y)
-				var r: float = randf()
+				var r: float = rng.randf()
 				var struct: Node3D = null
 				if r < 0.1:
 					struct = preload("res://scenes/structures/rock.tscn").instantiate()
@@ -56,16 +60,16 @@ func generate_area(world: Node3D, area_id: Vector2i) -> void:
 					struct = preload("res://scenes/structures/small_tree.tscn").instantiate()
 				if struct != null:
 					struct.position = pos
-					struct.rotation.y = randf_range(-PI, PI)
+					struct.rotation.y = rng.randf_range(-PI, PI)
 					world.add_child(struct)
 	else:
 		var subtiles: int = 8
 		var tile_size: float = area_size / subtiles
-		var danger: int = clamp(area_id.x + area_id.y + randi_range(-1, 1), 0, 5)
+		var danger: int = clamp(area_id.x + area_id.y + rng.randi_range(-1, 1), 0, 5)
 		var monster_chance: float = danger / 20.0
 		var primary_enemy: PackedScene = preload("res://scenes/monsters/arm_ball.tscn")
 		if danger > 3:
-			var r: float = randf()
+			var r: float = rng.randf()
 			if r < 0.3:
 				primary_enemy = preload("res://scenes/monsters/balrus.tscn")
 			else:
@@ -76,23 +80,24 @@ func generate_area(world: Node3D, area_id: Vector2i) -> void:
 			AreaType.Bushy,
 			AreaType.Rocky,
 			AreaType.Grass
-		][randi_range(0, 3)]
+		][rng.randi_range(0, 3)]
 		var spawner: Node3D = preload("res://scenes/spawner.tscn").instantiate()
+		spawner.position = center
 		world.add_child(spawner)
 		for x: int in range(1, subtiles):
 			for y: int in range(1, subtiles):
 				var tile: Vector2i = Vector2i(x, y)
-				var pos2: Vector2 = area.position + tile_size * (Vector2(tile) + Vector2(randf_range(0.2, 0.8), randf_range(0.2, 0.8)))
+				var pos2: Vector2 = area.position + tile_size * (Vector2(tile) + Vector2(rng.randf_range(0.2, 0.8), randf_range(0.2, 0.8)))
 				var pos: Vector3 = Vector3(pos2.x, 1, pos2.y)
-				var r: float = randf()
+				var r: float = rng.randf()
 				if r < monster_chance:
 					var monster: Monster
-					if randf() < 0.6:
+					if rng.randf() < 0.6:
 						monster = primary_enemy.instantiate()
 					else:
 						monster = secondary_enemy.instantiate()
-					monster.position = pos
-					monster.rotation.y = randf_range(-PI, PI)
+					monster.position = pos - center
+					monster.rotation.y = rng.randf_range(-PI, PI)
 					spawner.add_child(monster)
 				else:
 					var struct: Node3D = null
@@ -116,7 +121,7 @@ func generate_area(world: Node3D, area_id: Vector2i) -> void:
 							struct = preload("res://scenes/structures/tree.tscn").instantiate()
 					if struct != null:
 						struct.position = pos
-						struct.rotation.y = randf_range(-PI, PI)
+						struct.rotation.y = rng.randf_range(-PI, PI)
 						world.add_child(struct)
 	world.add_child(ground)
 

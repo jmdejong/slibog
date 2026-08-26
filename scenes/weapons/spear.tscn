@@ -20,7 +20,7 @@ rings = 2
 cap_top = false
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_it4ap"]
-radius = 0.2
+radius = 1.0
 
 [sub_resource type="Animation" id="Animation_8fn8c"]
 length = 0.001

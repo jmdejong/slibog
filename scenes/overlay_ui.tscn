@@ -1,7 +1,12 @@
 [gd_scene format=3 uid="uid://bpcm81j0r8362"]
 
 [ext_resource type="Script" uid="uid://clhdkhr0gt64k" path="res://code/overlay_ui.gd" id="1_j5fei"]
+[ext_resource type="Shader" uid="uid://dfsad83l5o468" path="res://code/shaders/hits.gdshader" id="2_avt5o"]
 [ext_resource type="Shader" uid="uid://bh5gkfcw2md36" path="res://code/shaders/fadout.gdshader" id="2_d0yxp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_it4ap"]
+shader = ExtResource("2_avt5o")
+shader_parameter/hits = PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_x4jx1"]
 frequency = 0.03
@@ -95,6 +100,16 @@ offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0.5025, 0.67, 1)
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1833776502]
+visible = false
+material = SubResource("ShaderMaterial_it4ap")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Fade" type="ColorRect" parent="." unique_id=1201082914]
 visible = false

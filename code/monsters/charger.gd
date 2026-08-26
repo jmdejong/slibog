@@ -7,12 +7,11 @@ var is_charging: bool = false
 var cooldown: float = 0
 
 func charge() -> void:
-	var dif = target_pos - global_position
-	horizontal_velocity = Vector3(dif.x, 0, dif.z).normalized() * charge_speed
+	walk_to(target_pos, charge_speed)
 	is_charging = true
 
 func stop_charge() -> void:
-	horizontal_velocity = Vector3.ZERO
+	reset_horizontal_velocity()
 	is_charging = false
 
 func post_process(delta: float) -> void:

@@ -39,7 +39,7 @@ offset_right = 41.5
 offset_bottom = -100.0
 grow_horizontal = 2
 grow_vertical = 2
-text = "Run Ended"
+text = "Defeated"
 label_settings = SubResource("LabelSettings_qlg0r")
 uppercase = true
 
