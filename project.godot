@@ -12,8 +12,13 @@ config_version=5
 
 config/name="slibog"
 run/main_scene="uid://bj6v8ob78apq3"
+config/use_custom_user_dir=true
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[autoload]
+
+State="*uid://s8heherv0j41"
 
 [display]
 

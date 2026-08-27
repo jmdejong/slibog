@@ -6,6 +6,7 @@ extends Monster
 var is_charging: bool = false
 var cooldown: float = 0
 
+
 func charge() -> void:
 	walk_to(target_pos, charge_speed)
 	is_charging = true

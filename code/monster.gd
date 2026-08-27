@@ -116,12 +116,14 @@ func plan() -> void:
 		else:
 			look_at(Vector3(target_pos.x, global_position.y, target_pos.z))
 			if global_position.distance_to(target_pos) <= attack_range:
-				#cooldown = attack_cooldown
-				behavior = Behavior.Attacking
-				$AnimationPlayer.play("attack")
-				start_attack()
-				await $AnimationPlayer.animation_finished
-				plan()
+				if target != null:
+					behavior = Behavior.Attacking
+					$AnimationPlayer.play("attack")
+					start_attack()
+					await $AnimationPlayer.animation_finished
+					plan()
+				else:
+					behavior = Behavior.Waiting
 			else:
 				behavior = Behavior.Walking
 				start_walk()

@@ -16,16 +16,18 @@ var class_selector: int = 0
 var level_selector: int = 0
 
 func _ready() -> void:
+	for i in classes.size():
+		if classes[i].scene_file_path == State.state.selected_class:
+			class_selector = i
+	for i in levels.size():
+		if levels[i].scene_file_path == State.state.selected_level:
+			level_selector = i
 	change_selected_class(0)
 	change_selected_level(0)
 
 func spawn_in_world() -> void:
-	var world: World = preload("res://scenes/world.tscn").instantiate()
-	var level: Node3D = selected_level().generate(randi())
-	world.add_child(level)
-	var player: Player = selected_class().player()
-	player.transform = level.get_node("Spawn").transform
-	world.set_player(player)
+	var world: World = World.setup(selected_class(), selected_level(), randi())
+	State.set_in_world(true)
 	get_tree().change_scene_to_node(world)
 
 func change_selected_class(d: int) -> void:
@@ -33,6 +35,7 @@ func change_selected_class(d: int) -> void:
 	for child: Node in %ClassPreview.get_children():
 		child.queue_free()
 	%ClassPreview.add_child(selected_class().preview())
+	State.set_selected_class(selected_class())
 
 func selected_class() -> PlayerClass:
 	return classes[class_selector]
@@ -42,6 +45,7 @@ func change_selected_level(d: int) -> void:
 	for child: Node in %LevelPreview.get_children():
 		child.queue_free()
 	%LevelPreview.add_child(selected_level().preview())
+	State.set_selected_level(selected_level())
 
 func selected_level() -> LevelBlueprint:
 	return levels[level_selector]

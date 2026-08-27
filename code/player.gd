@@ -106,6 +106,7 @@ func hit(damage: float, knockback: Vector3, _by: Monster) -> void:
 
 func die() -> void:
 	dead = true
+	State.set_in_world(false)
 	$AnimationPlayer.play("die")
 	await get_tree().create_timer(2).timeout
 	%InputControls.wants_pointer = false

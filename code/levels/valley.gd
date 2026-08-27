@@ -43,6 +43,7 @@ func generate_area(world: Node3D, area_id: Vector2i, rng: RandomNumberGenerator)
 		var spawn_tile: Vector2i = Vector2i(subtiles / 2, subtiles / 2)
 		var spawn_pos: Vector2 = area.position + tile_size * (Vector2(spawn_tile) + Vector2.ONE/2)
 		world.get_node("Spawn").position = Vector3(spawn_pos.x, 2, spawn_pos.y)
+		world.get_node("Spawn").rotation.y = PI * 5 / 4
 		for x: int in subtiles:
 			for y: int in subtiles:
 				var tile: Vector2i = Vector2i(x, y)

@@ -4,15 +4,18 @@ var world: World
 #var generate_progress()
 
 func _ready() -> void:
-	world = load("res://scenes/world.tscn").instantiate()
-	generate_world.call_deferred()
+	#world = load("res://scenes/world.tscn").instantiate()
+	if State.is_in_world():
+		generate_world.call_deferred()
+	else:
+		get_tree().change_scene_to_file("res://scenes/main.tscn")
 
 func generate_world() -> void:
-	var level: Node3D = load("res://scenes/levels/valley.tscn").instantiate().generate(randi())
-	world.add_child(level)
-	var player: Player = load("res://scenes/player_classes/spearman.tscn").instantiate().player()
-	player.transform = level.get_node("Spawn").transform
-	world.set_player(player)
+	world = World.setup(
+		State.selected_class(),
+		State.selected_level(),
+		randi()
+	)
 	start_world.call_deferred()
 
 func start_world() -> void:
