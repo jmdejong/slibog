@@ -2,8 +2,8 @@ class_name Monster;
 extends CharacterBody3D
 var health: float = 30
 
-@export var forget_range: float = 64
-@export var alert_range: float = 32
+@export var forget_range: float = 48
+@export var alert_range: float = 24
 @export var attack_range: float = 2.5
 @export var attack_knockback: float = 10
 @export var attack_cooldown: float = 1

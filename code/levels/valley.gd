@@ -53,8 +53,12 @@ func generate_area(world: Node3D, area_id: Vector2i, rng: RandomNumberGenerator)
 				var pos: Vector3 = Vector3(pos2.x, 1, pos2.y)
 				var r: float = rng.randf()
 				var struct: Node3D = null
-				if r < 0.1:
+				if r < 0.05:
+					struct = preload("res://scenes/structures/small_rock.tscn").instantiate()
+				elif r < 0.075:
 					struct = preload("res://scenes/structures/rock.tscn").instantiate()
+				elif r < 0.1:
+					struct = preload("res://scenes/structures/rock2.tscn").instantiate()
 				elif r < 0.2:
 					struct = preload("res://scenes/structures/tree.tscn").instantiate()
 				elif r < 0.3:
@@ -103,23 +107,37 @@ func generate_area(world: Node3D, area_id: Vector2i, rng: RandomNumberGenerator)
 				else:
 					var struct: Node3D = null
 					if area_type == AreaType.Forest:
-						if r > 0.8:
-							struct = preload("res://scenes/structures/small_tree.tscn").instantiate()
-						elif r > 0.5:
-							struct = preload("res://scenes/structures/tree.tscn").instantiate()
-					elif area_type == AreaType.Bushy:
 						if r > 0.85:
 							struct = preload("res://scenes/structures/small_tree.tscn").instantiate()
-						elif r > 0.75:
+						elif r > 0.6:
 							struct = preload("res://scenes/structures/tree.tscn").instantiate()
+						elif r > 0.5:
+							struct = preload("res://scenes/structures/bush.tscn").instantiate()
+					elif area_type == AreaType.Bushy:
+						if r > 0.9:
+							struct = preload("res://scenes/structures/small_tree.tscn").instantiate()
+						elif r > 0.8:
+							struct = preload("res://scenes/structures/tree.tscn").instantiate()
+						elif r > 0.75:
+							struct = preload("res://scenes/structures/small_rock.tscn").instantiate()
+						elif r > 0.6:
+							struct = preload("res://scenes/structures/bush.tscn").instantiate()
 					elif area_type == AreaType.Rocky:
-						if r > 0.7:
+						if r > 0.9:
+							struct = preload("res://scenes/structures/rock2.tscn").instantiate()
+						elif r > 0.7:
 							struct = preload("res://scenes/structures/rock.tscn").instantiate()
+						elif r > 0.6:
+							struct = preload("res://scenes/structures/small_rock.tscn").instantiate()
+						elif r > 0.55:
+							struct = preload("res://scenes/structures/bush.tscn").instantiate()
 					elif area_type == AreaType.Grass:
 						if r > 0.95:
 							struct = preload("res://scenes/structures/small_tree.tscn").instantiate()
 						elif r > 0.9:
 							struct = preload("res://scenes/structures/tree.tscn").instantiate()
+						elif r > 0.85:
+							struct = preload("res://scenes/structures/bush.tscn").instantiate()
 					if struct != null:
 						struct.position = pos
 						struct.rotation.y = rng.randf_range(-PI, PI)
