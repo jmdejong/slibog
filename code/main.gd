@@ -51,4 +51,6 @@ func selected_level() -> LevelBlueprint:
 	return levels[level_selector]
 
 func _process(delta: float) -> void:
-	%ClassPreview.rotate_y(delta/5)
+	%ClassPreview.rotate_y(delta/6)
+	%LevelPreview.rotate_y(delta/12)
+	%Info.text = "fps: %3.1f" % Engine.get_frames_per_second()

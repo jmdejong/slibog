@@ -1,32 +1,78 @@
 [gd_scene format=3 uid="uid://dhp37g8dw61oy"]
 
 [ext_resource type="Script" uid="uid://b0p1tvhgnk65h" path="res://code/main.gd" id="1_tbgi4"]
+[ext_resource type="Shader" uid="uid://bqkk427v6my1m" path="res://code/shaders/clouds_bg.gdshader" id="2_tefeu"]
 [ext_resource type="Environment" uid="uid://hofgm4ax01r3" path="res://materials/environment/cloud_environment.tres" id="2_tipki"]
 [ext_resource type="Texture2D" uid="uid://cpvg8sanx8v6u" path="res://textures/icons/right.png" id="3_tefeu"]
 [ext_resource type="FontFile" uid="uid://brlxme5qgpox1" path="res://fonts/Avara.ttf" id="4_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://bbcncejir25bj" path="res://textures/icons/left.png" id="4_o6xl0"]
+[ext_resource type="Shader" uid="uid://bncgr7quxc7nm" path="res://code/shaders/clouds_cylinder.gdshader" id="7_o6xl0"]
 
-[sub_resource type="Gradient" id="Gradient_86me1"]
-colors = PackedColorArray(0.5, 0.35000002, 0.25, 1, 0.6, 0.42000005, 0.3, 1)
+[sub_resource type="Gradient" id="Gradient_tefeu"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_pmxoi"]
-seed = 10
-frequency = 0.1
-fractal_octaves = 3
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_choun"]
+frequency = 0.02
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_00jve"]
-noise = SubResource("FastNoiseLite_pmxoi")
-color_ramp = SubResource("Gradient_86me1")
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_tefeu"]
+height = 256
+noise = SubResource("FastNoiseLite_choun")
+color_ramp = SubResource("Gradient_tefeu")
 seamless = true
 
-[sub_resource type="World3D" id="World3D_r2bmj"]
-environment = ExtResource("2_tipki")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ylmcp"]
+shader = ExtResource("2_tefeu")
+shader_parameter/noise_a = SubResource("NoiseTexture2D_tefeu")
 
-[sub_resource type="World3D" id="World3D_srjl7"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_it4ap"]
+radius = 0.3
+height = 1.8
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_cdsqw"]
+top_radius = 10.0
+bottom_radius = 10.0
+height = 1.0
 
 [sub_resource type="Theme" id="Theme_it4ap"]
 default_font = ExtResource("4_jyhfs")
 default_font_size = 30
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_it4ap"]
+flip_faces = true
+top_radius = 20.0
+bottom_radius = 20.0
+height = 1000.0
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_o6xl0"]
+frequency = 0.02
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_85g3d"]
+noise = SubResource("FastNoiseLite_o6xl0")
+seamless = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_eb6dy"]
+seed = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_trceg"]
+noise = SubResource("FastNoiseLite_eb6dy")
+seamless = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_a8y0u"]
+frequency = 0.02
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jkv2x"]
+noise = SubResource("FastNoiseLite_a8y0u")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tipki"]
+render_priority = 0
+shader = ExtResource("7_o6xl0")
+shader_parameter/noise_a = SubResource("NoiseTexture2D_85g3d")
+shader_parameter/noise_b = SubResource("NoiseTexture2D_trceg")
+shader_parameter/noise_c = SubResource("NoiseTexture2D_jkv2x")
+shader_parameter/blue = Color(0.4, 0.4, 1, 1)
+shader_parameter/white = Color(1, 1, 1, 1)
 
 [node name="Main" type="Control" unique_id=1933535169]
 layout_mode = 3
@@ -37,61 +83,61 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_tbgi4")
 
-[node name="TextureRect" type="TextureRect" parent="." unique_id=1978338261]
+[node name="Clouds" type="ColorRect" parent="." unique_id=1051759891]
+material = SubResource("ShaderMaterial_ylmcp")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("NoiseTexture2D_00jve")
-stretch_mode = 1
+color = Color(0.4, 0.4, 1, 1)
 
-[node name="CharacterPreview2" type="Control" parent="." unique_id=1466051068]
+[node name="Node3D2" type="Node3D" parent="." unique_id=784765419]
+
+[node name="Camera3D" type="Camera3D" parent="Node3D2" unique_id=213037154]
+transform = Transform3D(-1, -3.6946464e-08, 7.923194e-08, 0, 0.90630776, 0.42261827, -8.742278e-08, 0.42261827, -0.90630776, -1.9936124e-09, 3.5, -5)
+keep_aspect = 0
+projection = 1
+size = 12.0
+near = 0.1
+far = 100.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Node3D2" unique_id=2129763500]
+environment = ExtResource("2_tipki")
+
+[node name="ClassPreview" type="Node3D" parent="Node3D2" unique_id=181693128]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, -1.9936124e-09, -1.9936124e-09)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D2/ClassPreview" unique_id=318557909]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, 0.85, -1.9936124e-09)
+mesh = SubResource("CapsuleMesh_it4ap")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Node3D2" unique_id=1287870908]
+transform = Transform3D(-0.8622871, -0.4460654, 0.23976372, -5.366623e-09, 0.4734486, 0.88082147, -0.5064198, 0.75952095, -0.4082486, 0, 2.8379834, 0)
+shadow_enabled = true
+
+[node name="LevelPreview" type="Node3D" parent="Node3D2" unique_id=1906970304]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, -1.9936124e-09, -1.9936124e-09)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D2/LevelPreview" unique_id=721083257]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -1.9936124e-09, -0.5, -1.9936124e-09)
+mesh = SubResource("CylinderMesh_cdsqw")
+
+[node name="CharacterPreview" type="Control" parent="." unique_id=1466051068]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
+anchor_left = 0.1
 anchor_top = 0.5
-anchor_right = 0.5
+anchor_right = 0.45
 anchor_bottom = 0.5
-offset_left = -430.0
-offset_top = -100.0
-offset_right = -30.0
+offset_top = -200.0
 offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="CharacterPreview" type="SubViewportContainer" parent="CharacterPreview2" unique_id=112061138]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-stretch = true
-
-[node name="SubViewport" type="SubViewport" parent="CharacterPreview2/CharacterPreview" unique_id=813316167]
-world_3d = SubResource("World3D_r2bmj")
-handle_input_locally = false
-size = Vector2i(400, 300)
-render_target_update_mode = 4
-
-[node name="Node3D" type="Node3D" parent="CharacterPreview2/CharacterPreview/SubViewport" unique_id=1207718907]
-
-[node name="Camera3D" type="Camera3D" parent="CharacterPreview2/CharacterPreview/SubViewport/Node3D" unique_id=213037154]
-transform = Transform3D(-0.70710677, -0.35355338, 0.6123724, 0, 0.8660254, 0.5, -0.70710677, 0.35355338, -0.6123724, 0.829, 2, -1.978)
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="CharacterPreview2/CharacterPreview/SubViewport/Node3D" unique_id=2129763500]
-environment = ExtResource("2_tipki")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="CharacterPreview2/CharacterPreview/SubViewport/Node3D" unique_id=1287870908]
-transform = Transform3D(-0.86228704, -0.44606537, 0.23976372, -5.3666227e-09, 0.4734486, 0.88082147, -0.5064197, 0.75952095, -0.4082486, 0, 2.8379834, 0)
-shadow_enabled = true
-
-[node name="ClassPreview" type="Node3D" parent="CharacterPreview2/CharacterPreview/SubViewport/Node3D" unique_id=181693128]
-unique_name_in_owner = true
-
-[node name="NextClass" type="Button" parent="CharacterPreview2" unique_id=1411509812]
+[node name="NextClass" type="Button" parent="CharacterPreview" unique_id=1411509812]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -105,9 +151,8 @@ grow_horizontal = 0
 grow_vertical = 2
 offset_transform_enabled = true
 icon = ExtResource("3_tefeu")
-flat = true
 
-[node name="PrevClass" type="Button" parent="CharacterPreview2" unique_id=1417622400]
+[node name="PrevClass" type="Button" parent="CharacterPreview" unique_id=1417622400]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -118,41 +163,17 @@ offset_bottom = 68.0
 grow_vertical = 2
 tooltip_text = "Previous player class"
 icon = ExtResource("4_o6xl0")
-flat = true
 
-[node name="Control" type="Control" parent="." unique_id=1834852640]
+[node name="LevelPreview" type="Control" parent="." unique_id=1834852640]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
+anchor_left = 0.55
 anchor_top = 0.5
-anchor_right = 0.5
+anchor_right = 0.95
 anchor_bottom = 0.5
-offset_left = 30.0
-offset_top = -100.0
-offset_right = 430.0
-offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="WorldPreview" type="SubViewportContainer" parent="Control" unique_id=302295798]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-stretch = true
-
-[node name="SubViewport" type="SubViewport" parent="Control/WorldPreview" unique_id=1426139029]
-world_3d = SubResource("World3D_srjl7")
-handle_input_locally = false
-size = Vector2i(400, 300)
-render_target_update_mode = 4
-
-[node name="LevelPreview" type="Node3D" parent="Control/WorldPreview/SubViewport" unique_id=1906970304]
-unique_name_in_owner = true
-
-[node name="NextLevel" type="Button" parent="Control" unique_id=140554535]
+[node name="NextLevel" type="Button" parent="LevelPreview" unique_id=140554535]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -167,7 +188,7 @@ grow_vertical = 2
 tooltip_text = "Next level"
 icon = ExtResource("3_tefeu")
 
-[node name="PreviousLevel" type="Button" parent="Control" unique_id=1085974351]
+[node name="PreviousLevel" type="Button" parent="LevelPreview" unique_id=1085974351]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -195,8 +216,18 @@ grow_vertical = 0
 theme = SubResource("Theme_it4ap")
 text = "Reincarnate"
 
-[connection signal="pressed" from="CharacterPreview2/NextClass" to="." method="change_selected_class" binds= [1]]
-[connection signal="pressed" from="CharacterPreview2/PrevClass" to="." method="change_selected_class" binds= [-1]]
-[connection signal="pressed" from="Control/NextLevel" to="." method="change_selected_level" binds= [1]]
-[connection signal="pressed" from="Control/PreviousLevel" to="." method="change_selected_level" binds= [-1]]
+[node name="Info" type="Label" parent="." unique_id=1261470930]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1956105928]
+mesh = SubResource("CylinderMesh_it4ap")
+surface_material_override/0 = SubResource("ShaderMaterial_tipki")
+
+[connection signal="pressed" from="CharacterPreview/NextClass" to="." method="change_selected_class" binds= [1]]
+[connection signal="pressed" from="CharacterPreview/PrevClass" to="." method="change_selected_class" binds= [-1]]
+[connection signal="pressed" from="LevelPreview/NextLevel" to="." method="change_selected_level" binds= [1]]
+[connection signal="pressed" from="LevelPreview/PreviousLevel" to="." method="change_selected_level" binds= [-1]]
 [connection signal="pressed" from="Button" to="." method="spawn_in_world"]

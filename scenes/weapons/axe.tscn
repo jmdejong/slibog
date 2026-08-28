@@ -81,11 +81,13 @@ transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000002, 0.4, -0.3, -0
 
 [node name="Pole" type="MeshInstance3D" parent="Handle" unique_id=339728886]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.49823117, -0.008237392)
+cast_shadow = 0
 mesh = SubResource("CylinderMesh_sxbk6")
 surface_material_override/0 = ExtResource("2_w43rl")
 
 [node name="Head" type="MeshInstance3D" parent="Handle/Pole" unique_id=2046899690]
 transform = Transform3D(1, 0, 0, 0, 0.72447085, -0.6893055, 0, 0.6893055, 0.72447085, -1.9936124e-09, 0.5, -0.1)
+cast_shadow = 0
 mesh = SubResource("BoxMesh_it4ap")
 surface_material_override/0 = ExtResource("3_5wbh6")
 

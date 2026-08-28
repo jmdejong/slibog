@@ -4,36 +4,40 @@
 [ext_resource type="Material" uid="uid://btoib0ln78fjg" path="res://materials/static/ground_grass.tres" id="2_th8hq"]
 [ext_resource type="Environment" uid="uid://dkaipsmtbmw7a" path="res://materials/environment/day_environment.tres" id="3_amgr8"]
 [ext_resource type="PackedScene" uid="uid://dwijwqo44vuk6" path="res://scenes/structures/rock.tscn" id="4_amgr8"]
+[ext_resource type="PackedScene" uid="uid://bkvyyc553lnia" path="res://model_src/tree.tscn" id="5_udwnv"]
+[ext_resource type="PackedScene" uid="uid://c5yts0b33od7m" path="res://scenes/monsters/arm_ball.tscn" id="6_00bio"]
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_udwnv"]
-size = Vector2(256, 256)
-
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_amgr8"]
+[sub_resource type="CylinderMesh" id="CylinderMesh_tefeu"]
+top_radius = 10.0
+bottom_radius = 10.0
+height = 1.0
 
 [node name="Valley" type="Node3D" unique_id=511982229]
 script = ExtResource("1_nje75")
 
 [node name="Preview" type="Node3D" parent="." unique_id=1672200582]
-
-[node name="Camera3D2" type="Camera3D" parent="Preview" unique_id=719512494]
-transform = Transform3D(-0.7071068, -0.5, 0.5, 0, 0.7071068, 0.70710677, -0.7071068, 0.5, -0.5, 2.1965134, 3.5554314, -2.4901724)
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Preview" unique_id=1914979460]
-mesh = SubResource("PlaneMesh_udwnv")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, -0.5, -1.9936124e-09)
+mesh = SubResource("CylinderMesh_tefeu")
 surface_material_override/0 = ExtResource("2_th8hq")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Preview" unique_id=1861849166]
+[node name="Rock" parent="Preview" unique_id=1684314174 instance=ExtResource("4_amgr8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5046804, 0, 3.3480895)
+
+[node name="Tree" parent="Preview" unique_id=2091600670 instance=ExtResource("5_udwnv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4364128, 0, -2.5450573)
+
+[node name="ArmBall" parent="Preview" unique_id=828132823 instance=ExtResource("6_00bio")]
+process_mode = 4
+transform = Transform3D(0.07627886, 0.046011187, -0.9960243, -8.211626e-12, 0.99893475, 0.046145625, 0.99708647, -0.0035199348, 0.07619757, 5.481711, 0, -1.4234769)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=763773689]
 unique_name_in_owner = true
 environment = ExtResource("3_amgr8")
 
-[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="Preview/WorldEnvironment" unique_id=939638907]
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="WorldEnvironment" unique_id=2104489131]
 transform = Transform3D(0.9659259, -0.25488704, 0.04494347, 0, 0.17364824, 0.9848077, -0.25881907, -0.95125127, 0.1677313, -1.9936124e-09, 10, -1.9936124e-09)
 light_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
 shadow_enabled = true
-
-[node name="Rock" parent="Preview" unique_id=1684314174 instance=ExtResource("4_amgr8")]
-
-[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1813257951]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1132218801]
-shape = SubResource("WorldBoundaryShape3D_amgr8")

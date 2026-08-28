@@ -8,7 +8,7 @@ func _ready() -> void:
 	if State.is_in_world():
 		generate_world.call_deferred()
 	else:
-		get_tree().change_scene_to_file("res://scenes/main.tscn")
+		get_tree().change_scene_to_file.call_deferred("res://scenes/main.tscn")
 
 func generate_world() -> void:
 	world = World.setup(
