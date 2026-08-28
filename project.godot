@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 State="*uid://s8heherv0j41"
+Config="*uid://v7jmaggxikf3"
 
 [display]
 

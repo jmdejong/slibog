@@ -17,7 +17,7 @@ radius = 0.45
 height = 1.7
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_it4ap"]
-radius = 128.0
+radius = 64.0
 
 [sub_resource type="Animation" id="Animation_g2els"]
 length = 0.001
@@ -90,7 +90,8 @@ shape = SubResource("CapsuleShape3D_it4ap")
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, 1.5, -1.9936124e-09)
 
-[node name="Camera3D" type="Camera3D" parent="Body/Head" unique_id=1169723385]
+[node name="Camera" type="Camera3D" parent="Body/Head" unique_id=1169723385]
+unique_name_in_owner = true
 cull_mask = 1048559
 far = 500.0
 
@@ -117,7 +118,8 @@ collision_layer = 16
 collision_mask = 0
 monitoring = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Alerter" unique_id=1937155293]
+[node name="AlerterShape" type="CollisionShape3D" parent="Alerter" unique_id=1937155293]
+unique_name_in_owner = true
 shape = SubResource("SphereShape3D_it4ap")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=721278984]

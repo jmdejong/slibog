@@ -1,6 +1,6 @@
 [gd_resource type="Environment" format=3 uid="uid://hofgm4ax01r3"]
 
-[ext_resource type="Shader" uid="uid://qkoadiik53po" path="res://code/clouds_sky.gdshader" id="1_sngxj"]
+[ext_resource type="Shader" uid="uid://qkoadiik53po" path="res://code/shaders/clouds_sky.gdshader" id="1_sngxj"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_toly3"]
 frequency = 0.02

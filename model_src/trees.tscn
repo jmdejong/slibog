@@ -108,15 +108,36 @@ rings = 3
 material = ExtResource("3_e8qbb")
 
 [node name="CSGSphere3D4" type="CSGSphere3D" parent="Bush/CSGCombiner3D" unique_id=1597549501]
-transform = Transform3D(0.8618792, -0.5071136, 0, 0.5071136, 0.8618792, 0, 0, 0, 1, -1.0795212, 0.8026717, 0.52688026)
+transform = Transform3D(0.8618792, -0.5071136, 0, 0.5071136, 0.8618792, 0, 0, 0, 1, -0.98793983, 0.8026717, 0.36971998)
 radius = 2.262694
 radial_segments = 8
 rings = 5
 material = ExtResource("3_e8qbb")
 
 [node name="CSGSphere3D3" type="CSGSphere3D" parent="Bush/CSGCombiner3D" unique_id=1184056244]
-transform = Transform3D(1, 0, 0, 0, 0.4269529, -0.90427387, 0, 0.90427387, 0.4269529, 0, 1.5252404, 0)
-radius = 2.262694
+transform = Transform3D(1, 0, 0, 0, 0.4269529, -0.90427387, 0, 0.90427387, 0.4269529, 0, 2.2156029, 0)
+radius = 2.194987
+radial_segments = 9
+rings = 4
+material = ExtResource("3_e8qbb")
+
+[node name="CSGSphere3D5" type="CSGSphere3D" parent="Bush/CSGCombiner3D" unique_id=386205101]
+transform = Transform3D(1, 0, 0, 0, 0.4269529, -0.90427387, 0, 0.90427387, 0.4269529, 0.30842876, 1.6030812, 0.2442112)
+radius = 2.194987
+radial_segments = 9
+rings = 4
+material = ExtResource("3_e8qbb")
+
+[node name="CSGSphere3D6" type="CSGSphere3D" parent="Bush/CSGCombiner3D" unique_id=1607116477]
+transform = Transform3D(0.97227824, 0.21144366, 0.09983312, 0, 0.4269529, -0.90427387, -0.23382702, 0.8792058, 0.41511703, 0.05562496, 1.6030812, -0.17460656)
+radius = 2.194987
+radial_segments = 9
+rings = 4
+material = ExtResource("3_e8qbb")
+
+[node name="CSGSphere3D7" type="CSGSphere3D" parent="Bush/CSGCombiner3D" unique_id=1356040729]
+transform = Transform3D(0.7463567, 0.601836, 0.28415686, 0, 0.42695287, -0.9042738, -0.6655462, 0.6749109, 0.3186592, -0.49805737, 1.6030812, -0.17460656)
+radius = 2.249995
 radial_segments = 9
 rings = 4
 material = ExtResource("3_e8qbb")

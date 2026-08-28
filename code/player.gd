@@ -27,8 +27,17 @@ var min_sprint_start_stamina: float = 2
 signal viewpoint_changed(pos: Vector3)
 
 func _ready() -> void:
+	set_performance()
 	update_health_bar()
 	update_stamina_bar()
+
+func set_performance() -> void:
+	if Config.performance == Config.Perf.FAST:
+		%AlerterShape.shape.radius = 64
+		%Camera.far = 96
+	elif Config.performance == Config.Perf.PRETTY:
+		%AlerterShape.shape.radius = 128
+		%Camera.far = 500
 
 func _physics_process(delta: float) -> void:
 	

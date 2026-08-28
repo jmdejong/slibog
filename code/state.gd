@@ -1,7 +1,7 @@
 extends Node
 
 const save_path: String = "user://state.json"
-const tmp_save_path: String = "user://state.json"
+const tmp_save_path: String = "user://state.json.tmp"
 
 
 

@@ -6,9 +6,9 @@ func set_player(player: Player) -> void:
 		child.queue_free()
 	$Players.add_child(player)
 
-static func setup(player_class: PlayerClass, blueprint: LevelBlueprint, seed: int) -> World:
+static func setup(player_class: PlayerClass, blueprint: LevelBlueprint, world_seed: int) -> World:
 	var world: World = preload("res://scenes/world.tscn").instantiate()
-	var level: Node3D = blueprint.generate(seed)
+	var level: Node3D = blueprint.generate(world_seed)
 	world.add_child(level)
 	var player: Player = player_class.player()
 	player.transform = level.get_node("Spawn").transform
