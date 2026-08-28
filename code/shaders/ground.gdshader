@@ -1,6 +1,6 @@
 shader_type spatial;
 
-render_mode world_vertex_coords, specular_disabled, diffuse_lambert;
+render_mode specular_disabled, diffuse_lambert;
 
 uniform sampler2D tex : source_color, filter_nearest_mipmap;
 uniform sampler2D wall_tex : source_color, filter_nearest_mipmap;
@@ -59,7 +59,7 @@ void fragment() {
 	t += int(floor(world_position.y / pixel_size));
 	//ALBEDO = texelFetch(tex, t % tex_size, 0).xyz;
 	vec2 tex_coord = vec2(t)/float(tex_size);
-	if (world_normal.y > max_y_floor) {
+	if (normalize(world_normal).y > max_y_floor) {
 		ALBEDO = texture(tex, tex_coord).xyz;
 	} else {
 		ALBEDO = texture(wall_tex, tex_coord).xyz;

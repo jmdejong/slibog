@@ -2,24 +2,69 @@
 
 [ext_resource type="Script" uid="uid://ct43vkxr8y7hq" path="res://code/level_blueprint.gd" id="1_xlcxy"]
 [ext_resource type="PackedScene" uid="uid://buy0r8yjrtfu0" path="res://scenes/worlds/sol.tscn" id="2_xlcxy"]
-[ext_resource type="PackedScene" uid="uid://yf830ij3s22a" path="res://scenes/structures/sun_surface.tscn" id="4_fqmv8"]
-[ext_resource type="Environment" uid="uid://bq12rrq07uicx" path="res://materials/environment/sun_environment.tres" id="4_xlcxy"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_it4ap"]
+top_radius = 10.0
+bottom_radius = 10.0
+height = 1.0
+
+[sub_resource type="Gradient" id="Gradient_7poqh"]
+offsets = PackedFloat32Array(0, 0.15306123, 0.30272108, 0.6632653, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.58, 0, 0, 1, 0.9, 0, 0, 1, 0.96, 0.89568, 0.31679997, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_uy5t1"]
+frequency = 0.02
+fractal_octaves = 6
+fractal_lacunarity = 3.0
+fractal_gain = 0.9
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xlcxy"]
+noise = SubResource("FastNoiseLite_uy5t1")
+color_ramp = SubResource("Gradient_7poqh")
+seamless = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fqmv8"]
+albedo_texture = SubResource("NoiseTexture2D_xlcxy")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4xpdj"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_uy5t1"]
+material = SubResource("StandardMaterial3D_4xpdj")
+size = Vector3(0.06, 0.06, 0.06)
+
+[sub_resource type="Gradient" id="Gradient_xlcxy"]
+colors = PackedColorArray(1, 1, 0, 1, 1, 0, 0, 1)
 
 [node name="Sol" type="Node3D" unique_id=1822606433]
 script = ExtResource("1_xlcxy")
 scene = ExtResource("2_xlcxy")
+display_name = "Sol"
 
 [node name="Preview" type="Node3D" parent="." unique_id=1716652406]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
-[node name="Camera3D2" type="Camera3D" parent="Preview" unique_id=364008759]
-transform = Transform3D(-0.70710677, -0.49999997, 0.49999997, 0, 0.70710677, 0.70710677, -0.70710677, 0.49999997, -0.49999997, 0.82907486, 1.5057249, -1.9780053)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Preview" unique_id=676116538]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, -0.5, -1.9936124e-09)
+mesh = SubResource("CylinderMesh_it4ap")
+surface_material_override/0 = SubResource("StandardMaterial3D_fqmv8")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Preview" unique_id=1669304299]
-environment = ExtResource("4_xlcxy")
-
-[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="Preview/WorldEnvironment" unique_id=368588894]
-transform = Transform3D(0.9659259, -0.25488704, 0.04494347, 0, 0.17364824, 0.9848077, -0.25881907, -0.95125127, 0.1677313, -1.9936124e-09, 10, -1.9936124e-09)
-light_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
-shadow_enabled = true
-
-[node name="SunSurface" parent="Preview" unique_id=620245187 instance=ExtResource("4_fqmv8")]
+[node name="CPUParticles3D" type="CPUParticles3D" parent="Preview" unique_id=1913879409]
+cast_shadow = 0
+mesh = SubResource("BoxMesh_uy5t1")
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 1.0
+emission_ring_radius = 8.0
+emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 90.0
+spread = 123.56
+gravity = Vector3(0, 1, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 2.0
+angle_min = -310.3
+angle_max = 358.0
+scale_amount_min = 0.5
+color_ramp = SubResource("Gradient_xlcxy")

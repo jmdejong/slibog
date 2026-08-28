@@ -92,6 +92,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, 1.5, -1.99361
 
 [node name="Camera3D" type="Camera3D" parent="Body/Head" unique_id=1169723385]
 cull_mask = 1048559
+far = 500.0
 
 [node name="Hand" type="Node3D" parent="Body" unique_id=305706327]
 unique_name_in_owner = true

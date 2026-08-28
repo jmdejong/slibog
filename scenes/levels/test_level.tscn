@@ -3,31 +3,26 @@
 [ext_resource type="Script" uid="uid://ct43vkxr8y7hq" path="res://code/level_blueprint.gd" id="1_2q6dc"]
 [ext_resource type="PackedScene" uid="uid://cxtq3sfexdf4o" path="res://scenes/worlds/test_world.tscn" id="2_w7c3h"]
 [ext_resource type="Material" uid="uid://btoib0ln78fjg" path="res://materials/static/ground_grass.tres" id="3_mx8sn"]
-[ext_resource type="Environment" uid="uid://dkaipsmtbmw7a" path="res://materials/environment/day_environment.tres" id="4_v45ci"]
 [ext_resource type="PackedScene" uid="uid://ckvhddih8pih4" path="res://scenes/structures/house.tscn" id="5_48ne7"]
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_2r41h"]
-size = Vector2(256, 256)
+[sub_resource type="CylinderMesh" id="CylinderMesh_uy5t1"]
+top_radius = 10.0
+bottom_radius = 10.0
+height = 1.0
 
 [node name="TestLevel" type="Node3D" unique_id=1822606433]
 script = ExtResource("1_2q6dc")
 scene = ExtResource("2_w7c3h")
 
 [node name="Preview" type="Node3D" parent="." unique_id=1716652406]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 
 [node name="Camera3D2" type="Camera3D" parent="Preview" unique_id=364008759]
 transform = Transform3D(-0.7071068, -0.5, 0.5, 0, 0.7071068, 0.70710677, -0.7071068, 0.5, -0.5, 4.054273, 8.583325, -2.3212652)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Preview" unique_id=865394917]
-mesh = SubResource("PlaneMesh_2r41h")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, -0.5, -1.9936124e-09)
+mesh = SubResource("CylinderMesh_uy5t1")
 surface_material_override/0 = ExtResource("3_mx8sn")
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Preview" unique_id=1669304299]
-environment = ExtResource("4_v45ci")
-
-[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="Preview/WorldEnvironment" unique_id=368588894]
-transform = Transform3D(0.9659259, -0.25488704, 0.04494347, 0, 0.17364824, 0.9848077, -0.25881907, -0.95125127, 0.1677313, -1.9936124e-09, 10, -1.9936124e-09)
-light_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
-shadow_enabled = true
 
 [node name="House" parent="Preview" unique_id=909676520 instance=ExtResource("5_48ne7")]

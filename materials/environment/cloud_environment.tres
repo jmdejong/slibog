@@ -1,23 +1,41 @@
 [gd_resource type="Environment" format=3 uid="uid://hofgm4ax01r3"]
 
-[sub_resource type="Gradient" id="Gradient_tbgi4"]
-colors = PackedColorArray(0.26666668, 0.26666668, 1, 1, 1, 1, 1, 1)
+[ext_resource type="Shader" uid="uid://qkoadiik53po" path="res://code/clouds_sky.gdshader" id="1_sngxj"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_jyhfs"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_toly3"]
+frequency = 0.02
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_sugp2"]
-noise = SubResource("FastNoiseLite_jyhfs")
-color_ramp = SubResource("Gradient_tbgi4")
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_yds5t"]
+noise = SubResource("FastNoiseLite_toly3")
 seamless = true
 
-[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_0wfyh"]
-panorama = SubResource("NoiseTexture2D_sugp2")
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_sngxj"]
+seed = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_toly3"]
+noise = SubResource("FastNoiseLite_sngxj")
+seamless = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_yds5t"]
+frequency = 0.02
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_12r5l"]
+noise = SubResource("FastNoiseLite_yds5t")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5wbh6"]
+shader = ExtResource("1_sngxj")
+shader_parameter/noise_a = SubResource("NoiseTexture2D_yds5t")
+shader_parameter/noise_b = SubResource("NoiseTexture2D_toly3")
+shader_parameter/noise_c = SubResource("NoiseTexture2D_12r5l")
+shader_parameter/blue = Color(0.4, 0.4, 1, 1)
+shader_parameter/white = Color(1, 1, 1, 1)
 
 [sub_resource type="Sky" id="Sky_o5qli"]
-sky_material = SubResource("PanoramaSkyMaterial_0wfyh")
+sky_material = SubResource("ShaderMaterial_5wbh6")
 
 [resource]
-background_mode = 2
 sky = SubResource("Sky_o5qli")
+sky_custom_fov = 60.0
 ambient_light_source = 2
 ambient_light_color = Color(0.53333336, 0.53333336, 0.53333336, 1)

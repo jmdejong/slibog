@@ -96,11 +96,13 @@ transform = Transform3D(0.99094516, -0.13233678, -0.022684108, 0.04494346, 0.167
 
 [node name="Pole" type="MeshInstance3D" parent="Handle" unique_id=1130786516]
 transform = Transform3D(1, 2.30968e-07, 4.8801303e-07, 0, 0.999998, -1.937151e-07, 0, 5.9604645e-08, 0.99999905, -1.9936124e-09, 1, -1.9936124e-09)
+cast_shadow = 0
 mesh = SubResource("CylinderMesh_it4ap")
 surface_material_override/0 = ExtResource("2_f4mc5")
 
 [node name="Point" type="MeshInstance3D" parent="Handle/Pole" unique_id=88785153]
 transform = Transform3D(1, 0, -3.7252903e-09, -7.450581e-09, 1, -1.4901161e-08, 0, 1.4901161e-08, 1, -1.9936124e-09, 1.7, -1.9936124e-09)
+cast_shadow = 0
 mesh = SubResource("CylinderMesh_cdsqw")
 surface_material_override/0 = ExtResource("3_osdwm")
 

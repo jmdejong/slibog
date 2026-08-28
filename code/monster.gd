@@ -81,7 +81,7 @@ func plan() -> void:
 	if target == null:
 		for o: Area3D in %Observe.get_overlapping_areas():
 			var player: Player = o.get_parent()
-			if global_position.distance_to(player.global_position) < alert_range:
+			if not player.dead and global_position.distance_to(player.global_position) < alert_range:
 				target = player
 	if target == null:
 		reconsider_timeout = randf_range(0.8, 2)
@@ -102,7 +102,7 @@ func plan() -> void:
 		else:
 			reset_horizontal_velocity()
 			behavior = Behavior.Waiting
-	if target != null and global_position.distance_to(target.global_position) > forget_range:
+	if target != null and (global_position.distance_to(target.global_position) > forget_range or target.dead):
 		target = null
 		behavior = Behavior.Waiting
 		plan.call_deferred()

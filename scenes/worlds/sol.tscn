@@ -7,11 +7,12 @@
 [sub_resource type="SphereShape3D" id="SphereShape3D_it4ap"]
 radius = 1024.0
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4xpdj"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1byqv"]
+shading_mode = 0
 vertex_color_use_as_albedo = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_it4ap"]
-material = SubResource("StandardMaterial3D_4xpdj")
+material = SubResource("StandardMaterial3D_1byqv")
 size = Vector3(0.3, 0.3, 0.3)
 
 [sub_resource type="Gradient" id="Gradient_cdsqw"]
@@ -40,10 +41,15 @@ script = ExtResource("1_k20h4")
 shape = SubResource("SphereShape3D_it4ap")
 
 [node name="CPUParticles3D" type="CPUParticles3D" parent="." unique_id=1491560690]
+cast_shadow = 0
 amount = 80
 mesh = SubResource("BoxMesh_it4ap")
-emission_shape = 3
-emission_box_extents = Vector3(10, 1, 10)
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 1.0
+emission_ring_radius = 20.0
+emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 90.0
 spread = 123.56
 gravity = Vector3(0, 10, 0)
 initial_velocity_min = 1.0
