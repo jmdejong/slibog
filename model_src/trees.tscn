@@ -8,6 +8,10 @@
 material = ExtResource("1_2gjij")
 size = Vector2(100, 100)
 
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_cdsqw"]
+radius = 2.519043
+height = 6.086914
+
 [node name="Trees" type="Node3D" unique_id=986280867]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2085568516]
@@ -108,7 +112,7 @@ rings = 3
 material = ExtResource("3_e8qbb")
 
 [node name="CSGSphere3D4" type="CSGSphere3D" parent="Bush/CSGCombiner3D" unique_id=1597549501]
-transform = Transform3D(0.8618792, -0.5071136, 0, 0.5071136, 0.8618792, 0, 0, 0, 1, -0.98793983, 0.8026717, 0.36971998)
+transform = Transform3D(0.8618792, -0.5071136, 0, 0.5071136, 0.8618792, 0, 0, 0, 1, -0.40589428, 0.8026717, 0.14727306)
 radius = 2.262694
 radial_segments = 8
 rings = 5
@@ -136,7 +140,7 @@ rings = 4
 material = ExtResource("3_e8qbb")
 
 [node name="CSGSphere3D7" type="CSGSphere3D" parent="Bush/CSGCombiner3D" unique_id=1356040729]
-transform = Transform3D(0.7463567, 0.601836, 0.28415686, 0, 0.42695287, -0.9042738, -0.6655462, 0.6749109, 0.3186592, -0.49805737, 1.6030812, -0.17460656)
+transform = Transform3D(0.7463567, 0.601836, 0.28415686, 0, 0.42695287, -0.9042738, -0.6655462, 0.6749109, 0.3186592, -0.14740086, 1.7619414, -0.17460656)
 radius = 2.249995
 radial_segments = 9
 rings = 4
@@ -148,3 +152,8 @@ radius = 2.262694
 radial_segments = 7
 rings = 3
 material = ExtResource("3_e8qbb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Bush" unique_id=96763291]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2514648, 0)
+visible = false
+mesh = SubResource("CapsuleMesh_cdsqw")

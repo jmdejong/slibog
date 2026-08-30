@@ -88,7 +88,12 @@ func _physics_process(delta: float) -> void:
 		stamina = min(stamina + stamina_regen_rate * delta, max_stamina)
 	if prev_stamina != stamina:
 		update_stamina_bar()
-	%OverlayUi.set_info_text("fps: %3.1f" % Engine.get_frames_per_second())
+	%OverlayUi.set_info_text("fps: %3.1f\npos: %3.1f, %3.1f, %3.1f" % [
+		Engine.get_frames_per_second(),
+		global_position.x,
+		global_position.y,
+		global_position.z
+	])
 
 
 func rotate_view(drot: Vector2) -> void:

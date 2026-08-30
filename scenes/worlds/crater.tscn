@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ddewpbstt2aag"]
 
-[ext_resource type="Environment" uid="uid://dkaipsmtbmw7a" path="res://materials/environment/day_environment.tres" id="1_nnjfp"]
-[ext_resource type="Material" uid="uid://btoib0ln78fjg" path="res://materials/static/ground_grass.tres" id="2_7khok"]
+[ext_resource type="Environment" uid="uid://dkaipsmtbmw7a" path="res://materials/environment/day_environment.tres" id="1_jwnio"]
+[ext_resource type="Material" uid="uid://btoib0ln78fjg" path="res://materials/static/ground_grass.tres" id="2_w5bcm"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_it4ap"]
 left_to_right = 0.0
@@ -17,10 +17,10 @@ sections = 8
 section_length = 2.0
 curve = SubResource("Curve_cdsqw")
 
-[node name="Valley" type="Node3D" unique_id=1635716418]
+[node name="Crater" type="Node3D" unique_id=1635716418]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1118867364]
-environment = ExtResource("1_nnjfp")
+environment = ExtResource("1_jwnio")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment" unique_id=1117527584]
 transform = Transform3D(0.9659259, -0.25488704, 0.04494347, 0, 0.17364824, 0.9848077, -0.25881907, -0.95125127, 0.1677313, -1.9936124e-09, 10, -1.9936124e-09)
@@ -32,20 +32,40 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, 2, -1.9936124
 
 [node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=840517251]
 size = Vector3(256, 64, 256)
-material = ExtResource("2_7khok")
+material = ExtResource("2_w5bcm")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="CSGBox3D" unique_id=776561942]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, 64, -1.9936124e-09)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.008999998, 65, -0.029000003)
 operation = 2
 size = Vector3(192, 128, 192)
-material = ExtResource("2_7khok")
+material = ExtResource("2_w5bcm")
 
 [node name="CSGMesh3D" type="CSGMesh3D" parent="CSGBox3D" unique_id=781897764]
 transform = Transform3D(0.015843282, 0, 0.9998745, 0, 1, 0, -0.9998745, 0, 0.015843282, -1.9936124e-09, -1.9936124e-09, 11.916)
 mesh = SubResource("PrismMesh_it4ap")
-material = ExtResource("2_7khok")
+material = ExtResource("2_w5bcm")
 
 [node name="CSGMesh3D2" type="CSGMesh3D" parent="CSGBox3D" unique_id=1894756022]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.394, 0, -1.9936124e-09)
 mesh = SubResource("TubeTrailMesh_it4ap")
-material = ExtResource("2_7khok")
+material = ExtResource("2_w5bcm")
+
+[node name="CSGSphere3D" type="CSGSphere3D" parent="CSGBox3D" unique_id=1476982841]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -33.48893)
+radius = 16.394104
+material = ExtResource("2_w5bcm")
+
+[node name="CSGSphere3D2" type="CSGSphere3D" parent="CSGBox3D" unique_id=743848328]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.908165, -1.711885, -33.48893)
+operation = 2
+radius = 16.394104
+material = ExtResource("2_w5bcm")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGBox3D" unique_id=1752308206]
+size = Vector3(5, 5, 5)
+material = ExtResource("2_w5bcm")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="CSGBox3D" unique_id=1528390126]
+transform = Transform3D(1, 0, 0, 0, 0.7107507, -0.703444, 0, 0.703444, 0.7107507, 0.8876953, -1.474494, 51.07177)
+size = Vector3(19.414063, 17.389221, 19.89978)
+material = ExtResource("2_w5bcm")

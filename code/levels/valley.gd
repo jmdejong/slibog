@@ -35,7 +35,7 @@ func generate_area(world: Node3D, area_id: Vector2i, rng: RandomNumberGenerator)
 	var area: Rect2 = Rect2(Vector2(area_id) * area_size, Vector2.ONE * area_size)
 	var center2: Vector2 = area.get_center()
 	var center: Vector3 = Vector3(center2.x, 1, center2.y)
-	var ground: Node3D = generate_ground(area)
+	generate_ground(world, area)
 	if area_id == Vector2i.ZERO:
 		# spawn area
 		var subtiles: int = 8
@@ -142,9 +142,8 @@ func generate_area(world: Node3D, area_id: Vector2i, rng: RandomNumberGenerator)
 						struct.position = pos
 						struct.rotation.y = rng.randf_range(-PI, PI)
 						world.add_child(struct)
-	world.add_child(ground)
 
-func generate_ground(area: Rect2) -> Node3D:
+func generate_ground(world: Node3D, area: Rect2) -> void:
 	var ground: StaticBody3D = StaticBody3D.new()
 	var center: Vector2 = area.get_center()
 	ground.position = Vector3(center.x, 0, center.y)
@@ -160,11 +159,11 @@ func generate_ground(area: Rect2) -> Node3D:
 	heightmap.map_data = height_buffer
 	ground_shape.shape = heightmap
 	ground.add_child(ground_shape)
+	world.add_child(ground)
 	var ground_mesh: MeshInstance3D = MeshInstance3D.new()
 	var mesh = PlaneMesh.new()
 	mesh.size = area.size
 	ground_mesh.mesh = mesh
 	ground_mesh.material_override = preload("res://materials/static/ground_grass.tres")
-	ground_mesh.position = Vector3(0, 1, 0)
-	ground.add_child(ground_mesh)
-	return ground
+	ground_mesh.position = Vector3(center.x, 1, center.y)
+	world.add_child(ground_mesh)

@@ -2,27 +2,31 @@
 
 [ext_resource type="Shader" uid="uid://bp36q35glr04l" path="res://code/shaders/ground.gdshader" id="1_ec4kg"]
 
+[sub_resource type="Gradient" id="Gradient_x6u22"]
+colors = PackedColorArray(0.33333334, 0.33333334, 0.33333334, 1, 0.6, 0.6, 0.6, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_6wdyt"]
+frequency = 0.5
+
+[sub_resource type="NoiseTexture3D" id="NoiseTexture3D_jwnio"]
+noise = SubResource("FastNoiseLite_6wdyt")
+color_ramp = SubResource("Gradient_x6u22")
+seamless = true
+
 [sub_resource type="Gradient" id="Gradient_r2ut1"]
 offsets = PackedFloat32Array(0, 0.05, 0.5, 1)
 colors = PackedColorArray(0.13333334, 0.2784314, 0.13333334, 1, 0.11372549, 0.4117647, 0.11372549, 1, 0.13333334, 0.5294118, 0.13333334, 1, 0.09411765, 0.7294118, 0.09411765, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_ggbkq"]
-frequency = 0.2
-domain_warp_enabled = true
+frequency = 0.5
 domain_warp_frequency = 0.02
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_uyqfm"]
-width = 128
-height = 128
+width = 64
+height = 64
 noise = SubResource("FastNoiseLite_ggbkq")
 color_ramp = SubResource("Gradient_r2ut1")
 seamless = true
-
-[sub_resource type="Gradient" id="Gradient_x6u22"]
-colors = PackedColorArray(0.2, 0.2, 0.2, 1, 0.8, 0.8, 0.8, 1)
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_6wdyt"]
-frequency = 0.2
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_7khok"]
 width = 128
@@ -36,6 +40,7 @@ render_priority = 0
 shader = ExtResource("1_ec4kg")
 shader_parameter/tex = SubResource("NoiseTexture2D_uyqfm")
 shader_parameter/wall_tex = SubResource("NoiseTexture2D_7khok")
-shader_parameter/tex_size = 128
-shader_parameter/pixel_size = 0.249999999999995
+shader_parameter/rock_tex = SubResource("NoiseTexture3D_jwnio")
+shader_parameter/tex_size = 64
+shader_parameter/pixel_size = 0.25
 shader_parameter/max_y_floor = 0.707
