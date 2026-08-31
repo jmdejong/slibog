@@ -116,6 +116,7 @@ mesh = SubResource("CapsuleMesh_it4ap")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Node3D2" unique_id=1287870908]
 transform = Transform3D(-0.8622871, -0.4460654, 0.23976372, -5.366623e-09, 0.4734486, 0.88082147, -0.5064198, 0.75952095, -0.4082486, 0, 2.8379834, 0)
+light_energy = 0.9
 shadow_enabled = true
 
 [node name="LevelPreview" type="Node3D" parent="Node3D2" unique_id=1906970304]

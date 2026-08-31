@@ -10,11 +10,17 @@ uniform sampler3D rock_tex : source_color, filter_linear_mipmap, repeat_enable;
 uniform int tex_size = 64;
 uniform float pixel_size = 0.25;
 uniform float max_y_floor = 0.707;
+uniform sampler2D height_input;
+uniform vec3 area_min;
+uniform vec3 area_size;
 varying vec3 world_position;
 varying vec3 world_normal;
 
 void vertex() {
-	world_position = VERTEX;
+	world_position = VERTEX + NODE_POSITION_WORLD;
+	//vec3 map_coordinates = (world_position - area_min) / area_size;
+	//VERTEX.y += texture(height_input, map_coordinates.xz).x * area_size.y + area_min.y;
+	//world_position = VERTEX + NODE_POSITION_WORLD;
 	world_normal = NORMAL;
 }
 

@@ -21,7 +21,7 @@ environment = ExtResource("1_oemaf")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment" unique_id=559209819]
 transform = Transform3D(0.9659259, -0.25488704, 0.04494347, 0, 0.17364824, 0.9848077, -0.25881907, -0.95125127, 0.1677313, -1.9936124e-09, 10, -1.9936124e-09)
-light_color = Color(0.53333336, 0.53333336, 0.53333336, 1)
+light_energy = 0.9
 shadow_enabled = true
 
 [node name="Spawn" type="Node3D" parent="." unique_id=318140625]

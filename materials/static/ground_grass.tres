@@ -14,8 +14,8 @@ color_ramp = SubResource("Gradient_x6u22")
 seamless = true
 
 [sub_resource type="Gradient" id="Gradient_r2ut1"]
-offsets = PackedFloat32Array(0, 0.05, 0.5, 1)
-colors = PackedColorArray(0.13333334, 0.2784314, 0.13333334, 1, 0.11372549, 0.4117647, 0.11372549, 1, 0.13333334, 0.5294118, 0.13333334, 1, 0.09411765, 0.7294118, 0.09411765, 1)
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0.1512, 0.28, 0.1512, 1, 0.1855, 0.53, 0.1855, 1, 0.16790001, 0.73, 0.16790001, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_ggbkq"]
 frequency = 0.5

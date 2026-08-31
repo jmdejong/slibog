@@ -1,7 +1,7 @@
 extends Node3D
 
 @export var roam_range: float = 32
-@export var respawn_time_ms: int = 120_000
+@export var respawn_time_ms: int = 300_000
 @export var initial_spawn: bool = true
 @export var clear_radius: float = 48
 

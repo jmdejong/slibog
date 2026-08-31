@@ -71,7 +71,10 @@ func _input(event: InputEvent) -> void:
 		start_sprint.emit()
 	if Input.is_action_just_released("sprint"):
 		stop_sprint.emit()
-
+		
+	if Input.is_action_just_pressed("switch_render"):
+		var vp := get_viewport()
+		vp.debug_draw = (vp.debug_draw + 1) % 6 as Viewport.DebugDraw
 
 func _on_click_area_gui_input(event: InputEvent) -> void:
 	if event is InputEventScreenDrag and event.index != %MoveJoystick.touch_index:

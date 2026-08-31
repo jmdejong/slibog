@@ -161,8 +161,10 @@ func generate_ground(world: Node3D, area: Rect2) -> void:
 	ground.add_child(ground_shape)
 	world.add_child(ground)
 	var ground_mesh: MeshInstance3D = MeshInstance3D.new()
-	var mesh = PlaneMesh.new()
+	var mesh: PlaneMesh = PlaneMesh.new()
 	mesh.size = area.size
+	mesh.subdivide_width = 15
+	mesh.subdivide_depth = 15
 	ground_mesh.mesh = mesh
 	ground_mesh.material_override = preload("res://materials/static/ground_grass.tres")
 	ground_mesh.position = Vector3(center.x, 1, center.y)

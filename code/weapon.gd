@@ -5,10 +5,12 @@ extends Node3D
 @export var is_stabbing: bool = false:
 	set(val):
 		is_stabbing = val
+		stabbed = {}
 		if val:
 			for area: Area3D in $%HitArea.get_overlapping_areas():
-				do_attack(area.get_parent())
+				stab(area.get_parent())
 @export var knockback: float = 15
+var stabbed: Dictionary[Monster, bool] = {}
 var player: Player
 
 func _ready() -> void:
@@ -18,13 +20,16 @@ func attack() -> void:
 	$AnimationPlayer.play("attack")
 	
 
-func _on_hit_area_area_entered(area: Area3D) -> void:
-	if not is_stabbing:
+func stab(monster: Monster) -> void:
+	if not is_stabbing or stabbed.has(monster):
 		return
-	var monster: Monster = area.get_parent()
 	do_attack(monster)
+	stabbed[monster] = true
 	if attack_single:
 		is_stabbing = false
+
+func _on_hit_area_area_entered(area: Area3D) -> void:
+	stab(area.get_parent())
 
 func do_attack(monster: Monster) -> void:
 	if monster.dead:
