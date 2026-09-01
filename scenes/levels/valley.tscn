@@ -6,6 +6,13 @@
 [ext_resource type="PackedScene" uid="uid://dwijwqo44vuk6" path="res://scenes/structures/rock.tscn" id="4_amgr8"]
 [ext_resource type="PackedScene" uid="uid://bxgiwy7folhqu" path="res://scenes/structures/tree.tscn" id="5_00bio"]
 [ext_resource type="PackedScene" uid="uid://c5yts0b33od7m" path="res://scenes/monsters/arm_ball.tscn" id="6_00bio"]
+[ext_resource type="Script" uid="uid://de0ju4sswa7g1" path="res://addons/zylann.hterrain/hterrain.gd" id="7_ah63f"]
+[ext_resource type="Script" uid="uid://dwkifajvx0sag" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="8_eq1w3"]
+[ext_resource type="Shader" uid="uid://b4rkmsbosivh5" path="res://code/shaders/height_ground.gdshader" id="8_n0roo"]
+
+[sub_resource type="Curve" id="Curve_eq1w3"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.49444443, 0.49295783), 1.577465, 1.577465, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_tefeu"]
 top_radius = 10.0
@@ -24,8 +31,40 @@ size = Vector2(0.2, 0.6)
 transform_format = 1
 mesh = SubResource("QuadMesh_it4ap")
 
+[sub_resource type="Resource" id="Resource_n0roo"]
+script = ExtResource("8_eq1w3")
+mode = 0
+textures = [[], []]
+
+[sub_resource type="Gradient" id="Gradient_eq1w3"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0.1512, 0.28, 0.1512, 1, 0.1855, 0.53, 0.1855, 1, 0.16790001, 0.73, 0.16790001, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_n0roo"]
+frequency = 0.5
+domain_warp_frequency = 0.02
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2gi8u"]
+width = 64
+height = 64
+noise = SubResource("FastNoiseLite_n0roo")
+color_ramp = SubResource("Gradient_eq1w3")
+seamless = true
+
+[sub_resource type="Gradient" id="Gradient_n0roo"]
+colors = PackedColorArray(0.33333334, 0.33333334, 0.33333334, 1, 0.6, 0.6, 0.6, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2gi8u"]
+frequency = 0.5
+
+[sub_resource type="NoiseTexture3D" id="NoiseTexture3D_6jg3n"]
+noise = SubResource("FastNoiseLite_2gi8u")
+color_ramp = SubResource("Gradient_n0roo")
+seamless = true
+
 [node name="Valley" type="Node3D" unique_id=511982229]
 script = ExtResource("1_nje75")
+edge_slope = SubResource("Curve_eq1w3")
 
 [node name="Preview" type="Node3D" parent="." unique_id=1672200582]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
@@ -61,3 +100,28 @@ environment = ExtResource("3_amgr8")
 transform = Transform3D(0.9659259, -0.25488704, 0.04494347, 0, 0.17364824, 0.9848077, -0.25881907, -0.95125127, 0.1677313, -1.9936124e-09, 10, -1.9936124e-09)
 light_energy = 0.9
 shadow_enabled = true
+
+[node name="HTerrain" type="Node3D" parent="." unique_id=1967998705]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -128, -1.9936124e-09, -128)
+script = ExtResource("7_ah63f")
+map_scale = Vector3(1, 100, 1)
+_terrain_data = null
+chunk_size = 32
+collision_enabled = true
+collision_layer = 1
+collision_mask = 1
+physics_material = null
+shader_type = "Custom"
+custom_shader = ExtResource("8_n0roo")
+custom_globalmap_shader = null
+texture_set = SubResource("Resource_n0roo")
+render_layers = 1
+cast_shadow = 1
+shader_params/u_specular = 0.0
+shader_params/grass_tex = SubResource("NoiseTexture2D_2gi8u")
+shader_params/rock_tex = SubResource("NoiseTexture3D_6jg3n")
+shader_params/tex_size = 64
+shader_params/pixel_size = 0.25
+shader_params/max_y_floor = 0.707
+shader_params/map_scale = Vector3(2, 100, 2)
+metadata/_custom_type_script = "uid://de0ju4sswa7g1"

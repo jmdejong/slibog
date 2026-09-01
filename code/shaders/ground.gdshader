@@ -58,22 +58,30 @@ void fragment() {
 	//vec3 v = p;
 	ivec3 pf = ivec3(floor(v));
 	vec3 fr = fract(v);
-	ivec3 corners[7] = { 
-		pf + ivec3(1, 0, 0),
-		pf + ivec3(0, 1, 0),
-		pf + ivec3(0, 0, 1),
-		pf + ivec3(1, 1, 0),
-		pf + ivec3(0, 1, 1),
-		pf + ivec3(1, 0, 1),
-		pf + ivec3(1, 1, 1)
+	ivec3 corners[8] = {
+		ivec3(0),
+		ivec3(1, 0, 0),
+		ivec3(0, 1, 0),
+		ivec3(0, 0, 1),
+		ivec3(1, 1, 0),
+		ivec3(0, 1, 1),
+		ivec3(1, 0, 1),
+		ivec3(1)
 	};
+	//corners = {
+		//fr.x + fr.y + fr.z > 1.5 ? ivec3(1) : ivec3(0),
+		//fr.x + 0.5 > fr.y + fr.z ? ivec3(1, 0, 0) : ivec3(0, 1, 1),
+		//fr.y + 0.5 > fr.x + fr.x ? ivec3(0, 1, 0) : ivec3(1, 0, 1),
+		//fr.z + 0.5 > fr.x + fr.y ? ivec3(0, 0, 1) : ivec3(1, 1, 0),
+		//ivec3(2), ivec3(2), ivec3(2), ivec3(2)
+	//};
 	
-	float min_distance = distance(texelpos(pf), p);
-	ivec3 pp = pf;
-	for (int i=0; i<7; ++i) {
-		float d = distance(texelpos(corners[i]), p);
+	float min_distance = distance(texelpos(pf + corners[0]), p);
+	ivec3 pp = corners[0] + pf;
+	for (int i=1; i<8; ++i) {
+		float d = distance(texelpos(pf + corners[i]), p);
 		if (d<min_distance) {
-			pp = corners[i];
+			pp = pf + corners[i];
 			min_distance = d;
 		}
 	}

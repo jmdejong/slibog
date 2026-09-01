@@ -44,3 +44,5 @@ shader_parameter/rock_tex = SubResource("NoiseTexture3D_jwnio")
 shader_parameter/tex_size = 64
 shader_parameter/pixel_size = 0.25
 shader_parameter/max_y_floor = 0.707
+shader_parameter/area_min = Vector3(0, 0, 0)
+shader_parameter/area_size = Vector3(0, 0, 0)

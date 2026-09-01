@@ -15,4 +15,5 @@ color_ramp = SubResource("Gradient_wkf2g")
 seamless = true
 
 [resource]
+specular_mode = 2
 albedo_texture = SubResource("NoiseTexture2D_p80ks")
