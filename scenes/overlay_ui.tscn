@@ -1,8 +1,16 @@
 [gd_scene format=3 uid="uid://bpcm81j0r8362"]
 
 [ext_resource type="Script" uid="uid://clhdkhr0gt64k" path="res://code/overlay_ui.gd" id="1_j5fei"]
+[ext_resource type="FontFile" uid="uid://brlxme5qgpox1" path="res://fonts/Avara.ttf" id="2_7ejqg"]
 [ext_resource type="Shader" uid="uid://dfsad83l5o468" path="res://code/shaders/hits.gdshader" id="2_avt5o"]
 [ext_resource type="Shader" uid="uid://bh5gkfcw2md36" path="res://code/shaders/fadout.gdshader" id="2_d0yxp"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ps0a0"]
+font = ExtResource("2_7ejqg")
+font_size = 24
+font_color = Color(1, 0.70033336, 0.42000002, 1)
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_it4ap"]
 shader = ExtResource("2_avt5o")
@@ -152,6 +160,7 @@ offset_right = -20.0
 offset_bottom = -45.0
 grow_vertical = 0
 text = "0"
+label_settings = SubResource("LabelSettings_ps0a0")
 horizontal_alignment = 2
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1833776502]

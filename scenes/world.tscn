@@ -29,3 +29,5 @@ surface_material_override/0 = SubResource("ShaderMaterial_cdsqw")
 script = ExtResource("4_k0juu")
 
 [node name="Players" type="Node3D" parent="." unique_id=1555413217]
+
+[node name="Level" type="Node3D" parent="." unique_id=565004266]

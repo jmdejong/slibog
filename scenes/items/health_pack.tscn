@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://582emqq2jcmv"]
 
 [ext_resource type="Script" uid="uid://b2n2e1sh64vod" path="res://code/items/health_pack.gd" id="1_y84vc"]
-[ext_resource type="FontFile" uid="uid://brlxme5qgpox1" path="res://fonts/Avara.ttf" id="2_sf7ei"]
+[ext_resource type="FontFile" uid="uid://gc4xtjbx8wa2" path="res://fonts/Jellee-Bold.ttf" id="2_sf7ei"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_it4ap"]
 
@@ -13,6 +13,7 @@ text = "H"
 font = ExtResource("2_sf7ei")
 vertical_alignment = 2
 pixel_size = 0.0625
+curve_step = 1.0
 depth = 0.15
 
 [node name="HealthPack" type="RigidBody3D" unique_id=896338429]
