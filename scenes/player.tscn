@@ -75,6 +75,10 @@ _data = {
 &"die": SubResource("Animation_dqkch")
 }
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_4xpdj"]
+radius = 1.1933594
+height = 3.7366943
+
 [node name="Player" type="CharacterBody3D" unique_id=265189897]
 collision_layer = 2
 collision_mask = 3
@@ -142,8 +146,18 @@ offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="Pickup" type="Area3D" parent="." unique_id=2147267961]
+collision_layer = 0
+collision_mask = 32
+monitorable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pickup" unique_id=60093798]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, 0.6737671, -1.9936124e-09)
+shape = SubResource("CapsuleShape3D_4xpdj")
+
 [connection signal="attack" from="InputControls" to="." method="start_attack"]
 [connection signal="rotate_view" from="InputControls" to="." method="rotate_view"]
 [connection signal="start_sprint" from="InputControls" to="." method="start_sprint"]
 [connection signal="stop_sprint" from="InputControls" to="." method="stop_sprint"]
 [connection signal="toggle_gravity" from="InputControls" to="." method="toggle_gravity"]
+[connection signal="body_entered" from="Pickup" to="." method="_on_pickup_body_entered"]

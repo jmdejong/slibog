@@ -29,6 +29,7 @@ var has_target_pos: bool = false
 enum Behavior {Sleeping, Waiting, Walking, Turning, Attacking, Knockedback, Dying}
 var behavior: Behavior = Behavior.Waiting
 
+@export var loot: Array[LootEntry] = []
 
 func set_horizontal_velocity(vel: Vector3) -> void:
 	velocity = Vector3(vel.x, velocity.y, vel.z)
@@ -56,12 +57,19 @@ func hit(damage: float, knockback: Vector3, by: Player) -> void:
 func die(by: Player) -> void:
 		dead = true
 		behavior = Behavior.Dying
-		if by != null:
-			by.gain_xp(xp)
 		reset_horizontal_velocity()
 		#process_mode = Node.PROCESS_MODE_DISABLED
 		collision_layer = 0
 		collision_mask = 1
+		if by != null:
+			by.gain_xp(xp)
+		for entry: LootEntry in loot:
+			if randf() < entry.chance:
+				var loot_item: Node3D = entry.item.instantiate()
+				loot_item.position = position + Vector3(randf_range(-0.5, 0.5), 1, randf_range(-0.5, 0.5))
+				loot_item.rotate_y(randf() * 2 * PI)
+				add_sibling(loot_item)
+				break
 		$AnimationPlayer.play("die")
 		await $AnimationPlayer.animation_finished
 		queue_free()

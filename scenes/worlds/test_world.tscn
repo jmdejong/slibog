@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://7aus8kw62omx" path="res://scenes/structures/small_tree.tscn" id="6_anyd7"]
 [ext_resource type="PackedScene" uid="uid://inndsla2y1r1" path="res://scenes/spawner.tscn" id="7_0xgc2"]
 [ext_resource type="PackedScene" uid="uid://c5yts0b33od7m" path="res://scenes/monsters/arm_ball.tscn" id="8_fs4ai"]
+[ext_resource type="PackedScene" uid="uid://582emqq2jcmv" path="res://scenes/items/health_pack.tscn" id="9_fs4ai"]
 [ext_resource type="PackedScene" uid="uid://b8ifqcg5xcqwp" path="res://scenes/monsters/balrus.tscn" id="9_oesy6"]
 [ext_resource type="PackedScene" uid="uid://bxqhjxk7305s7" path="res://scenes/monsters/beaksheep.tscn" id="10_si77m"]
 [ext_resource type="Script" uid="uid://de0ju4sswa7g1" path="res://addons/zylann.hterrain/hterrain.gd" id="14_0xgc2"]
@@ -96,6 +97,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -35.460354, 0, -15.661432)
 
 [node name="Rock4" parent="." unique_id=1669109105 instance=ExtResource("6_8xtsc")]
 transform = Transform3D(0.6065749, 0, -0.79502636, 0, 1, 0, 0.79502636, 0, 0.6065749, -26.531937, -1.9073486e-06, -23.525864)
+
+[node name="HealthPack" parent="." unique_id=1060407485 instance=ExtResource("9_fs4ai")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -42, 7.688891, -31)
 
 [node name="ArmballSpawner" parent="." unique_id=1606651978 instance=ExtResource("7_0xgc2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32.112297, 0, 30.34408)

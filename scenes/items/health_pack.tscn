@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://582emqq2jcmv"]
+
+[ext_resource type="Script" uid="uid://b2n2e1sh64vod" path="res://code/items/health_pack.gd" id="1_y84vc"]
+[ext_resource type="FontFile" uid="uid://brlxme5qgpox1" path="res://fonts/Avara.ttf" id="2_sf7ei"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_it4ap"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cdsqw"]
+albedo_color = Color(0.6666667, 0, 0, 1)
+
+[sub_resource type="TextMesh" id="TextMesh_y84vc"]
+text = "H"
+font = ExtResource("2_sf7ei")
+vertical_alignment = 2
+pixel_size = 0.0625
+depth = 0.15
+
+[node name="HealthPack" type="RigidBody3D" unique_id=896338429]
+collision_layer = 32
+axis_lock_linear_x = true
+axis_lock_linear_z = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+script = ExtResource("1_y84vc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=465506812]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.71533716, 0)
+shape = SubResource("SphereShape3D_it4ap")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1835051284]
+material_override = SubResource("StandardMaterial3D_cdsqw")
+cast_shadow = 0
+mesh = SubResource("TextMesh_y84vc")

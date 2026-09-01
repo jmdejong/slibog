@@ -180,3 +180,8 @@ func calculate_level() -> void:
 	next_level_xp = xp_for_level(player_level + 1)
 	%OverlayUi.set_xp(xp - current_level_xp, next_level_xp - current_level_xp)
 	%OverlayUi.set_level(player_level)
+
+
+
+func _on_pickup_body_entered(body: PickupItem) -> void:
+	body.pickup(self)

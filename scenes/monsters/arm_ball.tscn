@@ -1,7 +1,15 @@
 [gd_scene format=3 uid="uid://c5yts0b33od7m"]
 
 [ext_resource type="Script" uid="uid://blyb5xd78b1fr" path="res://code/monster.gd" id="1_fkm5i"]
+[ext_resource type="Script" uid="uid://cnff1455uo25" path="res://code/loot_entry.gd" id="2_06qny"]
 [ext_resource type="Material" uid="uid://cj03y5vpdfynw" path="res://materials/creature/eyebrow.tres" id="2_wso1e"]
+[ext_resource type="PackedScene" uid="uid://582emqq2jcmv" path="res://scenes/items/health_pack.tscn" id="3_0vfik"]
+
+[sub_resource type="Resource" id="Resource_2p2nn"]
+script = ExtResource("2_06qny")
+chance = 0.199999999999996
+item = ExtResource("3_0vfik")
+metadata/_custom_type_script = "uid://cnff1455uo25"
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_it4ap"]
 radius = 0.8
@@ -111,6 +119,7 @@ axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
 script = ExtResource("1_fkm5i")
+loot = Array[ExtResource("2_06qny")]([SubResource("Resource_2p2nn")])
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=74185302]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, 0.8, -1.9936124e-09)
