@@ -97,10 +97,10 @@ vec3 texelpos(ivec3 texel) {
 }
 
 void fragment() {
-	//if (v_tint.a < 0.5) {
-		//// TODO Add option to use vertex discarding instead, using NaNs
-		//discard;
-	//}
+	if (v_tint.a < 0.5) {
+		// TODO Add option to use vertex discarding instead, using NaNs
+		discard;
+	}
 
 	vec3 terrain_normal_world =
 		u_terrain_normal_basis * unpack_normal(texture(u_terrain_normalmap, UV));

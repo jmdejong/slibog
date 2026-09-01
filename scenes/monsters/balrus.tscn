@@ -104,6 +104,7 @@ jump_speed = 4.9999999999999
 attack_range = 7.99999999999984
 speed = 7.99999999999984
 attack_damage = 14.9999999999997
+xp = 19.9999999999996
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=6969173]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, 1.2, -1.9936124e-09)

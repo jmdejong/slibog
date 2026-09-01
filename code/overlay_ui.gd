@@ -25,6 +25,8 @@ func set_stamina(stamina: float, max_stamina: float) -> void:
 	%StaminaBar.offset_right = %StaminaBar.offset_left + 3 * max_stamina
 	%StaminaMarker.anchor_right = clamp(stamina / max_stamina, 0, 1)
 
+func set_xp(xp: float, max_xp: float) -> void:
+	%XpMarker.anchor_right = clamp(xp / max_xp, 0, 1)
 
-
-		
+func set_level(level: int) -> void:
+	%PlayerLevel.text = str(level)

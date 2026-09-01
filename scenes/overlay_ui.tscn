@@ -101,6 +101,59 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0.5025, 0.67, 1)
 
+[node name="XpBar" type="ColorRect" parent="." unique_id=1004605908]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -120.0
+offset_top = -40.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_vertical = 0
+color = Color(0.6666667, 0.6666667, 0.6666667, 0.53333336)
+
+[node name="Control" type="Control" parent="XpBar" unique_id=1718360886]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="XpMarker" type="ColorRect" parent="XpBar/Control" unique_id=36035923]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0.46666667, 0, 1)
+
+[node name="PlayerLevel" type="Label" parent="." unique_id=273486807]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -70.0
+offset_top = -55.0
+offset_right = -20.0
+offset_bottom = -45.0
+grow_vertical = 0
+text = "0"
+horizontal_alignment = 2
+
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1833776502]
 visible = false
 material = SubResource("ShaderMaterial_it4ap")

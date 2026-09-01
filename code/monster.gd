@@ -10,6 +10,7 @@ var health: float = 30
 @export var speed: float = 3
 @export var attack_damage: float = 10
 @export var turn_speed: float = PI # rad/s
+@export var xp: float = 10
 var knockback_duration: float = 0
 var knockback_max_duration: float = 0.6
 var knockback_dir: Vector3
@@ -27,6 +28,7 @@ var has_target_pos: bool = false
 
 enum Behavior {Sleeping, Waiting, Walking, Turning, Attacking, Knockedback, Dying}
 var behavior: Behavior = Behavior.Waiting
+
 
 func set_horizontal_velocity(vel: Vector3) -> void:
 	velocity = Vector3(vel.x, velocity.y, vel.z)
@@ -49,11 +51,13 @@ func hit(damage: float, knockback: Vector3, by: Player) -> void:
 	behavior = Behavior.Knockedback
 	$AnimationPlayer.stop()
 	if health <= 0:
-		die()
+		die(by)
 
-func die() -> void:
+func die(by: Player) -> void:
 		dead = true
 		behavior = Behavior.Dying
+		if by != null:
+			by.gain_xp(xp)
 		reset_horizontal_velocity()
 		#process_mode = Node.PROCESS_MODE_DISABLED
 		collision_layer = 0
@@ -201,7 +205,6 @@ func _on_observe_area_entered(area: Area3D) -> void:
 		alert_to_target(player)
 	elif behavior == Behavior.Sleeping:
 		plan()
-
 
 func _on_observe_area_exited(_area: Area3D) -> void:
 	if behavior != Behavior.Dying and %Observe != null and !%Observe.has_overlapping_areas():

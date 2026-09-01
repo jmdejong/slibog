@@ -25,15 +25,6 @@ func generate(world_seed: int) -> Node3D:
 	for x: int in range(0, area_axis_count):
 		for y: int in range(0, area_axis_count):
 			generate_area(world, Vector2i(x, y), rng)
-	#var boundary_body: StaticBody3D = StaticBody3D.new()
-	#for n: Vector3 in [Vector3(1, 0, 0), Vector3(-1, 0, 0), Vector3(0, 0, 1), Vector3(0, 0,-1)]:
-		#var boundary_shape: CollisionShape3D = CollisionShape3D.new()
-		#var world_boundary: WorldBoundaryShape3D = WorldBoundaryShape3D.new()
-		#world_boundary.plane = Plane(n)
-		#boundary_shape.shape = world_boundary
-		#boundary_shape.position = n.posmod(level_size)
-		#boundary_body.add_child(boundary_shape)
-	#world.add_child(boundary_body)
 	return world
 
 func generate_area(world: Node3D, area_id: Vector2i, rng: RandomNumberGenerator) -> void:
