@@ -3,6 +3,7 @@ extends Node3D
 
 @export var scene: PackedScene
 @export var display_name: String
+@export var version: int
 
 func preview() -> Node3D:
 	return $Preview.duplicate()
@@ -12,4 +13,3 @@ func generate(_seed: int) -> Node3D:
 
 func name() -> String:
 	return display_name
-	

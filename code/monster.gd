@@ -27,7 +27,7 @@ var home: Node3D = null
 var has_target_pos: bool = false
 
 enum Behavior {Sleeping, Waiting, Walking, Turning, Attacking, Knockedback, Dying}
-var behavior: Behavior = Behavior.Waiting
+var behavior: Behavior = Behavior.Sleeping
 
 @export var loot: Array[LootEntry] = []
 
@@ -217,3 +217,21 @@ func _on_observe_area_entered(area: Area3D) -> void:
 func _on_observe_area_exited(_area: Area3D) -> void:
 	if behavior != Behavior.Dying and %Observe != null and !%Observe.has_overlapping_areas():
 		behavior = Behavior.Sleeping
+
+func set_from_json(json: Dictionary) -> void:
+	position.x = json.p[0]
+	position.y = json.p[1]
+	position.z = json.p[2]
+	if json.get("dead", false):
+		dead = true
+	health = json.h
+
+func to_json() -> Dictionary:
+	var pos: Vector3 = position.snappedf(0.001)
+	var json: Dictionary = {
+		"p": [snappedf(position.x, 0.01), snappedf(position.y, 0.01), snappedf(position.z, 0.01)],
+		"h": health,
+	}
+	if dead:
+		json.dead = true
+	return json

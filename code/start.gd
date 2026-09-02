@@ -11,15 +11,17 @@ func _ready() -> void:
 		get_tree().change_scene_to_file.call_deferred("res://scenes/main.tscn")
 
 func generate_world() -> void:
-	world = World.setup(
-		State.selected_class(),
-		State.selected_level(),
-		randi()
-	)
-	start_world.call_deferred()
+	var world_json: Variant = State.load_world()
+	if world_json != null and world_json is Dictionary:
+		world = World.from_json(world_json)
+	if world == null:
+		world = World.setup(
+			State.selected_level(),
+			randi()
+		)
+		world.player_to_spawn = State.selected_class()
+	get_tree().change_scene_to_node.call_deferred(world)
 
-func start_world() -> void:
-	get_tree().change_scene_to_node(world)
 
 func _draw() -> void:
 	pass

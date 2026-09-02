@@ -31,6 +31,10 @@ window/stretch/aspect="expand"
 
 enabled=PackedStringArray("res://addons/zylann.hterrain/plugin.cfg")
 
+[global_group]
+
+spawners=""
+
 [input]
 
 left={

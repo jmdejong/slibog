@@ -11,7 +11,7 @@ var gravity_enabled: bool = true
 var base_max_health: float = 20
 var max_health: float:
 	get():
-		return base_max_health + player_level * 3
+		return base_max_health + (player_level-1) * 3
 var health: float = max_health
 var prev_health: float = -1
 var heal_rate = 0.25
@@ -24,7 +24,7 @@ var stamina: float = 10
 var base_max_stamina: float = 10
 var max_stamina: float:
 	get():
-		return base_max_stamina + player_level * 2
+		return base_max_stamina + (player_level-1) * 2
 var prev_stamina: float = -1
 var stamina_regen_rate: float = 1
 var sprint_stamina_drain: float = 3
@@ -35,6 +35,7 @@ var player_level: int = 0
 var prev_level: int = -1
 var current_level_xp: float = -2
 var next_level_xp: float = -1
+var player_class: PlayerClass
 
 @onready var weapon: Weapon = %Hand.get_child(0)
 
@@ -181,7 +182,27 @@ func calculate_level() -> void:
 	%OverlayUi.set_xp(xp - current_level_xp, next_level_xp - current_level_xp)
 	%OverlayUi.set_level(player_level)
 
-
-
 func _on_pickup_body_entered(body: PickupItem) -> void:
 	body.pickup(self)
+
+func to_json() -> Dictionary:
+	return {
+		"p": [snappedf(position.x, 0.01), snappedf(position.y, 0.01), snappedf(position.z, 0.01)],
+		"h": health,
+		"r": rotation.y,
+		"xp": xp,
+		"stamina": stamina,
+		"class": player_class.scene_file_path
+	}
+
+static func from_json(json: Dictionary) -> Player:
+	var player_class: PlayerClass = load(json.class).instantiate()
+	var player: Player = player_class.player()
+	player.position.x = json.p[0]
+	player.position.y = json.p[1]
+	player.position.z = json.p[2]
+	player.rotation.y = json.r
+	player.health = json.h
+	player.xp = json.xp
+	player.stamina = json.stamina
+	return player

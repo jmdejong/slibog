@@ -4,7 +4,7 @@
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_it4ap"]
 
-[node name="Spawner" type="Node3D" unique_id=1606651978]
+[node name="Spawner" type="Node3D" unique_id=1606651978 groups=["spawners"]]
 script = ExtResource("1_2vbf6")
 
 [node name="Timer" type="Timer" parent="." unique_id=1385707646]

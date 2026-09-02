@@ -12,4 +12,5 @@ func preview() -> Node3D:
 func player() -> Player:
 	var p: Player = player_scene.instantiate()
 	p.set_weapon(weapon.instantiate())
+	p.player_class = self
 	return p

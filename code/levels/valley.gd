@@ -17,8 +17,6 @@ const SMALL_ROCK_SCENE: PackedScene = preload("res://scenes/structures/small_roc
 
 @export var edge_slope: Curve
 
-enum AreaType {Spawn, Forest, Bushy, Rocky, Grass}
-
 func generate(world_seed: int) -> Node3D:
 	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 	rng.seed = world_seed

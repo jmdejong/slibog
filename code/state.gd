@@ -1,7 +1,7 @@
 extends Node
 
-const save_path: String = "user://state.json"
-const tmp_save_path: String = "user://state.json.tmp"
+const state_path: String = "user://state.json"
+const world_path: String = "user://world.json"
 
 
 
@@ -51,14 +51,28 @@ func set_in_world(w: bool) -> void:
 	save_state.call_deferred()
 
 func load_state() -> SaveState:
-	var file: FileAccess = FileAccess.open(save_path, FileAccess.READ)
+	var file: FileAccess = FileAccess.open(state_path, FileAccess.READ)
 	if file == null:
 		return SaveState.new()
 	var content: String = file.get_as_text()
 	return SaveState.from_variant(JSON.parse_string(content))
 
 func save_state():
-	var text: String = JSON.stringify(state.to_variant())
-	var file: FileAccess = FileAccess.open(tmp_save_path, FileAccess.WRITE)
+	save_json(state.to_variant(), state_path)
+	
+func load_world() -> Variant:
+	var file: FileAccess = FileAccess.open(world_path, FileAccess.READ)
+	if file == null:
+		return null
+	var content: String = file.get_as_text()
+	return JSON.parse_string(content)
+
+func save_world(json: Variant):
+	save_json(json, world_path)
+
+func save_json(json: Variant, path: String):
+	var text: String = JSON.stringify(json)
+	var temp_path: String = path + ".tmp"
+	var file: FileAccess = FileAccess.open(temp_path, FileAccess.WRITE)
 	file.store_string(text)
-	DirAccess.rename_absolute(tmp_save_path, save_path)
+	DirAccess.rename_absolute(temp_path, path)

@@ -1,27 +1,10 @@
 [gd_scene format=3 uid="uid://b8vt5oobg364r"]
 
-[ext_resource type="Shader" uid="uid://c48pvo4nqjn3" path="res://code/shaders/outblur.gdshader" id="1_71j4m"]
 [ext_resource type="Script" uid="uid://bj8plbngv8ts" path="res://code/world.gd" id="1_qfnet"]
 [ext_resource type="Script" uid="uid://dwrn2q786m36j" path="res://code/effects.gd" id="4_k0juu"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_it4ap"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_cdsqw"]
-render_priority = 0
-shader = ExtResource("1_71j4m")
-shader_parameter/inner = 0.1
-shader_parameter/outer = 0.3
-
 [node name="World" type="Node3D" unique_id=951009489]
 script = ExtResource("1_qfnet")
-
-[node name="Test" type="Node3D" parent="." unique_id=1718309922]
-
-[node name="OutblurTest" type="MeshInstance3D" parent="Test" unique_id=997396732]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.0971107, 2.9053812, -6.024007)
-visible = false
-mesh = SubResource("SphereMesh_it4ap")
-surface_material_override/0 = SubResource("ShaderMaterial_cdsqw")
 
 [node name="Creatures" type="Node3D" parent="." unique_id=521132684]
 
@@ -31,3 +14,9 @@ script = ExtResource("4_k0juu")
 [node name="Players" type="Node3D" parent="." unique_id=1555413217]
 
 [node name="Level" type="Node3D" parent="." unique_id=565004266]
+
+[node name="SaveTimer" type="Timer" parent="." unique_id=317780634]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="SaveTimer" to="." method="save"]

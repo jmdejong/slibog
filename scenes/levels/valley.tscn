@@ -65,6 +65,7 @@ seamless = true
 [node name="Valley" type="Node3D" unique_id=511982229]
 script = ExtResource("1_nje75")
 edge_slope = SubResource("Curve_eq1w3")
+version = 1
 
 [node name="Preview" type="Node3D" parent="." unique_id=1672200582]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
