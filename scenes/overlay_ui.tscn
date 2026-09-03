@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://clhdkhr0gt64k" path="res://code/overlay_ui.gd" id="1_j5fei"]
 [ext_resource type="FontFile" uid="uid://brlxme5qgpox1" path="res://fonts/Avara.ttf" id="2_7ejqg"]
-[ext_resource type="Shader" uid="uid://dfsad83l5o468" path="res://code/shaders/hits.gdshader" id="2_avt5o"]
+[ext_resource type="Shader" uid="uid://dfsad83l5o468" path="res://code/shaders/hurt.gdshader" id="2_avt5o"]
 [ext_resource type="Shader" uid="uid://bh5gkfcw2md36" path="res://code/shaders/fadout.gdshader" id="2_d0yxp"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_ps0a0"]
@@ -14,7 +14,8 @@ outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_it4ap"]
 shader = ExtResource("2_avt5o")
-shader_parameter/hits = PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/hurt = 0.0
+shader_parameter/hurt_color = Color(0.6666667, 0, 0, 1)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_x4jx1"]
 frequency = 0.03
@@ -163,8 +164,7 @@ text = "0"
 label_settings = SubResource("LabelSettings_ps0a0")
 horizontal_alignment = 2
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=1833776502]
-visible = false
+[node name="Hurt" type="ColorRect" parent="." unique_id=1833776502]
 material = SubResource("ShaderMaterial_it4ap")
 layout_mode = 1
 anchors_preset = 15
@@ -188,3 +188,17 @@ unique_name_in_owner = true
 layout_mode = 1
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="Notifications" type="Control" parent="." unique_id=2140019245]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2

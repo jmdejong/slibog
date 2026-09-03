@@ -122,11 +122,13 @@ func plan() -> void:
 		target_pos = target.global_position
 		has_target_pos = true
 	if has_target_pos:
-		if abs(angle_to_target()) > 0.05:
+		var tdist: float = distance_to_target()
+		if abs(angle_to_target()) > 0.05 and tdist > 0.1:
 			behavior = Behavior.Turning
 			reset_horizontal_velocity()
 		else:
-			look_at(Vector3(target_pos.x, global_position.y, target_pos.z))
+			if tdist > 0.1:
+				look_at(Vector3(target_pos.x, global_position.y, target_pos.z))
 			if global_position.distance_to(target_pos) <= attack_range:
 				if target != null:
 					behavior = Behavior.Attacking
@@ -144,6 +146,11 @@ func angle_to_target() -> float:
 	var look_dir: Vector3 = global_basis * Vector3.FORWARD
 	var target_dir: Vector3 = target_pos - global_position
 	return Vector2(look_dir.x, look_dir.z).angle_to(Vector2(target_dir.x, target_dir.z))
+
+func distance_to_target() -> float:
+	if not has_target_pos:
+		return 0
+	return Vector2(global_position.x, global_position.z).distance_to(Vector2(target_pos.x, target_pos.z))
 
 func start_walk() -> void:
 	walk_to(target_pos, speed)
@@ -164,6 +171,8 @@ func _physics_process(delta: float) -> void:
 	elif behavior == Behavior.Turning:
 		if target != null:
 			target_pos = target.global_position
+		if global_position == Vector3(target_pos.x, global_position.y, target_pos.z):
+			plan()
 		if abs(angle_to_target()) <= delta * turn_speed:
 			look_at(Vector3(target_pos.x, global_position.y, target_pos.z))
 			plan()
@@ -227,7 +236,6 @@ func set_from_json(json: Dictionary) -> void:
 	health = json.h
 
 func to_json() -> Dictionary:
-	var pos: Vector3 = position.snappedf(0.001)
 	var json: Dictionary = {
 		"p": [snappedf(position.x, 0.01), snappedf(position.y, 0.01), snappedf(position.z, 0.01)],
 		"h": health,

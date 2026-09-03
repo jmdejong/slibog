@@ -7,13 +7,12 @@
 [sub_resource type="CylinderMesh" id="CylinderMesh_sxbk6"]
 top_radius = 0.05
 bottom_radius = 0.05
-height = 1.2
+height = 1.4
 
 [sub_resource type="BoxMesh" id="BoxMesh_it4ap"]
-size = Vector3(0.04, 0.25, 0.25)
+size = Vector3(0.04, 0.3, 0.3)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_5wbh6"]
-radius = 0.4
 
 [sub_resource type="Animation" id="Animation_5wbh6"]
 length = 0.001
@@ -80,26 +79,25 @@ script = ExtResource("1_sxbk6")
 transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000002, 0.4, -0.3, -0.6)
 
 [node name="Pole" type="MeshInstance3D" parent="Handle" unique_id=339728886]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.49823117, -0.008237392)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, 0.5, -1.9936124e-09)
 cast_shadow = 0
 mesh = SubResource("CylinderMesh_sxbk6")
 surface_material_override/0 = ExtResource("2_w43rl")
 
 [node name="Head" type="MeshInstance3D" parent="Handle/Pole" unique_id=2046899690]
-transform = Transform3D(1, 0, 0, 0, 0.72447085, -0.6893055, 0, 0.6893055, 0.72447085, -1.9936124e-09, 0.5, -0.1)
+transform = Transform3D(1, 0, 0, 0, 0.72447085, -0.6893055, 0, 0.6893055, 0.72447085, -1.9936124e-09, 0.6, -0.14)
 cast_shadow = 0
 mesh = SubResource("BoxMesh_it4ap")
 surface_material_override/0 = ExtResource("3_5wbh6")
 
-[node name="HitArea" type="Area3D" parent="Handle/Pole/Head" unique_id=2035751095]
+[node name="HitArea" type="Area3D" parent="Handle/Pole" unique_id=2035751095]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 0.9999999, -2.9802322e-08, 0, 2.9802322e-08, 0.9999999, 0, -0.09837362, -0.20677972)
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, -1.9936124e-09, 0.6, -0.2)
 collision_layer = 0
 collision_mask = 8
 monitorable = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Handle/Pole/Head/HitArea" unique_id=1750702021]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.023532867, -0.026429176)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Handle/Pole/HitArea" unique_id=1750702021]
 shape = SubResource("SphereShape3D_5wbh6")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1156165050]

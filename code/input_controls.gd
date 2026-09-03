@@ -9,6 +9,7 @@ signal rotate_view(drot: Vector2)
 signal attack
 signal start_sprint
 signal stop_sprint
+signal game_click
 
 var touch_enabled: bool = false
 var touch_has_dragged: bool = true
@@ -49,34 +50,12 @@ func vertical_movement() -> float:
 func fly_sprint() -> bool:
 	return Input.is_action_pressed("sprint")
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if !touch_enabled and (event is InputEventScreenDrag or event is InputEventScreenTouch):
 		%TouchUi.visible = true
 		touch_enabled = true
-
-	# Capturing/Freeing the cursor
-	if Input.is_action_just_pressed("escape"):
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	if Input.is_action_just_pressed("click") and wants_pointer:
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
-	if Input.is_action_just_pressed("toggle_gravity"):
-		toggle_gravity.emit()
+		game_click.emit()
 	
-	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		rotate_view.emit(event.relative * MOUSE_SENSITIVITY)
-	if Input.is_action_just_pressed("attack"):
-		attack.emit()
-	if Input.is_action_just_pressed("sprint"):
-		start_sprint.emit()
-	if Input.is_action_just_released("sprint"):
-		stop_sprint.emit()
-		
-	if Input.is_action_just_pressed("switch_render"):
-		var vp := get_viewport()
-		vp.debug_draw = (vp.debug_draw + 1) % 6 as Viewport.DebugDraw
-
-func _on_click_area_gui_input(event: InputEvent) -> void:
 	if event is InputEventScreenDrag and event.index != %MoveJoystick.touch_index:
 		var drot: Vector2 = (event.position - active_touches[event.index].position) / get_window().size.y * PI
 		rotate_view.emit(drot)
@@ -96,3 +75,26 @@ func _on_click_area_gui_input(event: InputEvent) -> void:
 			active_touches.erase(event.index)
 			#tap_indices.erase(event.index)
 			#touch_positions.erase(event.index)
+	
+	# Capturing/Freeing the cursor
+	if Input.is_action_just_pressed("escape"):
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	if Input.is_action_just_pressed("click") and wants_pointer:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		game_click.emit()
+
+	if Input.is_action_just_pressed("toggle_gravity"):
+		toggle_gravity.emit()
+	
+	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+		rotate_view.emit(event.relative * MOUSE_SENSITIVITY)
+	if Input.is_action_just_pressed("attack"):
+		attack.emit()
+	if Input.is_action_just_pressed("sprint"):
+		start_sprint.emit()
+	if Input.is_action_just_released("sprint"):
+		stop_sprint.emit()
+		
+	if Input.is_action_just_pressed("switch_render"):
+		var vp := get_viewport()
+		vp.debug_draw = (vp.debug_draw + 1) % 6 as Viewport.DebugDraw

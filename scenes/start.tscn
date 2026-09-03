@@ -1,18 +1,33 @@
 [gd_scene format=3 uid="uid://bj6v8ob78apq3"]
 
 [ext_resource type="Script" uid="uid://qskt8bw0c1tb" path="res://code/start.gd" id="1_jaeev"]
+[ext_resource type="FontFile" uid="uid://brlxme5qgpox1" path="res://fonts/Avara.ttf" id="2_u80x2"]
 
-[node name="Start" type="Control" unique_id=1784060443]
-layout_mode = 3
+[sub_resource type="LabelSettings" id="LabelSettings_it4ap"]
+font = ExtResource("2_u80x2")
+font_size = 64
+
+[node name="Start" type="ColorRect" unique_id=808095555]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+script = ExtResource("1_jaeev")
+
+[node name="Label" type="Label" parent="." unique_id=1601907467]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -100.0
-offset_top = -100.0
-offset_right = 100.0
-offset_bottom = 100.0
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_jaeev")
+text = "INCARNATION"
+label_settings = SubResource("LabelSettings_it4ap")

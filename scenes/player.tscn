@@ -54,7 +54,7 @@ tracks/0/enabled = true
 tracks/0/path = NodePath("Body")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 2, 1, 0.642788, 0, 0, 0.766044)
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.3, 1, 0.258819, 0, 0, 0.965926, 2, 1, 0.642788, 0, 0, 0.766044)
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
@@ -62,10 +62,10 @@ tracks/1/path = NodePath("OverlayUi:faded")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 10),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 2, 10),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [0.0, 0.99999999999998]
+"values": [0.0, 0.3299999999999934, 0.99999999999998]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dqkch"]
@@ -137,14 +137,6 @@ unique_name_in_owner = true
 
 [node name="MenuUi" parent="." unique_id=223404704 instance=ExtResource("4_dqkch")]
 unique_name_in_owner = true
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 0.0
-offset_bottom = 0.0
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="Pickup" type="Area3D" parent="." unique_id=2147267961]
 collision_layer = 0
@@ -156,6 +148,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, 0.6737671, -1
 shape = SubResource("CapsuleShape3D_4xpdj")
 
 [connection signal="attack" from="InputControls" to="." method="start_attack"]
+[connection signal="game_click" from="InputControls" to="MenuUi" method="click_elsewhere"]
 [connection signal="rotate_view" from="InputControls" to="." method="rotate_view"]
 [connection signal="start_sprint" from="InputControls" to="." method="start_sprint"]
 [connection signal="stop_sprint" from="InputControls" to="." method="stop_sprint"]

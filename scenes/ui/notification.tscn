@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://ccdwoh2ycbknm"]
+
+[ext_resource type="FontFile" uid="uid://brlxme5qgpox1" path="res://fonts/Avara.ttf" id="1_u4fg0"]
+[ext_resource type="Script" uid="uid://xehw8fnjy2ht" path="res://code/ui/notification.gd" id="2_5bafy"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_cdsqw"]
+font = ExtResource("1_u4fg0")
+font_size = 64
+
+[node name="Notification" type="Label" unique_id=244845239]
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 0.2
+anchor_right = 0.7
+anchor_bottom = 0.3
+offset_left = -31.600006
+offset_top = -11.5
+offset_right = 31.600037
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Notification!"
+label_settings = SubResource("LabelSettings_cdsqw")
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+script = ExtResource("2_5bafy")

@@ -5,7 +5,8 @@ const config_path: String = "user://config.ini"
 enum Perf {FAST = 1, PRETTY = 9}
 
 var config_file = ConfigFile.new()
-var performance: Perf = Perf.FAST
+var performance: Perf = Perf.FAST 
+signal performance_changed()
 
 func configure_defaults() -> void:
 	if OS.has_feature("web_android") or OS.has_feature("web_ios"):
@@ -29,6 +30,13 @@ func _ready() -> void:
 	else:
 		print("config loaded sucessfully")
 		configure_from_file()
+
+func set_performance(perf: Perf):
+	var old_perf: Perf = performance
+	performance = perf
+	save()
+	if perf != old_perf:
+		performance_changed.emit()
 
 func save() -> void:
 	config_file.set_value("general", "performance", performance)

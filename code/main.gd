@@ -27,8 +27,9 @@ func _ready() -> void:
 
 func spawn_in_world() -> void:
 	var world: World = World.setup(selected_level(), randi())
-	world.player_to_spawn = selected_class()
+	world.add_new_player(selected_class())
 	State.set_in_world(true)
+	State.save_world(world.to_json())
 	get_tree().change_scene_to_node(world)
 
 func change_selected_class(d: int) -> void:

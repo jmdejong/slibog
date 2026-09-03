@@ -20,8 +20,13 @@ func _ready() -> void:
 			var s: SpawnData = SpawnData.new(child)
 			remove_child(child)
 			spawns.append(s)
+
+func initialize(json: Dictionary) -> void:
+	set_from_json(json)
 	var first_tick: SceneTreeTimer = get_tree().create_timer(0.5, false)
 	first_tick.timeout.connect(tick)
+	first_tick.timeout.connect($Timer.start)
+	
 
 func tick() -> void:
 	var spawned_normal: bool = false
@@ -101,4 +106,4 @@ func to_json() -> Variant:
 func add_json(all_json: Dictionary) -> void:
 	var json = to_json()
 	if json != null:
-		all_json[id()] = json	
+		all_json[id()] = json

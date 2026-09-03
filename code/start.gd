@@ -4,23 +4,28 @@ var world: World
 #var generate_progress()
 
 func _ready() -> void:
+	print("Starting slibog")
 	#world = load("res://scenes/world.tscn").instantiate()
+	initialize.call_deferred()
+
+func initialize():
+	await(get_tree().create_timer(0.2).timeout)
 	if State.is_in_world():
-		generate_world.call_deferred()
+		print("go to world")
+		generate_world()
 	else:
-		get_tree().change_scene_to_file.call_deferred("res://scenes/main.tscn")
+		print("go to menu")
 
 func generate_world() -> void:
 	var world_json: Variant = State.load_world()
 	if world_json != null and world_json is Dictionary:
+		print("load world from json")
 		world = World.from_json(world_json)
-	if world == null:
-		world = World.setup(
-			State.selected_level(),
-			randi()
-		)
-		world.player_to_spawn = State.selected_class()
-	get_tree().change_scene_to_node.call_deferred(world)
+	if world != null:
+		get_tree().change_scene_to_node.call_deferred(world)
+	else:
+		printerr("failed loading world")
+		get_tree().change_scene_to_file("res://scenes/main.tscn")
 
 
 func _draw() -> void:

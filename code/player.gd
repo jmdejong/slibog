@@ -42,9 +42,10 @@ var player_class: PlayerClass
 signal viewpoint_changed(pos: Vector3)
 
 func _ready() -> void:
+	Config.performance_changed.connect(set_performance)
 	set_performance()
 	update_bars()
-	calculate_level()
+	calculate_level(false)
 
 func set_performance() -> void:
 	if Config.performance == Config.Perf.FAST:
@@ -97,7 +98,10 @@ func _physics_process(delta: float) -> void:
 	else:
 		stamina = min(stamina + stamina_regen_rate * delta, max_stamina)
 	update_bars()
-	calculate_level()
+	prev_health = health
+	prev_stamina = stamina
+	prev_xp = xp
+	calculate_level(true)
 	%OverlayUi.set_info_text("fps: %3.1f\npos: %3.1f, %3.1f, %3.1f" % [
 		Engine.get_frames_per_second(),
 		global_position.x,
@@ -105,9 +109,6 @@ func _physics_process(delta: float) -> void:
 		global_position.z
 	])
 	
-	prev_health = health
-	prev_stamina = stamina
-	prev_xp = xp
 
 
 func rotate_view(drot: Vector2) -> void:
@@ -131,6 +132,7 @@ func hit(damage: float, knockback: Vector3, _by: Monster) -> void:
 	health -= damage
 	knockback_duration = knockback_max_duration
 	knockback_dir = knockback
+	$OverlayUi.set_hurt(damage)
 	if floor(health) <= 0:
 		die()
 
@@ -155,9 +157,11 @@ func start_attack() -> void:
 
 func toggle_gravity() -> void:
 	gravity_enabled = !gravity_enabled
+	if !gravity_enabled:
+		stop_sprint()
 
 func start_sprint() -> void:
-	if stamina > min_sprint_start_stamina:
+	if stamina > min_sprint_start_stamina and gravity_enabled:
 		is_sprinting = true
 
 func stop_sprint() -> void:
@@ -170,7 +174,7 @@ func xp_for_level(level: int) -> float:
 	var l := float(level-1)
 	return floor(l * l * 20)
 
-func calculate_level() -> void:
+func calculate_level(is_increase: bool) -> void:
 	var level_changed: bool
 	while xp >= xp_for_level(player_level + 1):
 		player_level += 1
@@ -181,6 +185,13 @@ func calculate_level() -> void:
 	next_level_xp = xp_for_level(player_level + 1)
 	%OverlayUi.set_xp(xp - current_level_xp, next_level_xp - current_level_xp)
 	%OverlayUi.set_level(player_level)
+	if is_increase:
+		level_up()
+
+func level_up() -> void:
+	stamina = min(max_stamina, stamina + max_stamina / 2)
+	health = min(max_health, health + max_health / 2)
+	%OverlayUi.level_up(player_level)
 
 func _on_pickup_body_entered(body: PickupItem) -> void:
 	body.pickup(self)

@@ -8,8 +8,8 @@
 script = ExtResource("1_2vbf6")
 
 [node name="Timer" type="Timer" parent="." unique_id=1385707646]
+process_callback = 0
 wait_time = 5.0
-autostart = true
 
 [node name="Observe" type="Area3D" parent="." unique_id=300564487]
 collision_layer = 0
