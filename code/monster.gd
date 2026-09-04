@@ -54,7 +54,7 @@ func hit(damage: float, knockback: Vector3, by: Player) -> void:
 	if health <= 0:
 		die(by)
 
-func die(by: Player) -> void:
+func die(by: Variant) -> void:
 		dead = true
 		behavior = Behavior.Dying
 		reset_horizontal_velocity()
@@ -163,6 +163,8 @@ func walk() -> void:
 func _physics_process(delta: float) -> void:
 	if behavior == Behavior.Sleeping:
 		return
+	if position.y < -2000:
+		die(null)
 	if behavior == Behavior.Waiting:
 		if reconsider_timeout <= 0:
 			plan()
@@ -231,15 +233,13 @@ func set_from_json(json: Dictionary) -> void:
 	position.x = json.p[0]
 	position.y = json.p[1]
 	position.z = json.p[2]
-	if json.get("dead", false):
-		dead = true
 	health = json.h
 
-func to_json() -> Dictionary:
+func to_json() -> Variant:
+	if dead:
+		return null
 	var json: Dictionary = {
 		"p": [snappedf(position.x, 0.01), snappedf(position.y, 0.01), snappedf(position.z, 0.01)],
 		"h": health,
 	}
-	if dead:
-		json.dead = true
 	return json
