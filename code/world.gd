@@ -8,13 +8,14 @@ var spawn_transform: Transform3D
 
 func _ready() -> void:
 	get_tree().call_group("spawners", "initialize", monster_json)
+	Measure.finish("open_world")
 
 func add_player(player: Player):
 	$Players.add_child(player)
 
 func add_new_player(player_class: PlayerClass) -> void:
 	var player: Player = player_class.player()
-	player.transfrom = spawn_transform
+	player.transform = spawn_transform
 	add_player(player)
 
 static func setup(blueprint_: LevelBlueprint, world_seed_: int) -> World:
@@ -56,4 +57,4 @@ func to_json() -> Dictionary:
 	}
 
 func save() -> void:
-	State.save_world(to_json())
+	Persistence.save_world(to_json())

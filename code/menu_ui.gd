@@ -7,6 +7,7 @@ func end_run() -> void:
 	%Return.visible = true
 
 func return_to_main() -> void:
+	Measure.start("open_menu")
 	get_tree().change_scene_to_file("res://scenes/main.tscn")
 
 func click_elsewhere() -> void:

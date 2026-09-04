@@ -20,6 +20,8 @@ config/icon="res://icon.svg"
 
 State="*uid://s8heherv0j41"
 Config="*uid://v7jmaggxikf3"
+Persistence="*uid://kqmtmaqxj04b"
+Measure="*uid://c18mo62dnx5i0"
 
 [display]
 

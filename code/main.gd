@@ -17,19 +17,20 @@ var level_selector: int = 0
 
 func _ready() -> void:
 	for i in classes.size():
-		if classes[i].scene_file_path == State.state.selected_class:
+		if classes[i].scene_file_path == State.selected_class:
 			class_selector = i
 	for i in levels.size():
-		if levels[i].scene_file_path == State.state.selected_level:
+		if levels[i].scene_file_path == State.selected_level:
 			level_selector = i
 	change_selected_class(0)
 	change_selected_level(0)
+	Measure.finish("open_menu")
 
 func spawn_in_world() -> void:
 	var world: World = World.setup(selected_level(), randi())
 	world.add_new_player(selected_class())
 	State.set_in_world(true)
-	State.save_world(world.to_json())
+	Measure.start("open_world")
 	get_tree().change_scene_to_node(world)
 
 func change_selected_class(d: int) -> void:

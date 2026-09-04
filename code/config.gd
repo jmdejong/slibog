@@ -1,6 +1,6 @@
 extends Node
 
-const config_path: String = "user://config.ini"
+const config_path: String = "user://config.cfg"
 
 enum Perf {FAST = 1, PRETTY = 9}
 
