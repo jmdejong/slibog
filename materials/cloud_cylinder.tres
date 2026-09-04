@@ -1,0 +1,33 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://bwtr7k1bdn8b0"]
+
+[ext_resource type="Shader" uid="uid://bncgr7quxc7nm" path="res://code/shaders/clouds_cylinder.gdshader" id="1_pi3xi"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_o6xl0"]
+frequency = 0.02
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_85g3d"]
+noise = SubResource("FastNoiseLite_o6xl0")
+seamless = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_eb6dy"]
+seed = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_trceg"]
+noise = SubResource("FastNoiseLite_eb6dy")
+seamless = true
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_a8y0u"]
+frequency = 0.02
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jkv2x"]
+noise = SubResource("FastNoiseLite_a8y0u")
+seamless = true
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_pi3xi")
+shader_parameter/noise_a = SubResource("NoiseTexture2D_85g3d")
+shader_parameter/noise_b = SubResource("NoiseTexture2D_trceg")
+shader_parameter/noise_c = SubResource("NoiseTexture2D_jkv2x")
+shader_parameter/blue = Color(0.4, 0.4, 1, 1)
+shader_parameter/white = Color(1, 1, 1, 1)

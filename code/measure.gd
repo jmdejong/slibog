@@ -1,7 +1,7 @@
 extends Node
 
 
-var measurements: Dictionary[String, int] = {}
+var measurements: Dictionary[String, float] = {}
 
 func start(name: String) -> void:
 	measurements[name] = now()
@@ -12,6 +12,9 @@ func finish(name: String) -> void:
 	if not measurements.has(name):
 		prints("%5.3f" % n, "finishing", name, "without starting")
 	prints("%5.3f" % n, name, "took", "%5.3f" % (n - measurements[name]))
+
+func mark(text: String) -> void:
+	prints("%5.3f" % now(), text)
 
 func now() -> float:
 	return float(Time.get_ticks_msec()) / 1000

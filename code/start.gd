@@ -2,11 +2,11 @@ extends Node
 
 
 func _ready() -> void:
-	print("Starting slibog")
+	Measure.mark("Starting slibog")
 	initialize.call_deferred()
 
 func initialize():
-	await(get_tree().create_timer(0.2).timeout)
+	Measure.mark("initializing")
 	#if not State.is_loaded:
 		#await State.loaded
 	assert(State.is_loaded, "Savestate not yet loaded")
@@ -30,8 +30,11 @@ func initialize():
 		get_tree().change_scene_to_node.call_deferred(world)
 	else:
 		print("go to menu")
+		Measure.start("load_menu")
+		var menu: PackedScene = load("res://scenes/main.tscn")
+		Measure.finish("load_menu")
 		Measure.start("open_menu")
-		get_tree().change_scene_to_file("res://scenes/main.tscn")
+		get_tree().change_scene_to_packed(menu)
 
 func _draw() -> void:
 	pass

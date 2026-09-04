@@ -85,6 +85,8 @@ func _physics_process(delta: float) -> void:
 	
 	viewpoint_changed.emit(position)
 	
+	if position.y < -2000:
+		die()
 	if dead:
 		health = 0
 	else:

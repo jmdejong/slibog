@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://dl6mq2ralfsn2"]
 
 [ext_resource type="Script" uid="uid://ct43vkxr8y7hq" path="res://code/level_blueprint.gd" id="1_xlcxy"]
-[ext_resource type="PackedScene" uid="uid://buy0r8yjrtfu0" path="res://scenes/worlds/sol.tscn" id="2_xlcxy"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_it4ap"]
 top_radius = 10.0
@@ -19,13 +18,16 @@ fractal_lacunarity = 3.0
 fractal_gain = 0.9
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xlcxy"]
+width = 64
+height = 64
 noise = SubResource("FastNoiseLite_uy5t1")
 color_ramp = SubResource("Gradient_7poqh")
 seamless = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fqmv8"]
+shading_mode = 0
 albedo_texture = SubResource("NoiseTexture2D_xlcxy")
-uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_scale = Vector3(4, 4, 4)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4xpdj"]
 shading_mode = 0
@@ -40,7 +42,7 @@ colors = PackedColorArray(1, 1, 0, 1, 1, 0, 0, 1)
 
 [node name="Sol" type="Node3D" unique_id=1822606433]
 script = ExtResource("1_xlcxy")
-scene = ExtResource("2_xlcxy")
+scene_file = "uid://buy0r8yjrtfu0"
 display_name = "Sol"
 
 [node name="Preview" type="Node3D" parent="." unique_id=1716652406]

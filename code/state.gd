@@ -10,6 +10,7 @@ signal loaded
 
 
 func _ready() -> void:
+	Measure.start("load_state")
 	var d: Variant = Persistence.load_state()
 	if d != null:
 		unlocks.assign(d.get("unlocks", unlocks))
@@ -18,6 +19,7 @@ func _ready() -> void:
 		in_world = d.in_world
 	is_loaded = true
 	loaded.emit()
+	Measure.finish("load_state")
 	
 func to_json() -> Dictionary:
 	return {

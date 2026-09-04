@@ -1,4 +1,4 @@
-extends LevelBlueprint
+extends LevelWorld
 
 const area_axis_count: int = 4
 const area_size: float = 64
@@ -15,26 +15,21 @@ const ROCK_SCENE: PackedScene = preload("res://scenes/structures/rock.tscn")
 const ROCK2_SCENE: PackedScene = preload("res://scenes/structures/rock2.tscn")
 const SMALL_ROCK_SCENE: PackedScene = preload("res://scenes/structures/small_rock.tscn")
 
+
+var rng: RandomNumberGenerator = RandomNumberGenerator.new()
+
 @export var edge_slope: Curve
 
-func generate(world_seed: int) -> Node3D:
-	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
+func generate(world_seed: int, _modifiers: Variant) -> void:
 	rng.seed = world_seed
-	var world: Node3D = Node3D.new()
-	world.add_child(%WorldEnvironment.duplicate())
-	var spawn: Node3D = Node3D.new()
-	spawn.name = "Spawn"
-	spawn.position = Vector3(0, 2, 0)
-	world.add_child(spawn)
 	var areas: Dictionary[Vector2i, MapArea] = {}
 	for x: int in range(0, area_axis_count):
 		for y: int in range(0, area_axis_count):
 			var area_id: Vector2i = Vector2i(x, y)
-			areas[area_id] = generate_area(world, area_id, rng)
-	generate_heightmap(world, rng, areas)
-	return world
+			areas[area_id] = generate_area(area_id)
+	generate_heightmap(areas)
 
-func generate_area(world: Node3D, area_id: Vector2i, rng: RandomNumberGenerator) -> MapArea:
+func generate_area(area_id: Vector2i) -> MapArea:
 	var area: Rect2 = Rect2(Vector2(area_id) * area_total_size + Vector2.ONE * area_offset / 2, Vector2.ONE * area_size)
 	var center2: Vector2 = area.get_center()
 	var center: Vector3 = Vector3(center2.x, 1, center2.y)
@@ -55,7 +50,7 @@ func generate_area(world: Node3D, area_id: Vector2i, rng: RandomNumberGenerator)
 	map_area.radius = area_size / 2
 	map_area.subtiles = 8
 	map_area.danger = clamp(area_id.x + area_id.y + rng.randi_range(-1, 1), 0, 5)
-	map_area.apply(world)
+	map_area.apply(self)
 	return map_area
 
 class MapArea:
@@ -206,12 +201,12 @@ class GrassArea extends MapArea:
 		_fadd(pool, SMALL_ROCK_SCENE, rng.randi_range(1, 3))
 		return pool
 
-func generate_heightmap(world: Node3D, rng: RandomNumberGenerator, areas: Dictionary[Vector2i, MapArea]) -> void:
+func generate_heightmap(areas: Dictionary[Vector2i, MapArea]) -> void:
 	var noise: FastNoiseLite = FastNoiseLite.new()
 	noise.seed = rng.randi()
 	var mountain_noise: FastNoiseLite = FastNoiseLite.new()
 	mountain_noise.seed = rng.randi()
-	var terrain: HTerrain = $HTerrain.duplicate();
+	var terrain: HTerrain = $HTerrain;
 	var terrain_data: HTerrainData = HTerrainData.new()
 	terrain_data.resize(513)
 	var heightmap: Image = terrain_data.get_image(HTerrainData.CHANNEL_HEIGHT)
@@ -237,4 +232,3 @@ func generate_heightmap(world: Node3D, rng: RandomNumberGenerator, areas: Dictio
 	
 	terrain.set_data(terrain_data)
 	terrain.update_collider()
-	world.add_child(terrain)

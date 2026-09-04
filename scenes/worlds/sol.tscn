@@ -2,6 +2,7 @@
 
 [ext_resource type="Environment" uid="uid://bq12rrq07uicx" path="res://materials/environment/sun_environment.tres" id="1_dg6bu"]
 [ext_resource type="Script" uid="uid://36mluet3puat" path="res://code/monsters/burn.gd" id="1_k20h4"]
+[ext_resource type="Script" uid="uid://dbc1yx6sg6rnb" path="res://code/level_world.gd" id="1_tq775"]
 [ext_resource type="PackedScene" uid="uid://yf830ij3s22a" path="res://scenes/structures/sun_surface.tscn" id="2_1byqv"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_it4ap"]
@@ -19,6 +20,7 @@ size = Vector3(0.3, 0.3, 0.3)
 colors = PackedColorArray(1, 1, 0, 1, 1, 0, 0, 1)
 
 [node name="Sol" type="Node3D" unique_id=1292691616]
+script = ExtResource("1_tq775")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1207640652]
 environment = ExtResource("1_dg6bu")

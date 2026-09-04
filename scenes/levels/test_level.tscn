@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://dpssf0q50sssl"]
 
 [ext_resource type="Script" uid="uid://ct43vkxr8y7hq" path="res://code/level_blueprint.gd" id="1_2q6dc"]
-[ext_resource type="PackedScene" uid="uid://cxtq3sfexdf4o" path="res://scenes/worlds/test_world.tscn" id="2_w7c3h"]
 [ext_resource type="Material" uid="uid://btoib0ln78fjg" path="res://materials/static/ground_grass.tres" id="3_mx8sn"]
 [ext_resource type="PackedScene" uid="uid://ckvhddih8pih4" path="res://scenes/structures/house.tscn" id="5_48ne7"]
 
@@ -12,13 +11,10 @@ height = 1.0
 
 [node name="TestLevel" type="Node3D" unique_id=1822606433]
 script = ExtResource("1_2q6dc")
-scene = ExtResource("2_w7c3h")
+scene_file = "uid://cxtq3sfexdf4o"
 
 [node name="Preview" type="Node3D" parent="." unique_id=1716652406]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
-
-[node name="Camera3D2" type="Camera3D" parent="Preview" unique_id=364008759]
-transform = Transform3D(-0.7071068, -0.5, 0.5, 0, 0.7071068, 0.70710677, -0.7071068, 0.5, -0.5, 4.054273, 8.583325, -2.3212652)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Preview" unique_id=865394917]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, -0.5, -1.9936124e-09)

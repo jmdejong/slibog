@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cxtq3sfexdf4o"]
 
 [ext_resource type="Environment" uid="uid://dkaipsmtbmw7a" path="res://materials/environment/day_environment.tres" id="1_oemaf"]
+[ext_resource type="Script" uid="uid://dbc1yx6sg6rnb" path="res://code/level_world.gd" id="1_oesy6"]
 [ext_resource type="PackedScene" uid="uid://dee583o6cogsh" path="res://scenes/structures/small_rock.tscn" id="2_dwl5u"]
 [ext_resource type="PackedScene" uid="uid://bxgiwy7folhqu" path="res://scenes/structures/tree.tscn" id="3_dwl5u"]
 [ext_resource type="PackedScene" uid="uid://ckvhddih8pih4" path="res://scenes/structures/house.tscn" id="4_d5wlu"]
@@ -50,6 +51,7 @@ color_ramp = SubResource("Gradient_fs4ai")
 seamless = true
 
 [node name="TestWorld" type="Node3D" unique_id=1292691616]
+script = ExtResource("1_oesy6")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1207640652]
 environment = ExtResource("1_oemaf")

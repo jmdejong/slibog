@@ -1,27 +1,10 @@
 [gd_scene format=3 uid="uid://dhp37g8dw61oy"]
 
 [ext_resource type="Script" uid="uid://b0p1tvhgnk65h" path="res://code/main.gd" id="1_tbgi4"]
-[ext_resource type="Shader" uid="uid://bqkk427v6my1m" path="res://code/shaders/clouds_bg.gdshader" id="2_tefeu"]
 [ext_resource type="Environment" uid="uid://hofgm4ax01r3" path="res://materials/environment/cloud_environment.tres" id="2_tipki"]
 [ext_resource type="Texture2D" uid="uid://cpvg8sanx8v6u" path="res://textures/icons/right.png" id="3_tefeu"]
 [ext_resource type="Texture2D" uid="uid://bbcncejir25bj" path="res://textures/icons/left.png" id="4_o6xl0"]
-[ext_resource type="Shader" uid="uid://bncgr7quxc7nm" path="res://code/shaders/clouds_cylinder.gdshader" id="7_o6xl0"]
 [ext_resource type="Theme" uid="uid://dtm7oa2ik2g24" path="res://ui/major_button_theme.tres" id="7_tipki"]
-
-[sub_resource type="Gradient" id="Gradient_tefeu"]
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_choun"]
-frequency = 0.02
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_tefeu"]
-height = 256
-noise = SubResource("FastNoiseLite_choun")
-color_ramp = SubResource("Gradient_tefeu")
-seamless = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ylmcp"]
-shader = ExtResource("2_tefeu")
-shader_parameter/noise_a = SubResource("NoiseTexture2D_tefeu")
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_it4ap"]
 radius = 0.3
@@ -40,35 +23,24 @@ height = 1000.0
 cap_top = false
 cap_bottom = false
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_o6xl0"]
-frequency = 0.02
+[sub_resource type="Gradient" id="Gradient_o6xl0"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0.4, 0.4, 1, 1, 0.4, 0.4, 1, 1, 1, 1, 1, 1)
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_85g3d"]
-noise = SubResource("FastNoiseLite_o6xl0")
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_tefeu"]
+frequency = 0.04
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_tbgi4"]
+width = 128
+height = 128
+noise = SubResource("FastNoiseLite_tefeu")
+color_ramp = SubResource("Gradient_o6xl0")
 seamless = true
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_eb6dy"]
-seed = 1
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_trceg"]
-noise = SubResource("FastNoiseLite_eb6dy")
-seamless = true
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_a8y0u"]
-frequency = 0.02
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jkv2x"]
-noise = SubResource("FastNoiseLite_a8y0u")
-seamless = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_tipki"]
-render_priority = 0
-shader = ExtResource("7_o6xl0")
-shader_parameter/noise_a = SubResource("NoiseTexture2D_85g3d")
-shader_parameter/noise_b = SubResource("NoiseTexture2D_trceg")
-shader_parameter/noise_c = SubResource("NoiseTexture2D_jkv2x")
-shader_parameter/blue = Color(0.4, 0.4, 1, 1)
-shader_parameter/white = Color(1, 1, 1, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u80x2"]
+shading_mode = 0
+albedo_texture = SubResource("NoiseTexture2D_tbgi4")
+uv1_scale = Vector3(6, 200, 1)
 
 [node name="Main" type="Control" unique_id=1933535169]
 layout_mode = 3
@@ -80,14 +52,13 @@ grow_vertical = 2
 script = ExtResource("1_tbgi4")
 
 [node name="CloudsFg" type="ColorRect" parent="." unique_id=1051759891]
-material = SubResource("ShaderMaterial_ylmcp")
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.4, 0.4, 1, 1)
 
 [node name="Node3D2" type="Node3D" parent="." unique_id=784765419]
 
@@ -124,8 +95,9 @@ transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, -1.9936124e-09, -0.5, -
 mesh = SubResource("CylinderMesh_cdsqw")
 
 [node name="CloudsBg" type="MeshInstance3D" parent="Node3D2" unique_id=1956105928]
+unique_name_in_owner = true
 mesh = SubResource("CylinderMesh_it4ap")
-surface_material_override/0 = SubResource("ShaderMaterial_tipki")
+surface_material_override/0 = SubResource("StandardMaterial3D_u80x2")
 
 [node name="CharacterPreview" type="Control" parent="." unique_id=1466051068]
 layout_mode = 1

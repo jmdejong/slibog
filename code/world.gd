@@ -1,13 +1,17 @@
 class_name World
 extends Node3D
 
-var blueprint: LevelBlueprint
+var level_blueprint: String
 var world_seed: int
 var monster_json: Dictionary = {}
-var spawn_transform: Transform3D
+var level: LevelWorld
 
 func _ready() -> void:
 	get_tree().call_group("spawners", "initialize", monster_json)
+	measure()
+
+func measure() -> void:
+	await get_tree().create_timer(0.2).timeout
 	Measure.finish("open_world")
 
 func add_player(player: Player):
@@ -15,26 +19,26 @@ func add_player(player: Player):
 
 func add_new_player(player_class: PlayerClass) -> void:
 	var player: Player = player_class.player()
-	player.transform = spawn_transform
+	player.transform = level.spawn_transform()
 	add_player(player)
 
-static func setup(blueprint_: LevelBlueprint, world_seed_: int) -> World:
+static func setup(blueprint: LevelBlueprint, world_seed_: int) -> World:
 	var world: World = preload("res://scenes/world.tscn").instantiate()
-	var level: Node3D = blueprint_.generate(world_seed_)
+	var level: Node3D = blueprint.generate(world_seed_)
 	world.get_node("Level").add_child(level)
-	world.spawn_transform = level.get_node("Spawn").transform
-	world.blueprint = blueprint_
+	world.level = level
+	world.level_blueprint = blueprint.scene_file_path
 	world.world_seed = world_seed_
 	return world
 
 static func from_json(json: Dictionary) -> World:
 	var blueprint_: LevelBlueprint = load(json.blueprint).instantiate()
-	var version_match: bool = blueprint_.version == json.blueprint_version
-	if not version_match:
-		printerr("Savefile mismatches level generation version. Saved: " + json.blueprint_version + ", current: " + blueprint_.version)
 	var world: World = setup(blueprint_, json.seed)
+	var version_match: bool = world.level.version == json.blueprint_version
 	if version_match:
 		world.monster_json = json.monsters
+	else:
+		printerr("Savefile mismatches level generation version. Saved: " + json.blueprint_version + ", current: " + blueprint_.version)
 	if json.player.size() > 0:
 		var player: Player = Player.from_json(json.player[0])
 		if not version_match:
@@ -49,8 +53,8 @@ func to_json() -> Dictionary:
 	get_tree().call_group("spawners", "add_json", spawners_json)
 	#print(spawn)
 	return {
-		"blueprint": blueprint.scene_file_path,
-		"blueprint_version": blueprint.version,
+		"blueprint": level_blueprint,
+		"blueprint_version": level.version,
 		"seed": world_seed,
 		"monsters": spawners_json,
 		"player": $Players.get_children().map(func(player: Player): return player.to_json())

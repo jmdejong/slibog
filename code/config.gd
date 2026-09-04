@@ -18,6 +18,7 @@ func configure_from_file() -> void:
 	performance = config_file.get_value("general", "performance", performance)
 
 func _ready() -> void:
+	Measure.start("load_config")
 	configure_defaults()
 	var err: Error = config_file.load(config_path)
 	if err == Error.ERR_FILE_NOT_FOUND:
@@ -30,6 +31,7 @@ func _ready() -> void:
 	else:
 		print("config loaded sucessfully")
 		configure_from_file()
+	Measure.finish("load_config")
 
 func set_performance(perf: Perf):
 	var old_perf: Perf = performance

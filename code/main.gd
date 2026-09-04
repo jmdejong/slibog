@@ -24,12 +24,22 @@ func _ready() -> void:
 			level_selector = i
 	change_selected_class(0)
 	change_selected_level(0)
+	measure()
+	#if Config.performance == Config.Perf.PRETTY:
+		#$CloudsFg.material = load("res://materials/cloud_fg.tres")
+		#$CloudsFg.show()
+		#%CloudsBg.material_override = load("res://materials/cloud_cylinder.tres")
+
+func measure() -> void:
+	await get_tree().create_timer(0.1).timeout
 	Measure.finish("open_menu")
 
 func spawn_in_world() -> void:
+	Measure.start("create_world")
+	State.set_in_world(true)
 	var world: World = World.setup(selected_level(), randi())
 	world.add_new_player(selected_class())
-	State.set_in_world(true)
+	Measure.finish("create_world")
 	Measure.start("open_world")
 	get_tree().change_scene_to_node(world)
 
@@ -46,8 +56,8 @@ func selected_class() -> PlayerClass:
 func change_selected_level(d: int) -> void:
 	level_selector = posmod(level_selector + d, levels.size())
 	for child: Node in %LevelPreview.get_children():
-		child.queue_free()
-	%LevelPreview.add_child(selected_level().preview())
+		%LevelPreview.remove_child(child)
+	%LevelPreview.add_child(selected_level())
 	State.set_selected_level(selected_level())
 
 func selected_level() -> LevelBlueprint:
@@ -56,4 +66,5 @@ func selected_level() -> LevelBlueprint:
 func _process(delta: float) -> void:
 	%ClassPreview.rotate_y(delta/6)
 	%LevelPreview.rotate_y(delta/12)
+	%CloudsBg.rotate_y(-delta / 200)
 	%Info.text = "fps: %3.1f" % Engine.get_frames_per_second()
