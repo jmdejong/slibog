@@ -3,16 +3,11 @@
 [ext_resource type="Script" uid="uid://crmmvcswbt7lo" path="res://code/menu_ui.gd" id="1_b5e6c"]
 [ext_resource type="FontFile" uid="uid://brlxme5qgpox1" path="res://fonts/Avara.ttf" id="2_tner2"]
 [ext_resource type="Theme" uid="uid://dtm7oa2ik2g24" path="res://ui/major_button_theme.tres" id="3_tner2"]
-[ext_resource type="Texture2D" uid="uid://cnp2y72b7ksgv" path="res://ui/menu.svg" id="4_3y6qt"]
-[ext_resource type="Script" uid="uid://bw5dipsqf688u" path="res://code/quality_selector.gd" id="4_ld3xo"]
+[ext_resource type="PackedScene" uid="uid://bgec72127tu6l" path="res://scenes/ui/settings_button.tscn" id="4_3y6qt"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_qlg0r"]
 font = ExtResource("2_tner2")
 font_size = 40
-
-[sub_resource type="Theme" id="Theme_tner2"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_it4ap"]
 
 [node name="MenuUi" type="Control" unique_id=223404704]
 layout_mode = 3
@@ -68,76 +63,7 @@ grow_vertical = 2
 theme = ExtResource("3_tner2")
 text = "Ascend"
 
-[node name="Settings" type="Control" parent="." unique_id=1696614643]
-visible = false
+[node name="SettingsButton" parent="." unique_id=1192050337 instance=ExtResource("4_3y6qt")]
 layout_mode = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -160.0
-offset_top = 60.0
-offset_right = -10.0
-offset_bottom = 210.0
-grow_horizontal = 0
-theme = SubResource("Theme_tner2")
-
-[node name="ColorRect" type="ColorRect" parent="Settings" unique_id=1160143908]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 0.53333336)
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Settings" unique_id=2058435591]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="Settings/VBoxContainer" unique_id=1685352791]
-layout_mode = 2
-text = "Settings"
-label_settings = SubResource("LabelSettings_it4ap")
-
-[node name="HSeparator" type="HSeparator" parent="Settings/VBoxContainer" unique_id=51282271]
-layout_mode = 2
-
-[node name="GridContainer" type="GridContainer" parent="Settings/VBoxContainer" unique_id=123750490]
-layout_mode = 2
-columns = 2
-
-[node name="Label" type="Label" parent="Settings/VBoxContainer/GridContainer" unique_id=1492492107]
-layout_mode = 2
-text = "Quality"
-
-[node name="QualitySelector" type="OptionButton" parent="Settings/VBoxContainer/GridContainer" unique_id=1869466348]
-unique_name_in_owner = true
-layout_mode = 2
-allow_reselect = true
-item_count = 2
-popup/item_0/text = "low"
-popup/item_0/id = 1
-popup/item_1/text = "high"
-popup/item_1/id = 9
-script = ExtResource("4_ld3xo")
-
-[node name="SettingsButton" type="Button" parent="." unique_id=200934526]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -60.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = 60.0
-grow_horizontal = 0
-toggle_mode = true
-icon = ExtResource("4_3y6qt")
-expand_icon = true
 
 [connection signal="pressed" from="EndRun/Return" to="." method="return_to_main"]
-[connection signal="item_selected" from="Settings/VBoxContainer/GridContainer/QualitySelector" to="Settings/VBoxContainer/GridContainer/QualitySelector" method="_on_item_selected"]
-[connection signal="toggled" from="SettingsButton" to="Settings" method="set_visible"]

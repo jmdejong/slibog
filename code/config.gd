@@ -6,7 +6,8 @@ enum Perf {FAST = 1, PRETTY = 9}
 
 var config_file = ConfigFile.new()
 var performance: Perf = Perf.FAST 
-signal performance_changed()
+signal performance_changed
+var cheats_enabled: bool = false
 
 func configure_defaults() -> void:
 	if OS.has_feature("web_android") or OS.has_feature("web_ios"):
@@ -16,6 +17,7 @@ func configure_defaults() -> void:
 
 func configure_from_file() -> void:
 	performance = config_file.get_value("general", "performance", performance)
+	cheats_enabled = config_file.get_value("general", "cheats", cheats_enabled)
 
 func _ready() -> void:
 	Measure.start("load_config")
@@ -33,13 +35,18 @@ func _ready() -> void:
 		configure_from_file()
 	Measure.finish("load_config")
 
-func set_performance(perf: Perf):
+func set_performance(perf: Perf) -> void:
 	var old_perf: Perf = performance
 	performance = perf
 	save()
 	if perf != old_perf:
 		performance_changed.emit()
 
+func set_cheats(enabled: bool) -> void:
+	cheats_enabled = enabled
+	save()
+
 func save() -> void:
 	config_file.set_value("general", "performance", performance)
+	config_file.set_value("general", "cheats", cheats_enabled)
 	config_file.save(config_path)

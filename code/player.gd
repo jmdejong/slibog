@@ -7,7 +7,7 @@ const debug_sprint_mult: float = 10
 const gravity: float = 9.81
 const jump_speed: float = 5
 
-var gravity_enabled: bool = true
+var fly_enabled: bool = false
 var base_max_health: float = 20
 var max_health: float:
 	get():
@@ -70,14 +70,14 @@ func _physics_process(delta: float) -> void:
 		else:
 			movement *= walk_speed
 	
-	if gravity_enabled:
-		movement.y = velocity.y + get_gravity().y*delta
-		if %InputControls.jump() and is_on_floor() and not dead:
-			movement.y = jump_speed
-	else:
+	if fly_enabled and Config.cheats_enabled:
 		movement.y = walk_speed * %InputControls.vertical_movement()
 		if %InputControls.fly_sprint():
 			movement *= debug_sprint_mult
+	else:
+		movement.y = velocity.y + get_gravity().y*delta
+		if %InputControls.jump() and is_on_floor() and not dead:
+			movement.y = jump_speed
 	
 	velocity = movement
 	move_and_slide()
@@ -158,12 +158,14 @@ func start_attack() -> void:
 		weapon.attack()
 
 func toggle_gravity() -> void:
-	gravity_enabled = !gravity_enabled
-	if !gravity_enabled:
+	if not Config.cheats_enabled:
+		fly_enabled = false
+	fly_enabled = !fly_enabled
+	if !fly_enabled:
 		stop_sprint()
 
 func start_sprint() -> void:
-	if stamina > min_sprint_start_stamina and gravity_enabled:
+	if stamina > min_sprint_start_stamina and not fly_enabled:
 		is_sprinting = true
 
 func stop_sprint() -> void:

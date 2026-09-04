@@ -12,3 +12,4 @@ func return_to_main() -> void:
 
 func click_elsewhere() -> void:
 	$SettingsButton.button_pressed = false
+	$SettingsButton.release_focus()

@@ -38,11 +38,11 @@ static func from_json(json: Dictionary) -> World:
 	if version_match:
 		world.monster_json = json.monsters
 	else:
-		printerr("Savefile mismatches level generation version. Saved: " + json.blueprint_version + ", current: " + blueprint_.version)
+		printerr("Savefile mismatches level generation version. Saved: " + str(json.blueprint_version) + ", current: " + str(world.level.version))
 	if json.player.size() > 0:
 		var player: Player = Player.from_json(json.player[0])
 		if not version_match:
-			player.transform = world.spawn_transform
+			player.transform = world.level.spawn_transform()
 		world.add_player(player)
 
 	return world
