@@ -1,7 +1,8 @@
 [gd_scene format=3 uid="uid://ci775kxkatkhi"]
 
 [ext_resource type="Script" uid="uid://b8r281x4rij5v" path="res://code/input_controls.gd" id="1_fnbod"]
-[ext_resource type="Script" uid="uid://cjqxs2w267sw4" path="res://code/touch_joystick.gd" id="3_oyb8k"]
+[ext_resource type="Texture2D" uid="uid://d28heaguop72d" path="res://ui/jump.svg" id="2_fnbod"]
+[ext_resource type="Texture2D" uid="uid://vm4kc5s1xo56" path="res://ui/sprint.svg" id="3_qdf67"]
 
 [node name="InputControls" type="Control" unique_id=1967626344]
 layout_mode = 3
@@ -10,6 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 script = ExtResource("1_fnbod")
 
 [node name="TouchUi" type="Control" parent="." unique_id=1133641477]
@@ -21,16 +23,49 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 
-[node name="MoveJoystick" type="Control" parent="TouchUi" unique_id=1117429040]
-unique_name_in_owner = true
+[node name="VirtualJoystick" type="VirtualJoystick" parent="TouchUi" unique_id=76241365]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
+anchors_preset = -1
+anchor_top = 0.8
+anchor_right = 0.2
 anchor_bottom = 1.0
-offset_left = 130.0
-offset_top = -130.0
-offset_right = 130.0
-offset_bottom = -130.0
+offset_top = -200.0
+offset_right = 200.0
 grow_vertical = 0
-script = ExtResource("3_oyb8k")
+joystick_mode = 1
+joystick_size = 200.0
+tip_size = 100.0
+action_left = &"left"
+action_right = &"right"
+action_up = &"forwards"
+action_down = &"backwards"
+
+[node name="HBoxContainer" type="VBoxContainer" parent="TouchUi" unique_id=189851241]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.97
+anchor_top = 0.97
+anchor_right = 0.97
+anchor_bottom = 0.97
+offset_bottom = -50.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = 25
+
+[node name="Control2" type="Control" parent="TouchUi/HBoxContainer" unique_id=198967341]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+
+[node name="SprintButton" type="TouchScreenButton" parent="TouchUi/HBoxContainer/Control2" unique_id=1663950158]
+texture_normal = ExtResource("3_qdf67")
+action = "sprint"
+
+[node name="Control" type="Control" parent="TouchUi/HBoxContainer" unique_id=178304536]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+
+[node name="JumpButton" type="TouchScreenButton" parent="TouchUi/HBoxContainer/Control" unique_id=1686384009]
+texture_normal = ExtResource("2_fnbod")
+action = "up"

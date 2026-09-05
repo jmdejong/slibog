@@ -2,6 +2,10 @@
 
 [ext_resource type="Script" uid="uid://qskt8bw0c1tb" path="res://code/start.gd" id="1_jaeev"]
 [ext_resource type="FontFile" uid="uid://brlxme5qgpox1" path="res://fonts/Avara.ttf" id="2_u80x2"]
+[ext_resource type="PackedScene" uid="uid://baspx1h0d80jm" path="res://scenes/effects/impact.tscn" id="3_bodal"]
+
+[sub_resource type="Environment" id="Environment_it4ap"]
+background_mode = 1
 
 [sub_resource type="LabelSettings" id="LabelSettings_it4ap"]
 font = ExtResource("2_u80x2")
@@ -16,6 +20,29 @@ grow_vertical = 2
 color = Color(0, 0, 0, 1)
 script = ExtResource("1_jaeev")
 
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1775226900]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -64.0
+offset_right = 64.0
+offset_bottom = 128.0
+grow_horizontal = 2
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1718787448]
+handle_input_locally = false
+size = Vector2i(32, 32)
+render_target_update_mode = 4
+
+[node name="Node3D" type="Node3D" parent="SubViewportContainer/SubViewport" unique_id=1980269100]
+
+[node name="Impact" parent="SubViewportContainer/SubViewport/Node3D" unique_id=1941469683 instance=ExtResource("3_bodal")]
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/Node3D" unique_id=78796499]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9936124e-09, -1.9936124e-09, 5)
+environment = SubResource("Environment_it4ap")
+
 [node name="Label" type="Label" parent="." unique_id=1601907467]
 layout_mode = 1
 anchors_preset = 8
@@ -23,10 +50,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
+offset_left = -244.0
+offset_top = -37.5
+offset_right = 244.0
+offset_bottom = 37.5
 grow_horizontal = 2
 grow_vertical = 2
 text = "INCARNATION"

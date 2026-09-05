@@ -1,5 +1,5 @@
 class_name InputControls
-extends Node
+extends Control
 
 const MOUSE_SENSITIVITY: float = 0.003
 const tap_timeout_msec: int = 500
@@ -39,7 +39,7 @@ var wants_pointer: bool = true:
 			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 func horizontal_movement() -> Vector2:
-	return (Input.get_vector("left", "right", "forwards", "backwards") + $%MoveJoystick.touch_value().limit_length()).limit_length()
+	return Input.get_vector("left", "right", "forwards", "backwards").limit_length()# + $%MoveJoystick.touch_value().limit_length()).limit_length()
 
 func jump() -> bool:
 	return Input.is_action_pressed("up")
@@ -51,18 +51,24 @@ func fly_sprint() -> bool:
 	return Input.is_action_pressed("sprint")
 
 func _unhandled_input(event: InputEvent) -> void:
+	
 	if !touch_enabled and (event is InputEventScreenDrag or event is InputEventScreenTouch):
 		%TouchUi.visible = true
 		touch_enabled = true
 		game_click.emit()
+	if Input.is_action_just_pressed("click") and wants_pointer:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		game_click.emit()
 	
-	if event is InputEventScreenDrag and event.index != %MoveJoystick.touch_index:
+	# Capturing/Freeing the cursor
+	if Input.is_action_just_pressed("escape"):
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	
+	if event is InputEventScreenDrag:
 		var drot: Vector2 = (event.position - active_touches[event.index].position) / get_window().size.y * PI
 		rotate_view.emit(drot)
 		active_touches[event.index].position = event.position
-		#touch_positions[event.index] = event.position
-		#tap_indices.erase(event.index)
-	if event is InputEventScreenTouch and event.index != %MoveJoystick.touch_index:
+	if event is InputEventScreenTouch:
 		if event.pressed:
 			active_touches[event.index] = ActiveTouch.new(event.position)
 			#tap_indices[event.index] = Time.get_ticks_msec()
@@ -75,13 +81,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			active_touches.erase(event.index)
 			#tap_indices.erase(event.index)
 			#touch_positions.erase(event.index)
-	
-	# Capturing/Freeing the cursor
-	if Input.is_action_just_pressed("escape"):
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	if Input.is_action_just_pressed("click") and wants_pointer:
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-		game_click.emit()
 
 	if Input.is_action_just_pressed("toggle_gravity"):
 		toggle_gravity.emit()

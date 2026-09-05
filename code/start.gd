@@ -6,9 +6,9 @@ func _ready() -> void:
 	initialize.call_deferred()
 
 func initialize():
+	await get_tree().process_frame
+	await get_tree().process_frame
 	Measure.mark("initializing")
-	#if not State.is_loaded:
-		#await State.loaded
 	assert(State.is_loaded, "Savestate not yet loaded")
 	if State.in_world:
 		print("go to world")
