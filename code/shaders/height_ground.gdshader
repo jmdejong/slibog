@@ -67,12 +67,16 @@ void vertex() {
 
 	// Need to use u_terrain_normal_basis to handle scaling.
 	//NORMAL = u_terrain_normal_basis * unpack_normal(texture(u_terrain_normalmap, UV));
+	//NORMAL = -normalize(cross(
+		//vec3(0.1, height_at(VERTEX + vec3(0.1, 0, 0), MODEL_MATRIX)-h, 0),
+		//vec3(0, height_at(VERTEX + vec3(0, 0, 0.1), MODEL_MATRIX)-h, 0.1)
+	//));
 	NORMAL = -normalize(cross(
-		vec3(0.1, height_at(VERTEX + vec3(0.1, 0, 0), MODEL_MATRIX)-h, 0),
-		vec3(0, height_at(VERTEX + vec3(0, 0, 0.1), MODEL_MATRIX)-h, 0.1)
+		vec3(0.1, height_at(VERTEX + vec3(0.05, 0, 0), MODEL_MATRIX)-height_at(VERTEX - vec3(0.05, 0, 0), MODEL_MATRIX), 0),
+		vec3(0, height_at(VERTEX + vec3(0, 0, 0.05), MODEL_MATRIX)-height_at(VERTEX - vec3(0, 0, 0.05), MODEL_MATRIX), 0.1)
 	));
 	
-	world_position = VERTEX * map_scale;
+	world_position = (MODEL_MATRIX * vec4(VERTEX, 1)).xyz;
 	world_normal = NORMAL;
 }
 
@@ -86,14 +90,28 @@ float hash3(ivec3 t) {
 float hash2(ivec3 t) {
 	return float(abs(t.x * 394579 + t.y * 843951 + t.z * 23057 + 805) % 128) / 128.0;
 }
+vec3 offset(ivec3 texel) {
+	return (vec3(hash1(texel), hash2(texel), hash3(texel))-0.5)/2.0;
+}
+
+vec3 skew(vec3 p) {
+	float s = (p.x + p.y + p.z) / 3.0;
+	return p + s;
+}
+
+vec3 unskew(vec3 pp) {
+	float s = (pp.x + pp.y + pp.z) / 6.0;
+	return pp - s;
+}
 
 vec3 texelpos(ivec3 texel) {
 	vec3 t = vec3(texel);
+	return unskew(t+offset(texel)) ;
 	return vec3(
-		t.x + t.y / 2.0 + t.z / 2.0 + (hash1(texel) - 0.5)/2.0,
-		(t.y + t.z / 2.0) * TRIHEIGHT + (hash2(texel) - 0.5)/2.0,
-		t.z * TRIHEIGHT + (hash3(texel) - 0.5)/3.0
-	);
+		t.x + t.y / 2.0 + t.z / 2.0,
+		(t.y + t.z / 2.0) * TRIHEIGHT,
+		t.z * TRIHEIGHT
+	);// + offset(texel);
 }
 
 void fragment() {
@@ -110,26 +128,32 @@ void fragment() {
 	
 	vec3 p = world_position / pixel_size;
 	
-	float vz = p.z / TRIHEIGHT;
-	float vy = p.y / TRIHEIGHT - vz / 2.0;
-	float vx = p.x - vy / 2.0 - vz / 2.0;
-	vec3 v = vec3(vx, vy, vz);
+	//float vz = p.z / TRIHEIGHT;
+	//float vy = p.y / TRIHEIGHT - vz / 2.0;
+	//float vx = p.x - vy / 2.0 - vz / 2.0;
+	//vec3 v = vec3(vx, vy, vz);
 	//vec3 v = p;
+	vec3 v = skew(p);
 	ivec3 pf = ivec3(floor(v));
 	vec3 fr = fract(v);
-	ivec3 corners[7] = { 
-		pf + ivec3(1, 0, 0),
-		pf + ivec3(0, 1, 0),
-		pf + ivec3(0, 0, 1),
-		pf + ivec3(1, 1, 0),
-		pf + ivec3(0, 1, 1),
-		pf + ivec3(1, 0, 1),
-		pf + ivec3(1, 1, 1)
+	ivec3 corners[] = { 
+		//pf + (fr.x + fr.y + fr.z < 1.5 ? ivec3(0, 0, 0) : ivec3(1, 1, 1)),
+		pf + (1.0-fr.x + fr.y + fr.z < 1.5 ? ivec3(1, 0, 0) : ivec3(0, 1, 1)),
+		pf + (fr.x + 1.0-fr.y + fr.z < 1.5 ? ivec3(0, 1, 0) : ivec3(1, 0, 1)),
+		pf + (fr.x + fr.y + 1.0-fr.z < 1.5 ? ivec3(0, 0, 1) : ivec3(1, 1, 0)),
+		pf + ivec3(1, 1, 1),
+		pf + ivec3(0, 0, 0)
+		//pf + ivec3(1, 0, 0),
+		//pf + ivec3(0, 1, 0),
+		//pf + ivec3(0, 0, 1),
+		//pf + ivec3(0, 1, 1),
+		//pf + ivec3(1, 0, 1),
+		//pf + ivec3(1, 1, 0)
 	};
 	
-	float min_distance = distance(texelpos(pf), p);
-	ivec3 pp = pf;
-	for (int i=0; i<7; ++i) {
+	float min_distance = distance(texelpos(corners[0]), p);
+	ivec3 pp = corners[0];
+	for (int i=1; i<5; ++i) {
 		float d = distance(texelpos(corners[i]), p);
 		if (d<min_distance) {
 			pp = corners[i];
@@ -138,9 +162,10 @@ void fragment() {
 	}
 	//ivec2 tc = ivec2(pp.x, pp.z);
 	//NORMAL = normalize(cross(dFdy(VERTEX), dFdx(VERTEX)));
-	vec3 tex_coord = vec3(texelpos(pp)) / float(tex_size);
+	vec3 tex_coord = texelpos(pp) / float(tex_size);
 	//float lod = 1.0/FRAGCOORD.z/pixel_size/max(VIEWPORT_SIZE.x, VIEWPORT_SIZE.y);
-	if ((INV_VIEW_MATRIX * vec4(NORMAL, 0)).y > max_y_floor) {
+	vec3 norm = (INV_VIEW_MATRIX * vec4(NORMAL, 0)).xyz;
+	if (norm.y > length(norm.xz)) {
 		//ALBEDO = texelFetch(tex, tc % tex_size, lod).xyz;
 		ALBEDO = texture(grass_tex, tex_coord.xz).xyz;
 		//ALBEDO = textureLod(tex, tex_coord, lod).xyz;
@@ -150,6 +175,7 @@ void fragment() {
 		ALBEDO = texture(rock_tex, tex_coord).xyz;
 		//ALBEDO = textureLod(wall_tex, tex_coord, lod).xyz;
 	}
+	//ALBEDO = p/100.0;
 	ROUGHNESS = 1.0;
 	SPECULAR = u_specular;
 }
