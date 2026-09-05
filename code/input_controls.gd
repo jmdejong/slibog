@@ -71,16 +71,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch:
 		if event.pressed:
 			active_touches[event.index] = ActiveTouch.new(event.position)
-			#tap_indices[event.index] = Time.get_ticks_msec()
-			#touch_positions[event.index] = event.position
 		else:
-			#if tap_indices.get(event.index, -999_999) > Time.get_ticks_msec() - tap_timeout_msec:
-			#prints("touch release", event, active_touches.get(event.index))
 			if active_touches.has(event.index) and active_touches.get(event.index).is_tap():
 				attack.emit()
 			active_touches.erase(event.index)
-			#tap_indices.erase(event.index)
-			#touch_positions.erase(event.index)
 
 	if Input.is_action_just_pressed("toggle_gravity"):
 		toggle_gravity.emit()

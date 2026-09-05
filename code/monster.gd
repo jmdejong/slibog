@@ -187,6 +187,7 @@ func _physics_process(delta: float) -> void:
 		else:
 			plan()
 	elif behavior == Behavior.Attacking:
+		move_attack()
 		if not is_attacking():
 			plan()
 	elif behavior == Behavior.Dying:
@@ -199,6 +200,9 @@ func _physics_process(delta: float) -> void:
 
 func is_attacking() -> bool:
 	return $AnimationPlayer.current_animation == "attack" and $AnimationPlayer.is_playing()
+
+func move_attack() -> void:
+	pass
 
 func post_process(_delta: float) -> void:
 	pass

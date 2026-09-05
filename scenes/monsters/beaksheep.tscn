@@ -51,7 +51,12 @@ tracks/1/keys = PackedFloat32Array(0, 1, 0.47419122, 0, 0, 0.8804219)
 
 [sub_resource type="Animation" id="Animation_7av2o"]
 resource_name = "attack"
-length = 2.0
+length = 2.5000000000000004
+markers = [{
+"color": Color(1, 1, 1, 1),
+"name": &"charge_end",
+"time": 1.5
+}]
 tracks/0/type = "rotation_3d"
 tracks/0/imported = false
 tracks/0/enabled = true
