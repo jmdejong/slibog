@@ -146,11 +146,8 @@ cast_shadow = 1
 shader_params/u_specular = 0.099999999999998
 shader_params/grass_tex = SubResource("NoiseTexture2D_oesy6")
 shader_params/rock_tex = SubResource("NoiseTexture3D_si77m")
-shader_params/tex_size = 64
+shader_params/tex_size = 32
 shader_params/pixel_size = 0.25
 shader_params/max_y_floor = 0.707
 shader_params/map_scale = Vector3(2, 2, 2)
 metadata/_custom_type_script = "uid://de0ju4sswa7g1"
-
-[node name="Node3D" type="Node3D" parent="." unique_id=718367718]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 255.36874, 0, 257.27826)
