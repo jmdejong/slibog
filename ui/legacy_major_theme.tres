@@ -1,0 +1,10 @@
+[gd_resource type="LabelSettings" format=3 uid="uid://uavrdgjbfkd3"]
+
+[ext_resource type="FontFile" uid="uid://brlxme5qgpox1" path="res://fonts/Avara.ttf" id="1_xcndo"]
+
+[resource]
+font = ExtResource("1_xcndo")
+font_size = 32
+font_color = Color(0.53333336, 0, 0.53333336, 1)
+outline_size = 5
+outline_color = Color(0.8, 0, 0.8, 1)

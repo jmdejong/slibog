@@ -8,10 +8,12 @@ var level: LevelWorld
 
 func _ready() -> void:
 	get_tree().call_group("spawners", "initialize", monster_json)
+	save()
 	measure()
 
 func measure() -> void:
-	await get_tree().create_timer(0.2).timeout
+	await get_tree().process_frame
+	await get_tree().process_frame
 	Measure.finish("open_world")
 
 func add_player(player: Player):

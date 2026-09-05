@@ -11,5 +11,10 @@ func return_to_main() -> void:
 	get_tree().change_scene_to_file("res://scenes/main.tscn")
 
 func click_elsewhere() -> void:
-	$SettingsButton.button_pressed = false
-	$SettingsButton.release_focus()
+	$SettingsMenu.click_elsewhere()
+	
+func show_death_stats(level: int, xp: float, legacy: int) -> void:
+	%LevelCounter.text = str(level)
+	%XpCounter.text = str(int(floor(xp)))
+	%LegacyCounter.text = str(legacy)
+	

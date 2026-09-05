@@ -13,6 +13,10 @@ var health: float = 1
 var max_health: float = 1
 var actual_hurt: float = 0
 
+func _ready() -> void:
+	%Info.visible = Config.debug_info_enabled
+	Config.debug_info_enabled_changed.connect(%Info.set_visible)
+
 func _process(delta: float) -> void:
 	var health_hurt: float = clamp((0.5-health / max_health) * 1.5, 0, 1)
 	var total_hurt: float = hurt * 1.5 + health_hurt

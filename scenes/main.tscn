@@ -4,7 +4,9 @@
 [ext_resource type="Environment" uid="uid://hofgm4ax01r3" path="res://materials/environment/cloud_environment.tres" id="2_tipki"]
 [ext_resource type="Texture2D" uid="uid://cpvg8sanx8v6u" path="res://textures/icons/right.png" id="3_tefeu"]
 [ext_resource type="Texture2D" uid="uid://bbcncejir25bj" path="res://textures/icons/left.png" id="4_o6xl0"]
-[ext_resource type="PackedScene" uid="uid://bgec72127tu6l" path="res://scenes/ui/settings_button.tscn" id="6_tefeu"]
+[ext_resource type="LabelSettings" uid="uid://uavrdgjbfkd3" path="res://ui/legacy_major_theme.tres" id="6_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://bgec72127tu6l" path="res://scenes/ui/settings_menu.tscn" id="6_tefeu"]
+[ext_resource type="LabelSettings" uid="uid://dwp24030bi46q" path="res://ui/description.tres" id="7_85g3d"]
 [ext_resource type="Theme" uid="uid://dtm7oa2ik2g24" path="res://ui/major_button_theme.tres" id="7_tipki"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_it4ap"]
@@ -189,6 +191,26 @@ grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("7_tipki")
 text = "Reincarnate"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=926739908]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="LegacyCounter" type="Label" parent="HBoxContainer" unique_id=2088623034]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+label_settings = ExtResource("6_o6xl0")
+
+[node name="Label2" type="Label" parent="HBoxContainer" unique_id=1122560579]
+layout_mode = 2
+text = "Legacy"
+label_settings = ExtResource("7_85g3d")
+vertical_alignment = 1
 
 [node name="Info" type="Label" parent="." unique_id=1261470930]
 unique_name_in_owner = true

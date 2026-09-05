@@ -1,0 +1,6 @@
+[gd_resource type="LabelSettings" format=3 uid="uid://dwp24030bi46q"]
+
+[ext_resource type="FontFile" uid="uid://brlxme5qgpox1" path="res://fonts/Avara.ttf" id="1_rdnpk"]
+
+[resource]
+font = ExtResource("1_rdnpk")

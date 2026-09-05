@@ -22,17 +22,21 @@ script = ExtResource("1_jaeev")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1775226900]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 7
 anchor_left = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-offset_left = -64.0
-offset_right = 64.0
-offset_bottom = 128.0
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_top = -64.0
+offset_right = 32.0
 grow_horizontal = 2
+grow_vertical = 0
+stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=1718787448]
 handle_input_locally = false
-size = Vector2i(32, 32)
+size = Vector2i(64, 64)
 render_target_update_mode = 4
 
 [node name="Node3D" type="Node3D" parent="SubViewportContainer/SubViewport" unique_id=1980269100]

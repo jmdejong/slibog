@@ -139,11 +139,15 @@ func hit(damage: float, knockback: Vector3, _by: Monster) -> void:
 		die()
 
 func die() -> void:
+	var legacy: int = int(floor(xp / 100))
 	dead = true
-	State.set_in_world(false)
+	State.legacy += legacy
+	State.in_world = false
+	State.save()
 	$AnimationPlayer.play("die")
 	await get_tree().create_timer(2).timeout
 	%InputControls.wants_pointer = false
+	%MenuUi.show_death_stats(player_level, xp, legacy)
 	%MenuUi.end_run()
 
 func set_weapon(new_weapon: Weapon) -> void:

@@ -8,6 +8,10 @@ var config_file = ConfigFile.new()
 var performance: Perf = Perf.FAST 
 signal performance_changed
 var cheats_enabled: bool = false
+signal debug_info_enabled_changed(enabled: bool)
+var debug_info_enabled: bool = true
+
+const saved_properties: Array[StringName] = ["performance", "cheats_enabled", "debug_info_enabled"]
 
 func configure_defaults() -> void:
 	if OS.has_feature("web_android") or OS.has_feature("web_ios"):
@@ -16,8 +20,8 @@ func configure_defaults() -> void:
 		performance = Perf.PRETTY
 
 func configure_from_file() -> void:
-	performance = config_file.get_value("general", "performance", performance)
-	cheats_enabled = config_file.get_value("general", "cheats", cheats_enabled)
+	for property: StringName in saved_properties:
+		set(property, config_file.get_value("general", property, get(property)))
 
 func _ready() -> void:
 	Measure.start("load_config")
@@ -46,7 +50,12 @@ func set_cheats(enabled: bool) -> void:
 	cheats_enabled = enabled
 	save()
 
+func set_debug_info(enabled: bool) -> void:
+	debug_info_enabled = enabled
+	save()
+	debug_info_enabled_changed.emit(enabled)
+
 func save() -> void:
-	config_file.set_value("general", "performance", performance)
-	config_file.set_value("general", "cheats", cheats_enabled)
+	for property: StringName in saved_properties:
+		config_file.set_value("general", property, get(property))
 	config_file.save(config_path)

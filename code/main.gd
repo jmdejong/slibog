@@ -24,6 +24,9 @@ func _ready() -> void:
 			level_selector = i
 	change_selected_class(0)
 	change_selected_level(0)
+	%LegacyCounter.text = str(State.legacy)
+	%Info.visible = Config.debug_info_enabled
+	Config.debug_info_enabled_changed.connect(%Info.set_visible)
 	measure()
 	#if Config.performance == Config.Perf.PRETTY:
 		#$CloudsFg.material = load("res://materials/cloud_fg.tres")
@@ -31,7 +34,8 @@ func _ready() -> void:
 		#%CloudsBg.material_override = load("res://materials/cloud_cylinder.tres")
 
 func measure() -> void:
-	await get_tree().create_timer(0.1).timeout
+	await get_tree().process_frame
+	await get_tree().process_frame
 	Measure.finish("open_menu")
 
 func spawn_in_world() -> void:

@@ -1,0 +1,92 @@
+[gd_scene format=3 uid="uid://bgec72127tu6l"]
+
+[ext_resource type="Script" uid="uid://jd8uev08x6dh" path="res://code/ui/settings_menu.gd" id="1_yu862"]
+[ext_resource type="Texture2D" uid="uid://cnp2y72b7ksgv" path="res://ui/menu.svg" id="2_ywggk"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_it4ap"]
+
+[node name="SettingsMenu" type="Control" unique_id=2128081961]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+script = ExtResource("1_yu862")
+
+[node name="SettingsButton" type="Button" parent="." unique_id=1192050337]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -60.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 60.0
+grow_horizontal = 0
+toggle_mode = true
+icon = ExtResource("2_ywggk")
+expand_icon = true
+
+[node name="SettingsBox" type="PanelContainer" parent="." unique_id=1884119661]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -160.0
+offset_top = 60.0
+offset_right = -10.0
+offset_bottom = 210.0
+grow_horizontal = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsBox" unique_id=2064045239]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="SettingsBox/VBoxContainer" unique_id=1099904627]
+layout_mode = 2
+text = "Settings"
+label_settings = SubResource("LabelSettings_it4ap")
+
+[node name="HSeparator" type="HSeparator" parent="SettingsBox/VBoxContainer" unique_id=332967852]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="SettingsBox/VBoxContainer" unique_id=1091435320]
+layout_mode = 2
+columns = 2
+
+[node name="Label" type="Label" parent="SettingsBox/VBoxContainer/GridContainer" unique_id=513154247]
+layout_mode = 2
+text = "Quality"
+
+[node name="QualitySelector" type="OptionButton" parent="SettingsBox/VBoxContainer/GridContainer" unique_id=1794954655]
+unique_name_in_owner = true
+layout_mode = 2
+allow_reselect = true
+item_count = 2
+popup/item_0/text = "low"
+popup/item_0/id = 1
+popup/item_1/text = "high"
+popup/item_1/id = 9
+
+[node name="Cheats" type="Label" parent="SettingsBox/VBoxContainer/GridContainer" unique_id=2136691976]
+layout_mode = 2
+text = "Cheats"
+
+[node name="CheatsButton" type="CheckButton" parent="SettingsBox/VBoxContainer/GridContainer" unique_id=54459431]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="SettingsBox/VBoxContainer/GridContainer" unique_id=1802690466]
+layout_mode = 2
+text = "Debug info"
+
+[node name="DebugInfoToggle" type="CheckButton" parent="SettingsBox/VBoxContainer/GridContainer" unique_id=264993353]
+unique_name_in_owner = true
+layout_mode = 2
+
+[connection signal="toggled" from="SettingsButton" to="SettingsBox" method="set_visible"]
+[connection signal="item_selected" from="SettingsBox/VBoxContainer/GridContainer/QualitySelector" to="." method="_on_quality_selector_item_selected"]
+[connection signal="toggled" from="SettingsBox/VBoxContainer/GridContainer/CheatsButton" to="." method="_on_cheats_button_toggled"]
+[connection signal="toggled" from="SettingsBox/VBoxContainer/GridContainer/DebugInfoToggle" to="." method="_on_debug_info_toggle_toggled"]
